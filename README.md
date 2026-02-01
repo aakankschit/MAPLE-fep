@@ -2,10 +2,10 @@
 
 **Maximum A Posteriori Learning of Energies**
 
-[![PyPI version](https://badge.fury.io/py/maple-fep.svg)](https://badge.fury.io/py/maple-fep)
-[![CI/CD Pipeline](https://github.com/aakankschit/MAPLE-fep/workflows/CI/badge.svg)](https://github.com/aakankschit/MAPLE-fep/actions)
+[![PyPI version](https://img.shields.io/pypi/v/maple-fep.svg)](https://pypi.org/project/maple-fep/)
+[![CI/CD Pipeline](https://github.com/aakankschit/MAPLE-fep/actions/workflows/ci.yml/badge.svg)](https://github.com/aakankschit/MAPLE-fep/actions/workflows/ci.yml)
 [![Documentation Status](https://readthedocs.org/projects/maple-fep/badge/?version=latest)](https://maple-fep.readthedocs.io/en/latest/?badge=latest)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Python 3.13+](https://img.shields.io/badge/python-3.13+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 A Python package for Bayesian analysis of Free Energy Perturbation (FEP) calculations in computational drug discovery. MAPLE provides probabilistic inference methods to correct thermodynamic inconsistencies and detect outliers in FEP perturbation graphs.
@@ -125,12 +125,6 @@ If you use MAPLE in your research, please cite:
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
-## Related Projects
-
-- [Pyro](https://pyro.ai/) - Probabilistic programming
-- [OpenFE](https://openfree.energy/) - Open Free Energy
-- [PyMBAR](https://pymbar.readthedocs.io/) - Multistate Bennett Acceptance Ratio
 
 ---
 

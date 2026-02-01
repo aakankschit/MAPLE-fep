@@ -151,3 +151,8 @@ tutorial_results/
 *.hdf5
 *.npy
 *.npz
+
+# Project-specific files (not for remote)
+CHANGELOG.md
+CLAUDE.md
+MANIFEST.in
