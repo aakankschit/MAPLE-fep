@@ -1,0 +1,16 @@
+numpy
+scipy
+matplotlib
+pandas
+networkx
+scikit-learn
+pydantic
+requests
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+pyro-ppl
+pytest
+seaborn
+tqdm
+adjustText 
