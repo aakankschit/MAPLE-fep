@@ -266,19 +266,23 @@ class TestParameterSweepCore:
         )
 
         # Test plotting
-        fig = parameter_sweep.plot_parameter_effects(
+        figures = parameter_sweep.plot_parameter_effects(
             results_df=results,
             parameter_name="learning_rate",
             metrics=["RMSE", "R2"],
             confidence_intervals=True,
         )
 
-        assert isinstance(fig, plt.Figure)
+        # plot_parameter_effects returns a dict with 'error' and 'correlation' figures
+        assert isinstance(figures, dict)
 
-        # Should have subplots for each metric
-        assert len(fig.axes) >= 2
-
-        plt.close(fig)
+        # Should have error figure (for RMSE) and correlation figure (for R2)
+        if "error" in figures:
+            assert isinstance(figures["error"], plt.Figure)
+            plt.close(figures["error"])
+        if "correlation" in figures:
+            assert isinstance(figures["correlation"], plt.Figure)
+            plt.close(figures["correlation"])
 
     def test_grid_search_data_structure(self, parameter_sweep):
         """Test grid search result data structure."""

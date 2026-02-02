@@ -908,8 +908,7 @@ def create_prior_sweep_experiment(
     sweep.plot_parameter_effects(
         results_df=results_df,
         parameter_name="prior_std",
-        figsize=(15, 8),
-        save_path=tracker.storage_dir / "prior_std_effects.png",
+        save_path=tracker.storage_dir / "prior_std_effects",
     )
 
     return results_df

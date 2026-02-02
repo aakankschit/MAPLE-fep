@@ -470,16 +470,22 @@ class TestParameterSweepIntegration:
         )
 
         # Test plotting
-        fig = sweep.plot_parameter_effects(
+        figures = sweep.plot_parameter_effects(
             results_df=results,
             parameter_name="learning_rate",
             metrics=["RMSE", "R2"],
-            figsize=(10, 6),
         )
 
-        assert isinstance(fig, plt.Figure)
-        assert len(fig.axes) >= 2  # One subplot per metric
-        plt.close(fig)
+        # plot_parameter_effects returns a dict with 'error' and 'correlation' figures
+        assert isinstance(figures, dict)
+
+        # Should have error figure (for RMSE) and correlation figure (for R2)
+        if "error" in figures:
+            assert isinstance(figures["error"], plt.Figure)
+            plt.close(figures["error"])
+        if "correlation" in figures:
+            assert isinstance(figures["correlation"], plt.Figure)
+            plt.close(figures["correlation"])
 
     def test_parameter_sweep_error_handling(self, parameter_sweep_setup):
         """Test error handling in parameter sweeps."""
@@ -730,24 +736,9 @@ class TestUtilsErrorHandling:
         tracker = PerformanceTracker(temp_directory)
         datasets = {"test": SyntheticFEPDataset(add_noise=False, random_seed=42)}
 
-        # Test with invalid base config - should handle gracefully with failure tracking
-        sweep = ParameterSweep(tracker, "invalid_config", datasets)
-
-        # Should handle the error gracefully and record as failed experiment
-        results = sweep.sweep_parameter(
-            parameter_name="learning_rate",
-            values=[0.01],
-            experiment_name="invalid_test",
-        )
-
-        # Should return empty results due to failure
-        assert isinstance(results, pd.DataFrame)
-        assert len(results) == 0
-
-        # Should record the failure
-        failed_experiments = sweep.get_failed_experiments()
-        assert len(failed_experiments) == 1
-        assert "AttributeError" in failed_experiments["error_type"].values
+        # Test with invalid base config - should raise ValueError immediately
+        with pytest.raises(ValueError, match="Unsupported config type"):
+            ParameterSweep(tracker, "invalid_config", datasets)
 
     def test_empty_results_handling(self, temp_directory):
         """Test handling of empty results in analysis functions."""

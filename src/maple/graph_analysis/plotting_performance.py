@@ -1722,7 +1722,6 @@ def plot_error_distribution(
     return fig_result, stats_df
 
 
-#TODO: Check if this functionality is necessary, when is this ever used? Usually I only plot DDGs for a single target.
 def plot_dataset_all_DDGs(
     dataset,
     experimental_column: str = "Experimental DeltaDeltaG",
