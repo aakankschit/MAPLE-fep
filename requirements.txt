@@ -1,16 +1,17 @@
-numpy
-scipy
-matplotlib
-pandas
-networkx
-scikit-learn
-pydantic
-requests
+# Core dependencies (aligned with pyproject.toml)
+numpy>=1.21.0,<3.0
+scipy>=1.7.0
+pandas>=1.3.0
 torch>=2.0.0
-torchvision>=0.15.0
-torchaudio>=2.0.0
-pyro-ppl
-pytest
-seaborn
-tqdm
-adjustText 
+pyro-ppl>=1.8.0
+networkx>=2.6.0
+scikit-learn>=1.0.0
+pydantic>=2.0.0
+matplotlib>=3.4.0
+seaborn>=0.11.0
+tqdm>=4.60.0
+adjustText>=0.8
+requests>=2.25.0
+
+# Dev dependencies (for running tests)
+pytest>=7.0

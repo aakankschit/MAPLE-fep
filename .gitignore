@@ -153,6 +153,4 @@ tutorial_results/
 *.npz
 
 # Project-specific files (not for remote)
-CHANGELOG.md
-CLAUDE.md
-MANIFEST.in
+# Note: CHANGELOG.md, CLAUDE.md, and MANIFEST.in should be tracked in git

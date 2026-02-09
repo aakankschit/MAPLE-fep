@@ -252,6 +252,12 @@ Table of Contents
 
 .. toctree::
    :maxdepth: 1
+   :caption: Interactive Tutorials
+
+   tutorials/index
+
+.. toctree::
+   :maxdepth: 1
    :caption: Examples
 
    examples/basic_usage
