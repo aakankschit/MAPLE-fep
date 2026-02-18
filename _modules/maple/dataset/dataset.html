@@ -8,7 +8,6 @@
   <title>maple.dataset.dataset &mdash; MAPLE-fep 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../../../_static/jquery.js?v=5d32c60e"></script>
@@ -223,128 +222,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#running-all-methods">Running All Methods</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#references">References</a></li>
 </ul>
 </li>
 </ul>

@@ -9,7 +9,6 @@
   <title>Architecture and Design &mdash; MAPLE-fep 0.1.0 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
-      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
 
   
       <script src="../_static/jquery.js?v=5d32c60e"></script>
@@ -226,128 +225,7 @@
 <li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#running-all-methods">Running All Methods</a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
-<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
-</ul>
-</li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
-<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#references">References</a></li>
 </ul>
 </li>
 </ul>
@@ -690,333 +568,103 @@
 <section id="module-overview">
 <h2>Module Overview<a class="headerlink" href="#module-overview" title="Link to this heading"></a></h2>
 <p>MAPLE is organized into four main packages, with models split into <strong>probabilistic</strong> and <strong>deterministic</strong> subpackages:</p>
-<figure class="align-center" id="id1">
-digraph package_structure {
-    rankdir=TB;
-    node [shape=box, style=&quot;rounded,filled&quot;, fontname=&quot;Helvetica&quot;, fontsize=12];
-    edge [fontname=&quot;Helvetica&quot;, fontsize=10];
-    compound=true;
-    nodesep=0.4;
-    ranksep=0.6;
-
-    maple [label=&quot;maple/&quot;, fillcolor=&quot;#E8F4FD&quot;, style=&quot;rounded,filled,bold&quot;, fontsize=14];
-
-    subgraph cluster_packages {
-        style=invis;
-
-        subgraph cluster_dataset {
-            label=&quot;dataset/&quot;;
-            style=&quot;rounded,filled&quot;;
-            fillcolor=&quot;#D4EDDA&quot;;
-            fontname=&quot;Helvetica-Bold&quot;;
-            fontsize=13;
-
-            base_dataset [label=&quot;base_dataset.py\n(BaseDataset ABC)&quot;, fillcolor=&quot;#C3E6CB&quot;];
-            dataset [label=&quot;dataset.py\n(FEPDataset)&quot;, fillcolor=&quot;#C3E6CB&quot;];
-            benchmark [label=&quot;FEP_benchmark_dataset.py\n(FEPBenchmarkDataset)&quot;, fillcolor=&quot;#C3E6CB&quot;];
-            synthetic [label=&quot;synthetic_dataset.py\n(SyntheticFEPDataset)&quot;, fillcolor=&quot;#C3E6CB&quot;];
-
-            base_dataset -&gt; dataset -&gt; benchmark -&gt; synthetic [style=invis];
-        }
-
-        subgraph cluster_models {
-            label=&quot;models/&quot;;
-            style=&quot;rounded,filled&quot;;
-            fillcolor=&quot;#FFF3CD&quot;;
-            fontname=&quot;Helvetica-Bold&quot;;
-            fontsize=13;
-
-            model_base [label=&quot;base.py  (BaseEstimator ABC)\nconfig.py  (Pydantic configs + enums)\ngraph_data.py  (GraphData dataclass)&quot;, fillcolor=&quot;#FFE69C&quot;];
-
-            subgraph cluster_prob {
-                label=&quot;probabilistic/&quot;;
-                style=&quot;rounded,filled&quot;;
-                fillcolor=&quot;#FFECB3&quot;;
-                fontname=&quot;Helvetica&quot;;
-                fontsize=11;
-
-                var_est [label=&quot;variational_estimator.py\n(MAP / VI / MLE)&quot;, fillcolor=&quot;#FFE082&quot;];
-                gmvi_model [label=&quot;gaussian_mixture_vi.py\n(GMVI + outlier detection)&quot;, fillcolor=&quot;#FFE082&quot;];
-
-                var_est -&gt; gmvi_model [style=invis];
-            }
-
-            subgraph cluster_det {
-                label=&quot;deterministic/&quot;;
-                style=&quot;rounded,filled&quot;;
-                fillcolor=&quot;#FFECB3&quot;;
-                fontname=&quot;Helvetica&quot;;
-                fontsize=11;
-
-                wcc_model [label=&quot;cycle_closure.py\n(WCC)&quot;, fillcolor=&quot;#FFE082&quot;];
-                wsfc_model [label=&quot;spectral_correction.py\n(WSFC / SFC)&quot;, fillcolor=&quot;#FFE082&quot;];
-
-                wcc_model -&gt; wsfc_model [style=invis];
-            }
-
-            model_base -&gt; var_est [style=invis];
-        }
-
-        subgraph cluster_analysis {
-            label=&quot;graph_analysis/&quot;;
-            style=&quot;rounded,filled&quot;;
-            fillcolor=&quot;#F8D7DA&quot;;
-            fontname=&quot;Helvetica-Bold&quot;;
-            fontsize=13;
-
-            perf_stats [label=&quot;performance_stats.py&quot;, fillcolor=&quot;#F5C6CB&quot;];
-            plotting [label=&quot;plotting_performance.py&quot;, fillcolor=&quot;#F5C6CB&quot;];
-            graph_setup [label=&quot;graph_setup.py&quot;, fillcolor=&quot;#F5C6CB&quot;];
-            cycle_analysis [label=&quot;graph_cycle_analysis.py&quot;, fillcolor=&quot;#F5C6CB&quot;];
-
-            perf_stats -&gt; plotting -&gt; graph_setup -&gt; cycle_analysis [style=invis];
-        }
-
-        subgraph cluster_utils {
-            label=&quot;utils/&quot;;
-            style=&quot;rounded,filled&quot;;
-            fillcolor=&quot;#D1ECF1&quot;;
-            fontname=&quot;Helvetica-Bold&quot;;
-            fontsize=13;
-
-            param_sweep [label=&quot;parameter_sweep.py\n(ParameterSweep)&quot;, fillcolor=&quot;#BEE5EB&quot;];
-            perf_tracker [label=&quot;performance_tracker.py\n(PerformanceTracker)&quot;, fillcolor=&quot;#BEE5EB&quot;];
-
-            param_sweep -&gt; perf_tracker [style=invis];
-        }
-    }
-
-    maple -&gt; base_dataset [lhead=cluster_dataset];
-    maple -&gt; model_base [lhead=cluster_models];
-    maple -&gt; perf_stats [lhead=cluster_analysis];
-    maple -&gt; param_sweep [lhead=cluster_utils];
-}<figcaption>
-<p><span class="caption-text">MAPLE Package Structure</span><a class="headerlink" href="#id1" title="Link to this image"></a></p>
-</figcaption>
-</figure>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>maple/
+├── dataset/
+│   ├── base_dataset.py          (BaseDataset ABC)
+│   ├── dataset.py               (FEPDataset)
+│   ├── FEP_benchmark_dataset.py (FEPBenchmarkDataset)
+│   └── synthetic_dataset.py     (SyntheticFEPDataset)
+│
+├── models/
+│   ├── base.py                  (BaseEstimator ABC)
+│   ├── config.py                (Pydantic configs + enums)
+│   ├── graph_data.py            (GraphData dataclass)
+│   ├── probabilistic/
+│   │   ├── variational_estimator.py  (MAP / VI / MLE)
+│   │   └── gaussian_mixture_vi.py    (GMVI + outlier detection)
+│   └── deterministic/
+│       ├── cycle_closure.py          (WCC)
+│       └── spectral_correction.py    (WSFC / SFC)
+│
+├── graph_analysis/
+│   ├── performance_stats.py
+│   ├── plotting_performance.py
+│   ├── graph_setup.py
+│   └── graph_cycle_analysis.py
+│
+└── utils/
+    ├── parameter_sweep.py       (ParameterSweep)
+    └── performance_tracker.py   (PerformanceTracker)
+</pre></div>
+</div>
 </section>
 <section id="the-dataset-as-central-hub">
 <h2>The Dataset as Central Hub<a class="headerlink" href="#the-dataset-as-central-hub" title="Link to this heading"></a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">FEPDataset</span></code> object serves as the central hub in MAPLE:</p>
-<figure class="align-center" id="id2">
-digraph dataset_hub {
-    rankdir=TB;
-    node [shape=box, style=&quot;rounded,filled&quot;, fontname=&quot;Helvetica&quot;, fontsize=12];
-    edge [fontname=&quot;Helvetica&quot;, fontsize=10];
-    compound=true;
-    nodesep=0.4;
-    ranksep=0.6;
-
-    subgraph cluster_input {
-        label=&quot;Input Sources&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#E3F2FD&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=14;
-
-        subgraph cluster_input_inner {
-            style=invis;
-            rank=same;
-            csv [label=&quot;CSV Files&quot;, fillcolor=&quot;#BBDEFB&quot;];
-            df [label=&quot;DataFrames&quot;, fillcolor=&quot;#BBDEFB&quot;];
-            bench [label=&quot;Benchmarks&quot;, fillcolor=&quot;#BBDEFB&quot;];
-        }
-    }
-
-    subgraph cluster_dataset {
-        label=&quot;FEPDataset (Central Hub)&quot;;
-        style=&quot;rounded,filled,bold&quot;;
-        fillcolor=&quot;#E8F5E9&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=14;
-
-        nodes_df [label=&quot;dataset_nodes&quot;, fillcolor=&quot;#C8E6C9&quot;];
-        edges_df [label=&quot;dataset_edges&quot;, fillcolor=&quot;#C8E6C9&quot;];
-        graph_data [label=&quot;cycle_data&quot;, fillcolor=&quot;#C8E6C9&quot;];
-        mappings [label=&quot;node2idx / idx2node&quot;, fillcolor=&quot;#C8E6C9&quot;];
-        est [label=&quot;estimators[]&quot;, fillcolor=&quot;#C8E6C9&quot;];
-
-        nodes_df -&gt; edges_df -&gt; graph_data -&gt; mappings -&gt; est [style=invis];
-    }
-
-    subgraph cluster_output {
-        label=&quot;Consumers&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#FFF8E1&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=14;
-
-        subgraph cluster_output_inner {
-            style=invis;
-            rank=same;
-            models [label=&quot;Models&quot;, fillcolor=&quot;#FFECB3&quot;];
-            analysis [label=&quot;Analysis&quot;, fillcolor=&quot;#FFECB3&quot;];
-            viz [label=&quot;Visualization&quot;, fillcolor=&quot;#FFECB3&quot;];
-        }
-    }
-
-    df -&gt; nodes_df [lhead=cluster_dataset];
-    est -&gt; models [ltail=cluster_dataset, lhead=cluster_output];
-}<figcaption>
-<p><span class="caption-text">FEPDataset: Central Data Hub</span><a class="headerlink" href="#id2" title="Link to this image"></a></p>
-</figcaption>
-</figure>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Input Sources
+CSV Files | DataFrames | Benchmarks
+      |
+      v
++------------------------------------------------------------------+
+|                  FEPDataset (Central Hub)                         |
++------------------------------------------------------------------+
+|  dataset_nodes        - Node data and model predictions           |
+|  dataset_edges        - Edge data and model predictions           |
+|  cycle_data           - Graph structure for models                |
+|  node2idx / idx2node  - Node name &lt;-&gt; index mappings              |
+|  estimators[]         - List of applied model names               |
++------------------------------------------------------------------+
+      |
+      v
+Consumers
+Models | Analysis | Visualization
+</pre></div>
+</div>
 </section>
 <section id="model-dataset-interaction-pattern">
 <h2>Model-Dataset Interaction Pattern<a class="headerlink" href="#model-dataset-interaction-pattern" title="Link to this heading"></a></h2>
 <p>All MAPLE models follow a consistent interaction pattern with the dataset:</p>
-<figure class="align-center" id="id3">
-digraph interaction {
-    rankdir=TB;
-    node [shape=box, style=&quot;rounded,filled&quot;, fontname=&quot;Helvetica&quot;, fontsize=12];
-    edge [fontname=&quot;Helvetica&quot;, fontsize=10];
-    nodesep=0.4;
-    ranksep=0.5;
-
-    subgraph cluster_step1 {
-        label=&quot;Step 1: Initialize&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#E3F2FD&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=13;
-
-        init [label=&quot;model = ModelClass(config, dataset)&quot;, fillcolor=&quot;#BBDEFB&quot;];
-    }
-
-    subgraph cluster_step2 {
-        label=&quot;Step 2: Extract Data&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#E8F5E9&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=13;
-
-        extract [label=&quot;model._extract_graph_data()\nReads: dataset.cycle_data / dataset_edges&quot;, fillcolor=&quot;#C8E6C9&quot;];
-    }
-
-    subgraph cluster_step3 {
-        label=&quot;Step 3: Fit&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#FFF8E1&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=13;
-
-        train [label=&quot;model.fit()\nProduces: node_estimates, edge_estimates&quot;, fillcolor=&quot;#FFECB3&quot;];
-    }
-
-    subgraph cluster_step4 {
-        label=&quot;Step 4: Add to Dataset&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#FCE4EC&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=13;
-
-        add [label=&quot;model.add_predictions_to_dataset()\nWrites to: dataset_nodes, dataset_edges&quot;, fillcolor=&quot;#F8BBD9&quot;];
-    }
-
-    init -&gt; extract -&gt; train -&gt; add;
-}<figcaption>
-<p><span class="caption-text">Model-Dataset Interaction Pattern</span><a class="headerlink" href="#id3" title="Link to this image"></a></p>
-</figcaption>
-</figure>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Step 1: Initialize
+    model = ModelClass(config, dataset)
+         |
+         v
+Step 2: Extract Data
+    model._extract_graph_data()
+    Reads: dataset.cycle_data / dataset_edges
+         |
+         v
+Step 3: Fit
+    model.fit()
+    Produces: node_estimates, edge_estimates
+         |
+         v
+Step 4: Add to Dataset
+    model.add_predictions_to_dataset()
+    Writes to: dataset_nodes, dataset_edges
+</pre></div>
+</div>
 </section>
 <section id="available-models">
 <h2>Available Models<a class="headerlink" href="#available-models" title="Link to this heading"></a></h2>
 <p>MAPLE provides both probabilistic and deterministic inference methods:</p>
-<figure class="align-center" id="id4">
-digraph models {
-    rankdir=TB;
-    node [shape=box, style=&quot;rounded,filled&quot;, fontname=&quot;Helvetica&quot;, fontsize=12];
-    edge [fontname=&quot;Helvetica&quot;, fontsize=10];
-    compound=true;
-    nodesep=0.4;
-    ranksep=0.6;
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>Available Models
+================
 
-    subgraph cluster_models {
-        label=&quot;Available Models&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#F5F5F5&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=14;
-
-        subgraph cluster_models_inner {
-            style=invis;
-            rank=same;
-
-            subgraph cluster_nodemodel {
-                label=&quot;VariationalEstimator\n(probabilistic/)&quot;;
-                style=&quot;rounded,filled&quot;;
-                fillcolor=&quot;#E3F2FD&quot;;
-                fontname=&quot;Helvetica-Bold&quot;;
-                fontsize=12;
-
-                map [label=&quot;MAP&quot;, fillcolor=&quot;#BBDEFB&quot;];
-                mle [label=&quot;MLE&quot;, fillcolor=&quot;#BBDEFB&quot;];
-                vi [label=&quot;VI&quot;, fillcolor=&quot;#BBDEFB&quot;];
-
-                map -&gt; mle -&gt; vi [style=invis];
-            }
-
-            subgraph cluster_gmvi {
-                label=&quot;GaussianMixtureVI\n(probabilistic/)&quot;;
-                style=&quot;rounded,filled&quot;;
-                fillcolor=&quot;#E8F5E9&quot;;
-                fontname=&quot;Helvetica-Bold&quot;;
-                fontsize=12;
-
-                gmvi [label=&quot;Full-rank VI\n+ Outlier Detection&quot;, fillcolor=&quot;#C8E6C9&quot;];
-            }
-
-            subgraph cluster_wcc {
-                label=&quot;CycleClosureCorrection\n(deterministic/)&quot;;
-                style=&quot;rounded,filled&quot;;
-                fillcolor=&quot;#FFF8E1&quot;;
-                fontname=&quot;Helvetica-Bold&quot;;
-                fontsize=12;
-
-                wcc [label=&quot;Weighted\nCycle Closure&quot;, fillcolor=&quot;#FFECB3&quot;];
-            }
-
-            subgraph cluster_wsfc {
-                label=&quot;SpectralCorrection\n(deterministic/)&quot;;
-                style=&quot;rounded,filled&quot;;
-                fillcolor=&quot;#F3E5F5&quot;;
-                fontname=&quot;Helvetica-Bold&quot;;
-                fontsize=12;
-
-                wsfc [label=&quot;Graph Laplacian\nPseudoinverse&quot;, fillcolor=&quot;#E1BEE7&quot;];
-            }
-        }
-    }
-
-    subgraph cluster_result {
-        label=&quot;Columns Added to Dataset&quot;;
-        style=&quot;rounded,filled&quot;;
-        fillcolor=&quot;#FCE4EC&quot;;
-        fontname=&quot;Helvetica-Bold&quot;;
-        fontsize=14;
-
-        subgraph cluster_result_inner {
-            style=invis;
-            rank=same;
-            col_map [label=&quot;'MAP'&quot;, fillcolor=&quot;#F8BBD9&quot;];
-            col_mle [label=&quot;'MLE'&quot;, fillcolor=&quot;#F8BBD9&quot;];
-            col_vi [label=&quot;'VI', 'VI_uncertainty'&quot;, fillcolor=&quot;#F8BBD9&quot;];
-            col_gmvi [label=&quot;'GMVI', 'GMVI_uncertainty'&quot;, fillcolor=&quot;#F8BBD9&quot;];
-            col_wcc [label=&quot;'WCC', 'WCC_uncertainty'&quot;, fillcolor=&quot;#F8BBD9&quot;];
-            col_wsfc [label=&quot;'WSFC'/'SFC', '{}_uncertainty'&quot;, fillcolor=&quot;#F8BBD9&quot;];
-        }
-    }
-
-    map -&gt; col_map;
-    mle -&gt; col_mle;
-    vi -&gt; col_vi;
-    gmvi -&gt; col_gmvi;
-    wcc -&gt; col_wcc;
-    wsfc -&gt; col_wsfc;
-}<figcaption>
-<p><span class="caption-text">Available Models and Their Outputs</span><a class="headerlink" href="#id4" title="Link to this image"></a></p>
-</figcaption>
-</figure>
+probabilistic/                          deterministic/
++--------------------------+            +--------------------------+
+| VariationalEstimator     |            | CycleClosureCorrection   |
+|   MAP  -&gt; &#39;MAP&#39;          |            |   WCC -&gt; &#39;WCC&#39;,          |
+|   MLE  -&gt; &#39;MLE&#39;          |            |          &#39;WCC_uncertainty&#39;|
+|   VI   -&gt; &#39;VI&#39;,          |            +--------------------------+
+|          &#39;VI_uncertainty&#39; |            | SpectralCorrection       |
++--------------------------+            |   WSFC -&gt; &#39;WSFC&#39;,        |
+| GaussianMixtureVI        |            |           &#39;WSFC_unc.&#39;    |
+|   GMVI -&gt; &#39;GMVI&#39;,        |            |   SFC  -&gt; &#39;SFC&#39;,        |
+|           &#39;GMVI_unc.&#39;,    |            |           &#39;SFC_unc.&#39;     |
+|           outlier probs   |            +--------------------------+
++--------------------------+
+</pre></div>
+</div>
 <section id="probabilistic-models-models-probabilistic">
 <h3>Probabilistic Models (<code class="docutils literal notranslate"><span class="pre">models.probabilistic</span></code>)<a class="headerlink" href="#probabilistic-models-models-probabilistic" title="Link to this heading"></a></h3>
 <p><strong>VariationalEstimator</strong> (MAP/VI/MLE):</p>
