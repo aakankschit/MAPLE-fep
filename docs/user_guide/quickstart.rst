@@ -13,73 +13,22 @@ MAPLE uses a **dataset-centric architecture** where the ``FEPDataset`` object se
 3. **Adding predictions** - Call ``add_predictions_to_dataset()`` to store results
 4. **Analyzing results** - Access all predictions from the dataset
 
-.. graphviz::
-   :align: center
-   :caption: MAPLE Workflow Overview
+.. code-block:: text
 
-   digraph workflow {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       compound=true;
-       nodesep=0.4;
-       ranksep=0.5;
-       
-       subgraph cluster_create {
-           label="1. Create Dataset";
-           style="rounded,filled";
-           fillcolor="#E3F2FD";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-           
-           create [label="FEPDataset(your data)", fillcolor="#BBDEFB"];
-       }
-       
-       subgraph cluster_train {
-           label="2. Fit Models";
-           style="rounded,filled";
-           fillcolor="#E8F5E9";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-           
-           subgraph cluster_train_inner {
-               style=invis;
-               rank=same;
-               train1 [label="VariationalEstimator", fillcolor="#C8E6C9"];
-               train2 [label="GaussianMixtureVI", fillcolor="#C8E6C9"];
-               train3 [label="CycleClosureCorrection", fillcolor="#C8E6C9"];
-           }
-       }
-       
-       subgraph cluster_add {
-           label="3. Add Predictions";
-           style="rounded,filled";
-           fillcolor="#FFF8E1";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-           
-           add [label="add_predictions_to_dataset()", fillcolor="#FFECB3"];
-       }
-       
-       subgraph cluster_access {
-           label="4. Access Results";
-           style="rounded,filled";
-           fillcolor="#FCE4EC";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-           
-           subgraph cluster_access_inner {
-               style=invis;
-               rank=same;
-               access1 [label="dataset.dataset_nodes", fillcolor="#F8BBD9"];
-               access2 [label="dataset.estimators", fillcolor="#F8BBD9"];
-           }
-       }
-       
-       create -> train2 [lhead=cluster_train];
-       train2 -> add [ltail=cluster_train];
-       add -> access1 [lhead=cluster_access];
-   }
+   1. Create Dataset
+      FEPDataset(your data)
+            |
+            v
+   2. Fit Models
+      VariationalEstimator | GaussianMixtureVI | CycleClosureCorrection | SpectralCorrection
+            |
+            v
+   3. Add Predictions
+      model.add_predictions_to_dataset()
+            |
+            v
+   4. Access Results
+      dataset.dataset_nodes  |  dataset.estimators
 
 Basic Example
 -------------
@@ -347,39 +296,22 @@ The Dataset as Central Hub
 
 The ``FEPDataset`` object serves as the central hub:
 
-.. graphviz::
-   :align: center
-   :caption: FEPDataset as Central Hub
+.. code-block:: text
 
-   digraph dataset_hub {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       compound=true;
-       nodesep=0.4;
-       ranksep=0.5;
-       
-       models [label="Models (write predictions)", fillcolor="#FFF8E1", style="rounded,filled"];
-       
-       subgraph cluster_dataset {
-           label="FEPDataset (Central Hub)";
-           style="rounded,filled,bold";
-           fillcolor="#E8F5E9";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-           
-           nodes_df [label="dataset_nodes\nName | Exp. DeltaG | MAP | VI | GMVI", fillcolor="#C8E6C9"];
-           edges_df [label="dataset_edges\nSource | Dest | DeltaDeltaG | predictions", fillcolor="#C8E6C9"];
-           estimators [label="estimators = ['MAP', 'VI', 'GMVI', ...]", fillcolor="#C8E6C9"];
-           
-           nodes_df -> edges_df -> estimators [style=invis];
-       }
-       
-       analysis [label="Analysis (read predictions)", fillcolor="#FCE4EC", style="rounded,filled"];
-       
-       models -> nodes_df [label="add_predictions_to_dataset()"];
-       estimators -> analysis;
-   }
+   Models (write predictions)
+         |
+         | add_predictions_to_dataset()
+         v
+   +------------------------------------------------------------------+
+   |                  FEPDataset (Central Hub)                         |
+   +------------------------------------------------------------------+
+   |  dataset_nodes:  Name | Exp. DeltaG | MAP | VI | GMVI | ...      |
+   |  dataset_edges:  Source | Dest | DeltaDeltaG | predictions        |
+   |  estimators:     ['MAP', 'VI', 'GMVI', ...]                      |
+   +------------------------------------------------------------------+
+         |
+         v
+   Analysis (read predictions)
 
 The add_predictions_to_dataset() Pattern
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

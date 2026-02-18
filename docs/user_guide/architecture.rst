@@ -20,339 +20,109 @@ Module Overview
 
 MAPLE is organized into four main packages, with models split into **probabilistic** and **deterministic** subpackages:
 
-.. graphviz::
-   :align: center
-   :caption: MAPLE Package Structure
+.. code-block:: text
 
-   digraph package_structure {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       compound=true;
-       nodesep=0.4;
-       ranksep=0.6;
-
-       maple [label="maple/", fillcolor="#E8F4FD", style="rounded,filled,bold", fontsize=14];
-
-       subgraph cluster_packages {
-           style=invis;
-
-           subgraph cluster_dataset {
-               label="dataset/";
-               style="rounded,filled";
-               fillcolor="#D4EDDA";
-               fontname="Helvetica-Bold";
-               fontsize=13;
-
-               base_dataset [label="base_dataset.py\n(BaseDataset ABC)", fillcolor="#C3E6CB"];
-               dataset [label="dataset.py\n(FEPDataset)", fillcolor="#C3E6CB"];
-               benchmark [label="FEP_benchmark_dataset.py\n(FEPBenchmarkDataset)", fillcolor="#C3E6CB"];
-               synthetic [label="synthetic_dataset.py\n(SyntheticFEPDataset)", fillcolor="#C3E6CB"];
-
-               base_dataset -> dataset -> benchmark -> synthetic [style=invis];
-           }
-
-           subgraph cluster_models {
-               label="models/";
-               style="rounded,filled";
-               fillcolor="#FFF3CD";
-               fontname="Helvetica-Bold";
-               fontsize=13;
-
-               model_base [label="base.py  (BaseEstimator ABC)\nconfig.py  (Pydantic configs + enums)\ngraph_data.py  (GraphData dataclass)", fillcolor="#FFE69C"];
-
-               subgraph cluster_prob {
-                   label="probabilistic/";
-                   style="rounded,filled";
-                   fillcolor="#FFECB3";
-                   fontname="Helvetica";
-                   fontsize=11;
-
-                   var_est [label="variational_estimator.py\n(MAP / VI / MLE)", fillcolor="#FFE082"];
-                   gmvi_model [label="gaussian_mixture_vi.py\n(GMVI + outlier detection)", fillcolor="#FFE082"];
-
-                   var_est -> gmvi_model [style=invis];
-               }
-
-               subgraph cluster_det {
-                   label="deterministic/";
-                   style="rounded,filled";
-                   fillcolor="#FFECB3";
-                   fontname="Helvetica";
-                   fontsize=11;
-
-                   wcc_model [label="cycle_closure.py\n(WCC)", fillcolor="#FFE082"];
-                   wsfc_model [label="spectral_correction.py\n(WSFC / SFC)", fillcolor="#FFE082"];
-
-                   wcc_model -> wsfc_model [style=invis];
-               }
-
-               model_base -> var_est [style=invis];
-           }
-
-           subgraph cluster_analysis {
-               label="graph_analysis/";
-               style="rounded,filled";
-               fillcolor="#F8D7DA";
-               fontname="Helvetica-Bold";
-               fontsize=13;
-
-               perf_stats [label="performance_stats.py", fillcolor="#F5C6CB"];
-               plotting [label="plotting_performance.py", fillcolor="#F5C6CB"];
-               graph_setup [label="graph_setup.py", fillcolor="#F5C6CB"];
-               cycle_analysis [label="graph_cycle_analysis.py", fillcolor="#F5C6CB"];
-
-               perf_stats -> plotting -> graph_setup -> cycle_analysis [style=invis];
-           }
-
-           subgraph cluster_utils {
-               label="utils/";
-               style="rounded,filled";
-               fillcolor="#D1ECF1";
-               fontname="Helvetica-Bold";
-               fontsize=13;
-
-               param_sweep [label="parameter_sweep.py\n(ParameterSweep)", fillcolor="#BEE5EB"];
-               perf_tracker [label="performance_tracker.py\n(PerformanceTracker)", fillcolor="#BEE5EB"];
-
-               param_sweep -> perf_tracker [style=invis];
-           }
-       }
-
-       maple -> base_dataset [lhead=cluster_dataset];
-       maple -> model_base [lhead=cluster_models];
-       maple -> perf_stats [lhead=cluster_analysis];
-       maple -> param_sweep [lhead=cluster_utils];
-   }
+   maple/
+   ├── dataset/
+   │   ├── base_dataset.py          (BaseDataset ABC)
+   │   ├── dataset.py               (FEPDataset)
+   │   ├── FEP_benchmark_dataset.py (FEPBenchmarkDataset)
+   │   └── synthetic_dataset.py     (SyntheticFEPDataset)
+   │
+   ├── models/
+   │   ├── base.py                  (BaseEstimator ABC)
+   │   ├── config.py                (Pydantic configs + enums)
+   │   ├── graph_data.py            (GraphData dataclass)
+   │   ├── probabilistic/
+   │   │   ├── variational_estimator.py  (MAP / VI / MLE)
+   │   │   └── gaussian_mixture_vi.py    (GMVI + outlier detection)
+   │   └── deterministic/
+   │       ├── cycle_closure.py          (WCC)
+   │       └── spectral_correction.py    (WSFC / SFC)
+   │
+   ├── graph_analysis/
+   │   ├── performance_stats.py
+   │   ├── plotting_performance.py
+   │   ├── graph_setup.py
+   │   └── graph_cycle_analysis.py
+   │
+   └── utils/
+       ├── parameter_sweep.py       (ParameterSweep)
+       └── performance_tracker.py   (PerformanceTracker)
 
 The Dataset as Central Hub
 --------------------------
 
 The ``FEPDataset`` object serves as the central hub in MAPLE:
 
-.. graphviz::
-   :align: center
-   :caption: FEPDataset: Central Data Hub
+.. code-block:: text
 
-   digraph dataset_hub {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       compound=true;
-       nodesep=0.4;
-       ranksep=0.6;
-
-       subgraph cluster_input {
-           label="Input Sources";
-           style="rounded,filled";
-           fillcolor="#E3F2FD";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_input_inner {
-               style=invis;
-               rank=same;
-               csv [label="CSV Files", fillcolor="#BBDEFB"];
-               df [label="DataFrames", fillcolor="#BBDEFB"];
-               bench [label="Benchmarks", fillcolor="#BBDEFB"];
-           }
-       }
-
-       subgraph cluster_dataset {
-           label="FEPDataset (Central Hub)";
-           style="rounded,filled,bold";
-           fillcolor="#E8F5E9";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           nodes_df [label="dataset_nodes", fillcolor="#C8E6C9"];
-           edges_df [label="dataset_edges", fillcolor="#C8E6C9"];
-           graph_data [label="cycle_data", fillcolor="#C8E6C9"];
-           mappings [label="node2idx / idx2node", fillcolor="#C8E6C9"];
-           est [label="estimators[]", fillcolor="#C8E6C9"];
-
-           nodes_df -> edges_df -> graph_data -> mappings -> est [style=invis];
-       }
-
-       subgraph cluster_output {
-           label="Consumers";
-           style="rounded,filled";
-           fillcolor="#FFF8E1";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_output_inner {
-               style=invis;
-               rank=same;
-               models [label="Models", fillcolor="#FFECB3"];
-               analysis [label="Analysis", fillcolor="#FFECB3"];
-               viz [label="Visualization", fillcolor="#FFECB3"];
-           }
-       }
-
-       df -> nodes_df [lhead=cluster_dataset];
-       est -> models [ltail=cluster_dataset, lhead=cluster_output];
-   }
+   Input Sources
+   CSV Files | DataFrames | Benchmarks
+         |
+         v
+   +------------------------------------------------------------------+
+   |                  FEPDataset (Central Hub)                         |
+   +------------------------------------------------------------------+
+   |  dataset_nodes        - Node data and model predictions           |
+   |  dataset_edges        - Edge data and model predictions           |
+   |  cycle_data           - Graph structure for models                |
+   |  node2idx / idx2node  - Node name <-> index mappings              |
+   |  estimators[]         - List of applied model names               |
+   +------------------------------------------------------------------+
+         |
+         v
+   Consumers
+   Models | Analysis | Visualization
 
 Model-Dataset Interaction Pattern
 ---------------------------------
 
 All MAPLE models follow a consistent interaction pattern with the dataset:
 
-.. graphviz::
-   :align: center
-   :caption: Model-Dataset Interaction Pattern
+.. code-block:: text
 
-   digraph interaction {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       nodesep=0.4;
-       ranksep=0.5;
-
-       subgraph cluster_step1 {
-           label="Step 1: Initialize";
-           style="rounded,filled";
-           fillcolor="#E3F2FD";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-
-           init [label="model = ModelClass(config, dataset)", fillcolor="#BBDEFB"];
-       }
-
-       subgraph cluster_step2 {
-           label="Step 2: Extract Data";
-           style="rounded,filled";
-           fillcolor="#E8F5E9";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-
-           extract [label="model._extract_graph_data()\nReads: dataset.cycle_data / dataset_edges", fillcolor="#C8E6C9"];
-       }
-
-       subgraph cluster_step3 {
-           label="Step 3: Fit";
-           style="rounded,filled";
-           fillcolor="#FFF8E1";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-
-           train [label="model.fit()\nProduces: node_estimates, edge_estimates", fillcolor="#FFECB3"];
-       }
-
-       subgraph cluster_step4 {
-           label="Step 4: Add to Dataset";
-           style="rounded,filled";
-           fillcolor="#FCE4EC";
-           fontname="Helvetica-Bold";
-           fontsize=13;
-
-           add [label="model.add_predictions_to_dataset()\nWrites to: dataset_nodes, dataset_edges", fillcolor="#F8BBD9"];
-       }
-
-       init -> extract -> train -> add;
-   }
+   Step 1: Initialize
+       model = ModelClass(config, dataset)
+            |
+            v
+   Step 2: Extract Data
+       model._extract_graph_data()
+       Reads: dataset.cycle_data / dataset_edges
+            |
+            v
+   Step 3: Fit
+       model.fit()
+       Produces: node_estimates, edge_estimates
+            |
+            v
+   Step 4: Add to Dataset
+       model.add_predictions_to_dataset()
+       Writes to: dataset_nodes, dataset_edges
 
 Available Models
 ----------------
 
 MAPLE provides both probabilistic and deterministic inference methods:
 
-.. graphviz::
-   :align: center
-   :caption: Available Models and Their Outputs
+.. code-block:: text
 
-   digraph models {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       compound=true;
-       nodesep=0.4;
-       ranksep=0.6;
+   Available Models
+   ================
 
-       subgraph cluster_models {
-           label="Available Models";
-           style="rounded,filled";
-           fillcolor="#F5F5F5";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_models_inner {
-               style=invis;
-               rank=same;
-
-               subgraph cluster_nodemodel {
-                   label="VariationalEstimator\n(probabilistic/)";
-                   style="rounded,filled";
-                   fillcolor="#E3F2FD";
-                   fontname="Helvetica-Bold";
-                   fontsize=12;
-
-                   map [label="MAP", fillcolor="#BBDEFB"];
-                   mle [label="MLE", fillcolor="#BBDEFB"];
-                   vi [label="VI", fillcolor="#BBDEFB"];
-
-                   map -> mle -> vi [style=invis];
-               }
-
-               subgraph cluster_gmvi {
-                   label="GaussianMixtureVI\n(probabilistic/)";
-                   style="rounded,filled";
-                   fillcolor="#E8F5E9";
-                   fontname="Helvetica-Bold";
-                   fontsize=12;
-
-                   gmvi [label="Full-rank VI\n+ Outlier Detection", fillcolor="#C8E6C9"];
-               }
-
-               subgraph cluster_wcc {
-                   label="CycleClosureCorrection\n(deterministic/)";
-                   style="rounded,filled";
-                   fillcolor="#FFF8E1";
-                   fontname="Helvetica-Bold";
-                   fontsize=12;
-
-                   wcc [label="Weighted\nCycle Closure", fillcolor="#FFECB3"];
-               }
-
-               subgraph cluster_wsfc {
-                   label="SpectralCorrection\n(deterministic/)";
-                   style="rounded,filled";
-                   fillcolor="#F3E5F5";
-                   fontname="Helvetica-Bold";
-                   fontsize=12;
-
-                   wsfc [label="Graph Laplacian\nPseudoinverse", fillcolor="#E1BEE7"];
-               }
-           }
-       }
-
-       subgraph cluster_result {
-           label="Columns Added to Dataset";
-           style="rounded,filled";
-           fillcolor="#FCE4EC";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_result_inner {
-               style=invis;
-               rank=same;
-               col_map [label="'MAP'", fillcolor="#F8BBD9"];
-               col_mle [label="'MLE'", fillcolor="#F8BBD9"];
-               col_vi [label="'VI', 'VI_uncertainty'", fillcolor="#F8BBD9"];
-               col_gmvi [label="'GMVI', 'GMVI_uncertainty'", fillcolor="#F8BBD9"];
-               col_wcc [label="'WCC', 'WCC_uncertainty'", fillcolor="#F8BBD9"];
-               col_wsfc [label="'WSFC'/'SFC', '{}_uncertainty'", fillcolor="#F8BBD9"];
-           }
-       }
-
-       map -> col_map;
-       mle -> col_mle;
-       vi -> col_vi;
-       gmvi -> col_gmvi;
-       wcc -> col_wcc;
-       wsfc -> col_wsfc;
-   }
+   probabilistic/                          deterministic/
+   +--------------------------+            +--------------------------+
+   | VariationalEstimator     |            | CycleClosureCorrection   |
+   |   MAP  -> 'MAP'          |            |   WCC -> 'WCC',          |
+   |   MLE  -> 'MLE'          |            |          'WCC_uncertainty'|
+   |   VI   -> 'VI',          |            +--------------------------+
+   |          'VI_uncertainty' |            | SpectralCorrection       |
+   +--------------------------+            |   WSFC -> 'WSFC',        |
+   | GaussianMixtureVI        |            |           'WSFC_unc.'    |
+   |   GMVI -> 'GMVI',        |            |   SFC  -> 'SFC',        |
+   |           'GMVI_unc.',    |            |           'SFC_unc.'     |
+   |           outlier probs   |            +--------------------------+
+   +--------------------------+
 
 Probabilistic Models (``models.probabilistic``)
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

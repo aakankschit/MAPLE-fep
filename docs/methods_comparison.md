@@ -199,6 +199,8 @@ where $\epsilon_C = \sum_{e \in C} y_e$ is the closure error and $w_{ij} = 1/\si
 | `tolerance` | `1e-6` | Convergence threshold for max closure error |
 | `max_iterations` | `1000` | Maximum correction iterations |
 
+**Reference:** Li, Y. *et al.* An Open Source Graph-Based Weighted Cycle Closure Method for Relative Binding Free Energy Calculations. *J. Chem. Inf. Model.* **2023**, *63*, 561--570. [DOI: 10.1021/acs.jcim.2c01076](https://doi.org/10.1021/acs.jcim.2c01076)
+
 **When to use:** When thermodynamic consistency is the primary concern. Good baseline method that directly enforces cycle closure.
 
 ---
@@ -233,6 +235,8 @@ $$\sigma_{z_i} = \sqrt{(L_W^+)_{ii}}$$
 |-----------|-------|-------------|
 | `use_weights` | `True` | Must be `True` for WSFC |
 
+**Reference:** Liu, R. *et al.* State Function-Based Correction: A Simple and Efficient Free-Energy Correction Algorithm for Large-Scale Relative Binding Free-Energy Calculations. *J. Phys. Chem. Lett.* **2025**, *16*, 5763--5768. [DOI: 10.1021/acs.jpclett.5c01119](https://doi.org/10.1021/acs.jpclett.5c01119)
+
 **When to use:** When you have edge uncertainties and want a fast, direct solution with analytic uncertainty estimates. No iterative optimization needed.
 
 ---
@@ -258,6 +262,8 @@ Equivalent to unweighted MLE / ordinary least squares on the graph.
 | Parameter | Value | Description |
 |-----------|-------|-------------|
 | `use_weights` | `False` | Must be `False` for SFC |
+
+**Reference:** Liu, R. *et al.* State Function-Based Correction. *J. Phys. Chem. Lett.* **2025**, *16*, 5763--5768. [DOI: 10.1021/acs.jpclett.5c01119](https://doi.org/10.1021/acs.jpclett.5c01119)
 
 **When to use:** When edge uncertainties are not available or not trusted. Fast baseline equivalent to MLE but with analytic uncertainties.
 
@@ -386,6 +392,12 @@ for est in dataset.estimators:
 
 ---
 
-*See [Mathematical Foundations](MATHEMATICAL_FOUNDATIONS.md) for complete derivations and code-to-equation mappings.*
+## References
+
+1. Li, Y.; Liu, R.; Liu, J.; Luo, H.; Wu, C.; Li, Z. An Open Source Graph-Based Weighted Cycle Closure Method for Relative Binding Free Energy Calculations. *J. Chem. Inf. Model.* **2023**, *63*, 561--570. [DOI: 10.1021/acs.jcim.2c01076](https://doi.org/10.1021/acs.jcim.2c01076)
+
+2. Liu, R.; Lai, Y.; Yao, Y.; Huang, W.; Zhong, Y.; Luo, H.-B.; Li, Z. State Function-Based Correction: A Simple and Efficient Free-Energy Correction Algorithm for Large-Scale Relative Binding Free-Energy Calculations. *J. Phys. Chem. Lett.* **2025**, *16*, 5763--5768. [DOI: 10.1021/acs.jpclett.5c01119](https://doi.org/10.1021/acs.jpclett.5c01119)
+
+---
 
 *A CSV version of this comparison table is available at `docs/methods_comparison.csv` for programmatic access.*

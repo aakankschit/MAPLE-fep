@@ -67,73 +67,33 @@ Core Architecture: Dataset-Centric Design
 
 MAPLE uses a **dataset-centric architecture** where the ``FEPDataset`` object serves as the central hub for all data and predictions. Models read from the dataset, perform inference, and write their predictions back to the dataset.
 
-.. graphviz::
-   :align: center
-   :caption: MAPLE Architecture: Dataset as Central Hub
+.. code-block:: text
 
-   digraph maple_architecture {
-       rankdir=TB;
-       node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=12];
-       edge [fontname="Helvetica", fontsize=10];
-       compound=true;
-       nodesep=0.4;
-       ranksep=0.6;
-
-       subgraph cluster_dataset {
-           label="FEPDataset (Central Hub)";
-           style="rounded,filled";
-           fillcolor="#D4EDDA";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_dataset_inner {
-               style=invis;
-               rank=same;
-               nodes [label="dataset_nodes", fillcolor="#C3E6CB"];
-               edges [label="dataset_edges", fillcolor="#C3E6CB"];
-               est [label="estimators[]", fillcolor="#C3E6CB"];
-               cycle [label="cycle_data", fillcolor="#C3E6CB"];
-           }
-       }
-
-       subgraph cluster_models {
-           label="Models";
-           style="rounded,filled";
-           fillcolor="#FFF3CD";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_models_inner {
-               style=invis;
-               rank=same;
-               nodemodel [label="VariationalEstimator\n(MAP/VI/MLE)", fillcolor="#FFE69C"];
-               gmvi [label="GaussianMixtureVI\n(outlier detection)", fillcolor="#FFE69C"];
-               wcc [label="CycleClosureCorrection\n(cycle closure)", fillcolor="#FFE69C"];
-               wsfc [label="SpectralCorrection\n(graph Laplacian)", fillcolor="#FFE69C"];
-           }
-       }
-
-       subgraph cluster_results {
-           label="Results Added to Dataset";
-           style="rounded,filled";
-           fillcolor="#F8D7DA";
-           fontname="Helvetica-Bold";
-           fontsize=14;
-
-           subgraph cluster_results_inner {
-               style=invis;
-               rank=same;
-               map_col [label="'MAP'", fillcolor="#F5C6CB"];
-               vi_col [label="'VI'", fillcolor="#F5C6CB"];
-               gmvi_col [label="'GMVI'", fillcolor="#F5C6CB"];
-               wcc_col [label="'WCC'", fillcolor="#F5C6CB"];
-               wsfc_col [label="'WSFC'/'SFC'", fillcolor="#F5C6CB"];
-           }
-       }
-
-       cycle -> nodemodel [ltail=cluster_dataset, lhead=cluster_models, label="get_graph_data()"];
-       nodemodel -> map_col [ltail=cluster_models, lhead=cluster_results, label="add_predictions_to_dataset()"];
-   }
+   +------------------------------------------------------------------+
+   |                  FEPDataset (Central Hub)                         |
+   +------------------------------------------------------------------+
+   |  dataset_nodes | dataset_edges | cycle_data | estimators[]        |
+   +--------+---------------------------+---------+-------------------+
+            |                           |
+            | get_graph_data()          | add_predictions_to_dataset()
+            v                           |
+   +------------------------------------------------------------------+
+   |                         Models                                    |
+   +------------------------------------------------------------------+
+   | VariationalEstimator  | GaussianMixtureVI  | CycleClosureCorrection |
+   | (MAP / VI / MLE)      | (outlier detection)| (cycle closure)        |
+   |                       |                    |                        |
+   | SpectralCorrection    |                    |                        |
+   | (graph Laplacian)     |                    |                        |
+   +------------------------------------------------------------------+
+            |
+            | add_predictions_to_dataset()
+            v
+   +------------------------------------------------------------------+
+   |                  Results Added to Dataset                         |
+   +------------------------------------------------------------------+
+   | 'MAP' | 'VI' | 'GMVI' | 'WCC' | 'WSFC'/'SFC'                    |
+   +------------------------------------------------------------------+
 
 This design allows you to:
 
@@ -220,7 +180,6 @@ Table of Contents
    :caption: Methods & Theory
 
    methods_comparison
-   MATHEMATICAL_FOUNDATIONS
 
 .. toctree::
    :maxdepth: 2

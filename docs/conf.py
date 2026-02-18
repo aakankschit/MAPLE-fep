@@ -37,14 +37,9 @@ extensions = [
     "sphinx.ext.napoleon",
     "sphinx.ext.intersphinx",
     "sphinx.ext.mathjax",
-    "sphinx.ext.graphviz",
     "myst_parser",
     "sphinx_autodoc_typehints",
 ]
-
-# Graphviz settings
-graphviz_output_format = "svg"
-graphviz_dot_args = ["-Gdpi=150"]
 
 # Autodoc settings
 autodoc_default_options = {

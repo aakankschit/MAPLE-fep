@@ -111,7 +111,6 @@ outlier_probs = model.compute_edge_outlier_probabilities()
 
 - **[User Guide](https://maple-fep.readthedocs.io/)**: Installation, tutorials, examples
 - **[API Reference](https://maple-fep.readthedocs.io/api/)**: Detailed module documentation
-- **[Mathematical Foundations](docs/MATHEMATICAL_FOUNDATIONS.md)**: Derivations and code-to-equation mappings
 - **[Examples](examples/)**: Jupyter notebooks and scripts
 
 Build documentation locally:
@@ -136,6 +135,14 @@ pytest tests/ --cov=src/maple --cov-report=html
 black src/ tests/
 ruff check src/ tests/
 ```
+
+## References
+
+MAPLE implements methods from the following publications:
+
+- **WCC**: Li, Y.; Liu, R.; Liu, J.; Luo, H.; Wu, C.; Li, Z. An Open Source Graph-Based Weighted Cycle Closure Method for Relative Binding Free Energy Calculations. *J. Chem. Inf. Model.* **2023**, *63*, 561--570. [DOI: 10.1021/acs.jcim.2c01076](https://doi.org/10.1021/acs.jcim.2c01076)
+
+- **SFC/WSFC**: Liu, R.; Lai, Y.; Yao, Y.; Huang, W.; Zhong, Y.; Luo, H.-B.; Li, Z. State Function-Based Correction: A Simple and Efficient Free-Energy Correction Algorithm for Large-Scale Relative Binding Free-Energy Calculations. *J. Phys. Chem. Lett.* **2025**, *16*, 5763--5768. [DOI: 10.1021/acs.jpclett.5c01119](https://doi.org/10.1021/acs.jpclett.5c01119)
 
 ## Citation
 
