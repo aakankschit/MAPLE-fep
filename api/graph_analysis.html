@@ -1,0 +1,1332 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Graph Analysis Package (maple.graph_analysis) &mdash; MAPLE-fep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Interactive Tutorials" href="../tutorials/index.html" />
+    <link rel="prev" title="Utils Package (maple.utils)" href="utils.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/MAPLE_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#standard-installation">Standard Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#optional-dependencies">Optional Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/installation.html#common-installation-issues">Common Installation Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/installation.html#development-environment">Development Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#data-format">Data Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#edge-dataframe">Edge DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#node-dataframe">Node DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#from-benchmark-data">From Benchmark Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#variationalestimator-map-vi-mle">VariationalEstimator (MAP/VI/MLE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#gaussianmixturevi-outlier-robust">GaussianMixtureVI (Outlier-Robust)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#spectralcorrection-wsfc-sfc">SpectralCorrection (WSFC/SFC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#key-concepts">Key Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#the-add-predictions-to-dataset-pattern">The add_predictions_to_dataset() Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#performance-analysis">Performance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/architecture.html">Architecture and Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#design-philosophy">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#module-overview">Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#model-dataset-interaction-pattern">Model-Dataset Interaction Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#probabilistic-models-models-probabilistic">Probabilistic Models (<code class="docutils literal notranslate"><span class="pre">models.probabilistic</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#deterministic-models-models-deterministic">Deterministic Models (<code class="docutils literal notranslate"><span class="pre">models.deterministic</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#key-design-patterns">Key Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#configuration-via-pydantic">Configuration via Pydantic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#estimator-registry">Estimator Registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-1-understanding-the-dataset-model-workflow">Tutorial 1: Understanding the Dataset-Model Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#the-central-concept">The Central Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-1-create-your-dataset">Step 1: Create Your Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-2-train-a-model-and-add-predictions">Step 2: Train a Model and Add Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-3-add-more-models">Step 3: Add More Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-4-compare-models-from-dataset">Step 4: Compare Models from Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-2-complete-fep-analysis-workflow">Tutorial 2: Complete FEP Analysis Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-1-load-and-inspect-data">Step 1: Load and Inspect Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-2-train-multiple-inference-methods">Step 2: Train Multiple Inference Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-3-comprehensive-performance-analysis">Step 3: Comprehensive Performance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-4-outlier-analysis-gmvi">Step 4: Outlier Analysis (GMVI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-5-publication-ready-visualization">Step 5: Publication-Ready Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-3-working-with-your-own-data">Tutorial 3: Working with Your Own Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-1-prepare-your-data">Step 1: Prepare Your Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-2-create-dataset">Step 2: Create Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-3-automatic-node-derivation-if-no-experimental-data">Step 3: Automatic Node Derivation (If No Experimental Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-4-train-and-compare-models">Step 4: Train and Compare Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-4-understanding-model-uncertainties">Tutorial 4: Understanding Model Uncertainties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#variational-inference-uncertainties">Variational Inference Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#gmvi-uncertainties-and-outlier-detection">GMVI Uncertainties and Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#visualizing-uncertainties">Visualizing Uncertainties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-5-batch-processing-multiple-datasets">Tutorial 5: Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#summary-key-patterns-to-remember">Summary: Key Patterns to Remember</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/parameter_optimization.html">Parameter Optimization Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#simple-parameter-sweep">Simple Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#direct-notebook-replication">Direct Notebook Replication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parametersweep-class">ParameterSweep Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#single-parameter-sweeps">Single Parameter Sweeps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#learning-rate-optimization">Learning Rate Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#prior-parameter-investigation">Prior Parameter Investigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#training-steps-optimization">Training Steps Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#multi-parameter-optimization">Multi-Parameter Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#grid-search">Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#sequential-optimization">Sequential Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#cross-dataset-analysis">Cross-Dataset Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#multi-dataset-parameter-sweeps">Multi-Dataset Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#dataset-specific-optimization">Dataset-Specific Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#advanced-analysis-techniques">Advanced Analysis Techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parameter-interaction-analysis">Parameter Interaction Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#sensitivity-analysis">Sensitivity Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#bayesian-optimization">Bayesian Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#visualization-and-reporting">Visualization and Reporting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parameter-effect-plots">Parameter Effect Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#heatmaps-for-multi-parameter-analysis">Heatmaps for Multi-Parameter Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#performance-summary-reports">Performance Summary Reports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#experimental-design">Experimental Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parameter-selection">Parameter Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#statistical-considerations">Statistical Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#prior-parameter-study">Prior Parameter Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#comprehensive-parameter-study">Comprehensive Parameter Study</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#error-handling-and-failure-tracking">Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#automatic-failure-tracking">Automatic Failure Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#analyzing-failed-experiments">Analyzing Failed Experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#robust-parameter-exploration">Robust Parameter Exploration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#best-practices-for-robust-optimization">Best Practices for Robust Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#common-failure-scenarios">Common Failure Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#recovery-and-continuation">Recovery and Continuation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Methods &amp; Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../methods_comparison.html">Methods Comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#quick-selection-guide">Quick Selection Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#method-details">Method Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#map-maximum-a-posteriori">MAP — Maximum A Posteriori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#mle-maximum-likelihood-estimation">MLE — Maximum Likelihood Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#vi-variational-inference">VI — Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#gmvi-gaussian-mixture-variational-inference">GMVI — Gaussian Mixture Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#wcc-weighted-cycle-closure">WCC — Weighted Cycle Closure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#wsfc-weighted-spectral-free-energy-correction">WSFC — Weighted Spectral Free-energy Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#sfc-spectral-free-energy-correction">SFC — Spectral Free-energy Correction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#comparison-table">Comparison Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#method-relationships">Method Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#usage-examples">Usage Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#running-all-methods">Running All Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="models.html">Models Package (<code class="docutils literal notranslate"><span class="pre">maple.models</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#package-structure">Package Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#available-models">Available Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#the-add-predictions-to-dataset-method">The add_predictions_to_dataset() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#probabilistic-models">Probabilistic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#variationalestimator">VariationalEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#how-variationalestimator-determines-column-names">How VariationalEstimator Determines Column Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#gaussianmixturevi">GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id1">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id2">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#deterministic-models">Deterministic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#cycleclosurecorrection">CycleClosureCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id3">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#spectralcorrection">SpectralCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id5">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id6">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#id7">Probabilistic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id8">VariationalEstimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id12">GaussianMixtureVI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#id13">Deterministic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id14">CycleClosureCorrection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#id15">SpectralCorrection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#configuration-classes">Configuration Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#variationalestimatorconfig">VariationalEstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#gaussianmixtureviconfig">GaussianMixtureVIConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#cycleclosurecorrectionconfig">CycleClosureCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#spectralcorrectionconfig">SpectralCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#baseestimatorconfig">BaseEstimatorConfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#configuration-enums">Configuration Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#priortype">PriorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#guidetype">GuideType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="models.html#errordistributiontype">ErrorDistributionType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#data-structures">Data Structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#graphdata">GraphData</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="models.html#create-config">create_config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="models.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="dataset.html">Dataset Package (<code class="docutils literal notranslate"><span class="pre">maple.dataset</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#data-flow-how-models-interact-with-dataset">Data Flow: How Models Interact with Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#dataset-attributes">Dataset Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dataset.html#maple.dataset.BaseDataset"><code class="docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#main-dataset-classes">Main Dataset Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dataset.html#fepdataset">FEPDataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="dataset.html#fepbenchmarkdataset">FEPBenchmarkDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#specialized-datasets">Specialized Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="dataset.html#syntheticfepdataset">SyntheticFEPDataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="dataset.html#derive-nodes-from-edges">derive_nodes_from_edges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="dataset.html#example-multi-model-comparison">Example: Multi-Model Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="utils.html">Utils Package (<code class="docutils literal notranslate"><span class="pre">maple.utils</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#performance-tracking">Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#parameter-sweeps">Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#failure-tracking">Failure Tracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="utils.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#id1">Performance Tracking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.PerformanceTracker"><code class="docutils literal notranslate"><span class="pre">PerformanceTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.ModelRun"><code class="docutils literal notranslate"><span class="pre">ModelRun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.load_performance_history"><code class="docutils literal notranslate"><span class="pre">load_performance_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.compare_model_runs"><code class="docutils literal notranslate"><span class="pre">compare_model_runs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#parameter-optimization">Parameter Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.ParameterSweep"><code class="docutils literal notranslate"><span class="pre">ParameterSweep</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="utils.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.create_prior_sweep_experiment"><code class="docutils literal notranslate"><span class="pre">create_prior_sweep_experiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="utils.html#maple.utils.create_comprehensive_parameter_study"><code class="docutils literal notranslate"><span class="pre">create_comprehensive_parameter_study()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#performance-statistics">Performance Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Performance Statistics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#maple.graph_analysis.calculate_mae"><code class="docutils literal notranslate"><span class="pre">calculate_mae()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maple.graph_analysis.calculate_rmse"><code class="docutils literal notranslate"><span class="pre">calculate_rmse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maple.graph_analysis.calculate_r2"><code class="docutils literal notranslate"><span class="pre">calculate_r2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maple.graph_analysis.calculate_correlation"><code class="docutils literal notranslate"><span class="pre">calculate_correlation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maple.graph_analysis.bootstrap_statistic"><code class="docutils literal notranslate"><span class="pre">bootstrap_statistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maple.graph_analysis.compute_simple_statistics"><code class="docutils literal notranslate"><span class="pre">compute_simple_statistics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#single-model-plotting">Single Model Plotting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#multi-model-comparison">Multi-Model Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#error-analysis">Error Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interactive Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Interactive Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#getting-started-tutorial">Getting Started Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#source-files">Source Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#running-tutorials-locally">Running Tutorials Locally</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic_usage.html">Basic Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#core-concept-dataset-as-central-hub">Core Concept: Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#loading-and-preparing-data">Loading and Preparing Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-your-own-data">From Your Own Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#training-models-and-adding-predictions">Training Models and Adding Predictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#map-inference-with-variationalestimator">MAP Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#variational-inference-with-variationalestimator">Variational Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#gmvi-with-outlier-detection">GMVI with Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#complete-multi-model-workflow">Complete Multi-Model Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#working-with-results">Working with Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#accessing-predictions-from-dataset">Accessing Predictions from Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#creating-comparison-dataframe">Creating Comparison DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#model-comparison-plot">Model Comparison Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#predictions-with-uncertainties">Predictions with Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#outlier-analysis">Outlier Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#batch-processing-multiple-datasets">Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#best-practices-summary">Best Practices Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parameter_sweeps.html">Parameter Sweep Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-1-learning-rate-optimization">Example 1: Learning Rate Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#execute-parameter-sweep">Execute Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#analyze-results">Analyze Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#visualize-results">Visualize Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-2-prior-parameter-investigation">Example 2: Prior Parameter Investigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#setup-and-execution">Setup and Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#create-publication-quality-plots">Create Publication-Quality Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#statistical-analysis">Statistical Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-3-multi-parameter-grid-search">Example 3: Multi-Parameter Grid Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#define-parameter-grid">Define Parameter Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#execute-grid-search">Execute Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#analyze-grid-search-results">Analyze Grid Search Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#visualize-grid-search-results">Visualize Grid Search Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-4-cross-dataset-parameter-study">Example 4: Cross-Dataset Parameter Study</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#setup-multiple-datasets">Setup Multiple Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#cross-dataset-parameter-sweep">Cross-Dataset Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#find-universal-optimal-parameters">Find Universal Optimal Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#cross-dataset-visualization">Cross-Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-5-error-handling-and-failure-tracking">Example 5: Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#robust-parameter-sweep">Robust Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#failure-analysis-and-recovery">Failure Analysis and Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#recovery-strategies">Recovery Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#parameter-validation-and-preprocessing">Parameter Validation and Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#best-practices-for-robust-parameter-sweeps">Best Practices for Robust Parameter Sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html">FEP Benchmark Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#setup-and-imports">Setup and Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#fep-benchmark-dataset-tutorial">FEP Benchmark Dataset Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#available-datasets">Available Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#examining-the-data-structure">Examining the Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#dataset-visualization">Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#performance-tracker-tutorial">Performance Tracker Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#setting-up-performance-tracking">Setting Up Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#recording-model-runs">Recording Model Runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#comparing-models">Comparing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#advanced-performance-analysis">Advanced Performance Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#working-with-real-fep-data">Working with Real FEP Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#summary-and-best-practices">Summary and Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#key-takeaways">Key Takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contributing.html">Contributing to MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#development-setup">Development Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#fork-and-clone">Fork and Clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#development-environment">Development Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#running-tests">Running Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#building-documentation">Building Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#writing-documentation">Writing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#submitting-changes">Submitting Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#reporting-issues">Reporting Issues</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLE-fep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/aakankschit/MAPLE-fep/blob/main/docs/api/graph_analysis.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="graph-analysis-package-maple-graph-analysis">
+<h1>Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)<a class="headerlink" href="#graph-analysis-package-maple-graph-analysis" title="Link to this heading"></a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code> package provides performance statistics, plotting functionality, and graph-based analysis tools for FEP data.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The graph analysis package includes:</p>
+<ul class="simple">
+<li><p><strong>Performance Statistics</strong>: Statistical metrics (RMSE, MAE, R², Pearson ρ, Kendall τ) with bootstrap confidence intervals</p></li>
+<li><p><strong>Single Model Plotting</strong>: Scatter plots for individual model predictions (ΔG and ΔΔG)</p></li>
+<li><p><strong>Multi-Model Comparison</strong>: Bar plots and correlation plots for comparing multiple models</p></li>
+<li><p><strong>Error Analysis</strong>: KDE plots of prediction errors with fitted distributions</p></li>
+<li><p><strong>Graph Setup</strong>: Tools for graph construction and analysis</p></li>
+<li><p><strong>Cycle Analysis</strong>: Graph cycle detection and analysis</p></li>
+</ul>
+<p>The plotting functions support all MAPLE models (MAP, VI, GMVI, MLE, WCC) with automatic detection and consistent color schemes.</p>
+</section>
+<section id="quick-examples">
+<h2>Quick Examples<a class="headerlink" href="#quick-examples" title="Link to this heading"></a></h2>
+<section id="performance-statistics">
+<h3>Performance Statistics<a class="headerlink" href="#performance-statistics" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maple.graph_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="n">calculate_rmse</span><span class="p">,</span> <span class="n">calculate_r2</span><span class="p">,</span> <span class="n">bootstrap_statistic</span>
+
+<span class="c1"># Calculate basic metrics</span>
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">calculate_rmse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">calculate_r2</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># Bootstrap confidence intervals</span>
+<span class="n">ci_low</span><span class="p">,</span> <span class="n">ci_high</span> <span class="o">=</span> <span class="n">bootstrap_statistic</span><span class="p">(</span>
+    <span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">statistic_func</span><span class="o">=</span><span class="n">calculate_rmse</span><span class="p">,</span>
+    <span class="n">n_bootstrap</span><span class="o">=</span><span class="mi">1000</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="plotting">
+<h3>Plotting<a class="headerlink" href="#plotting" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maple.graph_analysis</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+    <span class="n">plot_dataset_DDGs</span><span class="p">,</span>
+    <span class="n">plot_model_comparison_bars</span><span class="p">,</span>
+    <span class="n">plot_model_comparison_correlation</span><span class="p">,</span>
+    <span class="n">plot_error_distribution</span>
+<span class="p">)</span>
+
+<span class="c1"># Single model scatter plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DDGs</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;MAP&#39;</span><span class="p">)</span>
+
+<span class="c1"># Compare multiple models with bar plots</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_model_comparison_bars</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;edges&#39;</span><span class="p">)</span>
+
+<span class="c1"># Side-by-side correlation plots</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_model_comparison_correlation</span><span class="p">(</span>
+    <span class="n">dataset</span><span class="p">,</span>
+    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;VI&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">,</span> <span class="s1">&#39;WCC&#39;</span><span class="p">],</span>
+    <span class="n">data_type</span><span class="o">=</span><span class="s1">&#39;edges&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Analyze error distribution</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plot_error_distribution</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;WCC&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="api-reference">
+<h2>API Reference<a class="headerlink" href="#api-reference" title="Link to this heading"></a></h2>
+<section id="id1">
+<h3>Performance Statistics<a class="headerlink" href="#id1" title="Link to this heading"></a></h3>
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.calculate_mae">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_mae</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/performance_stats.html#calculate_mae"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.calculate_mae" title="Link to this definition"></a></dt>
+<dd><p>Calculate Mean Absolute Error (MAE).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>ndarray</em>) – True values</p></li>
+<li><p><strong>y_pred</strong> (<em>ndarray</em>) – Predicted values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Mean Absolute Error</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.calculate_rmse">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_rmse</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/performance_stats.html#calculate_rmse"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.calculate_rmse" title="Link to this definition"></a></dt>
+<dd><p>Calculate Root Mean Square Error (RMSE).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>ndarray</em>) – True values</p></li>
+<li><p><strong>y_pred</strong> (<em>ndarray</em>) – Predicted values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Root Mean Square Error</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.calculate_r2">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_r2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/performance_stats.html#calculate_r2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.calculate_r2" title="Link to this definition"></a></dt>
+<dd><p>Calculate R² (coefficient of determination).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>ndarray</em>) – True values</p></li>
+<li><p><strong>y_pred</strong> (<em>ndarray</em>) – Predicted values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>R² value</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.calculate_correlation">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">calculate_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/performance_stats.html#calculate_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.calculate_correlation" title="Link to this definition"></a></dt>
+<dd><p>Calculate Pearson correlation coefficient.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>ndarray</em>) – True values</p></li>
+<li><p><strong>y_pred</strong> (<em>ndarray</em>) – Predicted values</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Pearson correlation coefficient</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)">float</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.bootstrap_statistic">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">bootstrap_statistic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy_true</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dy_pred</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ci</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.95</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'RMSE'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_true_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">include_pred_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/performance_stats.html#bootstrap_statistic"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.bootstrap_statistic" title="Link to this definition"></a></dt>
+<dd><p>Compute mean and confidence intervals of specified statistic.</p>
+<p>This function performs bootstrap resampling to compute robust statistics
+with confidence intervals, accounting for measurement uncertainties.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>ndarray with shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – True values (experimental data)</p></li>
+<li><p><strong>y_pred</strong> (<em>ndarray with shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – Predicted values (calculated data)</p></li>
+<li><p><strong>dy_true</strong> (<em>ndarray with shape</em><em> (</em><em>N</em><em>,</em><em>) or </em><em>None</em>) – Errors of true values. If None, the values are assumed to have no errors</p></li>
+<li><p><strong>dy_pred</strong> (<em>ndarray with shape</em><em> (</em><em>N</em><em>,</em><em>) or </em><em>None</em>) – Errors of predicted values. If None, the values are assumed to have no errors</p></li>
+<li><p><strong>ci</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>optional</em><em>, </em><em>default=0.95</em>) – Confidence interval level (e.g., 0.95 for 95% CI)</p></li>
+<li><p><strong>statistic</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a>) – Statistic to compute, one of [‘RMSE’, ‘MUE’, ‘R2’, ‘rho’, ‘KTAU’, ‘RAE’]</p></li>
+<li><p><strong>nbootstrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em><em>, </em><em>default=1000</em>) – Number of bootstrap samples</p></li>
+<li><p><strong>include_true_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for the uncertainty in y_true when bootstrapping</p></li>
+<li><p><strong>include_pred_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for the uncertainty in y_pred when bootstrapping</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>stats_dict</strong> – Dictionary containing:
+- ‘mle’: Maximum likelihood estimate of the statistic
+- ‘mean’: Mean of bootstrapped samples
+- ‘stderr’: Standard error
+- ‘low’: Lower bound of confidence interval
+- ‘high’: Upper bound of confidence interval</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">,</span> <span class="mf">4.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">1.1</span><span class="p">,</span> <span class="mf">1.9</span><span class="p">,</span> <span class="mf">3.1</span><span class="p">,</span> <span class="mf">3.9</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span> <span class="o">=</span> <span class="n">bootstrap_statistic</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">,</span> <span class="n">statistic</span><span class="o">=</span><span class="s2">&quot;RMSE&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RMSE: </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;mle&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> ± </span><span class="si">{</span><span class="n">stats</span><span class="p">[</span><span class="s1">&#39;stderr&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.compute_simple_statistics">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">compute_simple_statistics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_true</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_pred</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/performance_stats.html#compute_simple_statistics"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.compute_simple_statistics" title="Link to this definition"></a></dt>
+<dd><p>Compute basic statistics without bootstrapping.</p>
+<p>This function provides a quick way to compute common statistics
+without the computational overhead of bootstrapping.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_true</strong> (<em>ndarray with shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – True values (experimental data)</p></li>
+<li><p><strong>y_pred</strong> (<em>ndarray with shape</em><em> (</em><em>N</em><em>,</em><em>)</em>) – Predicted values (calculated data)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Dictionary containing basic statistics:
+- ‘RMSE’: Root Mean Square Error
+- ‘MUE’: Mean Absolute Error
+- ‘R2’: Coefficient of determination
+- ‘rho’: Pearson correlation coefficient
+- ‘KTAU’: Kendall’s tau correlation coefficient</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)">dict</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="plotting-functions">
+<h3>Plotting Functions<a class="headerlink" href="#plotting-functions" title="Link to this heading"></a></h3>
+<section id="single-model-plotting">
+<h4>Single Model Plotting<a class="headerlink" href="#single-model-plotting" title="Link to this heading"></a></h4>
+<p>These functions create scatter plots for a single model’s predictions.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.plot_dataset_DDGs">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">plot_dataset_DDGs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Experimental</span> <span class="pre">DeltaDeltaG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">map_positive</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">symmetrise</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_label_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_x_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_y_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/plotting_performance.html#plot_dataset_DDGs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.plot_dataset_DDGs" title="Link to this definition"></a></dt>
+<dd><p>Plot relative free energies (ΔΔG) from a dataset with node model estimates.</p>
+<p>This function extracts relative free energy data from a dataset and creates
+a scatter plot comparing experimental vs calculated values with statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<a class="reference internal" href="dataset.html#maple.dataset.FEPDataset" title="maple.dataset.FEPDataset"><em>FEPDataset</em></a>) – Dataset object containing edge data with experimental and predicted values</p></li>
+<li><p><strong>experimental_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;DeltaG&quot;</em>) – Name of column containing experimental relative free energies</p></li>
+<li><p><strong>predicted_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of column containing predicted relative free energies.
+If None, will try to find common prediction column names like “MAP”, “VI”, etc.</p></li>
+<li><p><strong>method_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of method associated with results, e.g. ‘perses’</p></li>
+<li><p><strong>target_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of system for results, e.g. ‘Thrombin’</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;&quot;</em>) – Title for the plot</p></li>
+<li><p><strong>map_positive</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default=False</em>) – Whether to map all DDGs to positive x values (aesthetic choice)</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save plot</p></li>
+<li><p><strong>symmetrise</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = False</em>) – Whether to plot each datapoint twice, both positive and negative</p></li>
+<li><p><strong>data_label_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em> or </em><em>None</em><em>, </em><em>default = None</em>) – Type of data label to add to each edge:
+- None: No labels
+- ‘small-molecule’: Edge labels as “A→B” format
+- ‘protein-mutation’: Edge labels as “A29B” format</p></li>
+<li><p><strong>bootstrap_x_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for uncertainty in x when bootstrapping</p></li>
+<li><p><strong>bootstrap_y_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for uncertainty in y when bootstrapping</p></li>
+<li><p><strong>statistic_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default 'mle'</em>) – Type of statistic to use: ‘mle’ (maximum likelihood estimate) or ‘mean’ (bootstrap mean)</p></li>
+<li><p><strong>statistics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – List of statistics to compute and display in plot title. Default: [‘RMSE’, ‘MUE’]
+Available options: ‘RMSE’, ‘MUE’, ‘R2’, ‘rho’ (Pearson correlation),
+‘KTAU’ (Kendall’s Tau), ‘RAE’ (Relative Absolute Error)</p></li>
+<li><p><strong>figsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default = 5</em>) – Size of the figure (creates a square plot of figsize x figsize inches)</p></li>
+<li><p><strong>nbootstrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default = 1000</em>) – Number of bootstrap samples to draw for computing statistics and confidence intervals</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to _master_plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created figure object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.8)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic usage with default statistics (RMSE, MUE)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DDGs</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;MAP&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Show correlation statistics</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DDGs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;VI&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;KTAU&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Custom target and method names</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DDGs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;GMVI&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">target_name</span><span class="o">=</span><span class="s1">&#39;CDK8&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">method_name</span><span class="o">=</span><span class="s1">&#39;FEP+&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.plot_dataset_DGs">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">plot_dataset_DGs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Exp.</span> <span class="pre">DeltaG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">centralizing</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_x_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_y_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mle'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/plotting_performance.html#plot_dataset_DGs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.plot_dataset_DGs" title="Link to this definition"></a></dt>
+<dd><p>Plot absolute free energies (ΔG) from a dataset with node model estimates.</p>
+<p>This function extracts absolute free energy data from a dataset and creates
+a scatter plot comparing experimental vs calculated values with statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<a class="reference internal" href="dataset.html#maple.dataset.FEPDataset" title="maple.dataset.FEPDataset"><em>FEPDataset</em></a>) – Dataset object containing node data with experimental and predicted values</p></li>
+<li><p><strong>experimental_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;Exp. DeltaG&quot;</em>) – Name of column containing experimental absolute free energies</p></li>
+<li><p><strong>predicted_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of column containing predicted absolute free energies.
+If None, will try to find common prediction column names like “MAP”, “VI”, etc.</p></li>
+<li><p><strong>method_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of method associated with results, e.g. ‘perses’</p></li>
+<li><p><strong>target_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of system for results, e.g. ‘Thrombin’</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;&quot;</em>) – Title for the plot</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save plot</p></li>
+<li><p><strong>centralizing</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = True</em>) – Whether to offset the free energies (Note: Node ΔG values are always mean-centered regardless of this parameter)</p></li>
+<li><p><strong>shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default = 0.0</em>) – Additional shift to apply after mean-centering (both x and y axis)</p></li>
+<li><p><strong>bootstrap_x_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for uncertainty in x when bootstrapping</p></li>
+<li><p><strong>bootstrap_y_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for uncertainty in y when bootstrapping</p></li>
+<li><p><strong>statistic_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default 'mle'</em>) – Type of statistic to use: ‘mle’ (maximum likelihood estimate) or ‘mean’ (bootstrap mean)</p></li>
+<li><p><strong>statistics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – List of statistics to compute and display in plot title. Default: [‘RMSE’, ‘MUE’]
+Available options: ‘RMSE’, ‘MUE’, ‘R2’, ‘rho’ (Pearson correlation),
+‘KTAU’ (Kendall’s Tau), ‘RAE’ (Relative Absolute Error)</p></li>
+<li><p><strong>figsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default = 5</em>) – Size of the figure (creates a square plot of figsize x figsize inches)</p></li>
+<li><p><strong>nbootstrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default = 1000</em>) – Number of bootstrap samples to draw for computing statistics and confidence intervals</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to _master_plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created figure object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.8)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Basic usage with default statistics (RMSE, MUE)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DGs</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;MAP&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Show correlation statistics</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DGs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;VI&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Comprehensive statistics</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span> <span class="o">=</span> <span class="n">plot_dataset_DGs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;WCC&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">target_name</span><span class="o">=</span><span class="s1">&#39;CDK8&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">statistics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;KTAU&#39;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.plot_dataset_all_DDGs">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">plot_dataset_all_DDGs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Experimental</span> <span class="pre">DeltaDeltaG'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">shift</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_x_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bootstrap_y_uncertainty</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">statistic_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'mle'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/plotting_performance.html#plot_dataset_all_DDGs"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.plot_dataset_all_DDGs" title="Link to this definition"></a></dt>
+<dd><p>Plot all possible relative free energies calculated from absolute free energies in a dataset.</p>
+<p>This function computes all pairwise differences between absolute free energies
+from a dataset and creates a scatter plot comparing experimental vs calculated values.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<a class="reference internal" href="dataset.html#maple.dataset.BaseDataset" title="maple.dataset.BaseDataset"><em>BaseDataset</em></a>) – Dataset object containing node data with experimental and predicted values</p></li>
+<li><p><strong>experimental_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;Exp. DeltaG&quot;</em>) – Name of column containing experimental absolute free energies</p></li>
+<li><p><strong>predicted_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of column containing predicted absolute free energies.
+If None, will try to find “Estimated DeltaG” column</p></li>
+<li><p><strong>method_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of method associated with results, e.g. ‘perses’</p></li>
+<li><p><strong>target_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of system for results, e.g. ‘Thrombin’</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;&quot;</em>) – Title for the plot</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save plot</p></li>
+<li><p><strong>shift</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#float" title="(in Python v3.14)"><em>float</em></a><em>, </em><em>default = 0.0</em>) – Shift both x and y axis by a constant</p></li>
+<li><p><strong>bootstrap_x_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for uncertainty in x when bootstrapping</p></li>
+<li><p><strong>bootstrap_y_uncertainty</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default False</em>) – Whether to account for uncertainty in y when bootstrapping</p></li>
+<li><p><strong>statistic_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default 'mle'</em>) – Type of statistic to use: ‘mle’ or ‘mean’</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to _master_plot</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The created figure object</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.8)">matplotlib.figure.Figure</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="multi-model-comparison">
+<h4>Multi-Model Comparison<a class="headerlink" href="#multi-model-comparison" title="Link to this heading"></a></h4>
+<p>These functions compare multiple models side-by-side with consistent colors.</p>
+<p><strong>Supported Models:</strong></p>
+<ul class="simple">
+<li><p>MAP (blue) - Maximum A Posteriori</p></li>
+<li><p>VI (green) - Variational Inference</p></li>
+<li><p>GMVI (orange) - Gaussian Mixture Variational Inference</p></li>
+<li><p>MLE (purple) - Maximum Likelihood Estimation</p></li>
+<li><p>WCC (red) - Weighted Cycle Closure</p></li>
+<li><p>WSFC - Weighted Spectral Free-energy Correction</p></li>
+<li><p>SFC - Spectral Free-energy Correction (unweighted)</p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.plot_model_comparison_bars">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">plot_model_comparison_bars</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">performance_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nodes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/plotting_performance.html#plot_model_comparison_bars"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.plot_model_comparison_bars" title="Link to this definition"></a></dt>
+<dd><p>Create bar plots comparing performance metrics across multiple models.</p>
+<p>This function generates side-by-side bar plots for multiple performance metrics,
+with each model represented by a consistent color. Useful for comparing the
+performance of different prediction models.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<a class="reference internal" href="dataset.html#maple.dataset.FEPDataset" title="maple.dataset.FEPDataset"><em>FEPDataset</em></a>) – Dataset object containing model predictions and metrics</p></li>
+<li><p><strong>performance_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – List of performance metrics/statistics to evaluate and plot.
+Available options: ‘RMSE’, ‘MUE’, ‘R2’, ‘rho’ (Pearson), ‘KTAU’ (Kendall’s tau), ‘RAE’
+Default: [‘RMSE’, ‘MUE’, ‘R2’, ‘rho’, ‘KTAU’]</p></li>
+<li><p><strong>models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – List of model column names to compare (e.g., [‘MAP’, ‘GMVI’, ‘WCC’]).
+This gives control over which models in the dataset should be evaluated.
+If None, automatically detects common model columns (MAP, VI, GMVI, MLE, WCC, etc.)</p></li>
+<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;nodes&quot;</em>) – Type of data to plot: “nodes” for ΔG or “edges” for ΔΔG</p></li>
+<li><p><strong>model_colors</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary mapping model names to colors. Default:
+{‘MAP’: ‘blue’, ‘VI’: ‘green’, ‘GMVI’: ‘orange’, ‘MLE’: ‘purple’, ‘WCC’: ‘red’, …}</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save plot. If None, displays in notebook</p></li>
+<li><p><strong>stats_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save statistics DataFrame as CSV. If None, doesn’t save</p></li>
+<li><p><strong>figsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>, </em><em>optional</em>) – Figure size (width, height) in inches. If None, calculated based on grid layout</p></li>
+<li><p><strong>grid_layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>)</em><em>, </em><em>optional</em>) – Grid arrangement as (nrows, ncols). For example:
+- (1, 2) for 2 metrics in a single row
+- (2, 2) for 4 metrics in a 2x2 grid
+- (4, 1) for 4 metrics in a single column
+Takes precedence over nrows/ncols if provided.</p></li>
+<li><p><strong>nrows</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Number of rows in subplot grid. If None, uses single row layout.
+Ignored if grid_layout is provided.</p></li>
+<li><p><strong>ncols</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Number of columns in subplot grid. If None, calculated based on number of metrics.
+Ignored if grid_layout is provided.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Overall title for the figure. If None, generates automatically</p></li>
+<li><p><strong>target_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the target/system (e.g., ‘CDK8’, ‘Thrombin’). If provided,
+will be added to the auto-generated title</p></li>
+<li><p><strong>return_stats</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = True</em>) – Whether to return the statistics DataFrame</p></li>
+<li><p><strong>nbootstrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default = 1000</em>) – Number of bootstrap samples to draw for computing statistics and confidence intervals</p></li>
+<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Deprecated. Use performance_metrics instead.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to matplotlib</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Figure object (None if saved to file)</p></li>
+<li><p>DataFrame with statistics for each model/metric combination (None if return_stats=False)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a> of (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.8)">matplotlib.figure.Figure</a> or None, <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.0)">pandas.DataFrame</a> or None)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get both plot and statistics - default single row</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_bars</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;nodes&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stats_df</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Select specific models and metrics with 2x1 layout</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_bars</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">,</span> <span class="s1">&#39;WCC&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">performance_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">grid_layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;nodes&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># 4 metrics in a 2x2 grid</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_bars</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;VI&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">,</span> <span class="s1">&#39;WCC&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">performance_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">grid_layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;nodes&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Custom 2x3 grid layout for 5 metrics (legacy nrows/ncols)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_bars</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;VI&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">,</span> <span class="s1">&#39;WCC&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">performance_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">,</span> <span class="s1">&#39;KTAU&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">stats_filename</span><span class="o">=</span><span class="s1">&#39;model_comparison_stats.csv&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.plot_model_comparison_correlation">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">plot_model_comparison_correlation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'nodes'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_colors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">performance_metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">grid_layout</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nrows</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_statistics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nbootstrap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">metrics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/plotting_performance.html#plot_model_comparison_correlation"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.plot_model_comparison_correlation" title="Link to this definition"></a></dt>
+<dd><p>Create correlation plots comparing multiple models side-by-side.</p>
+<p>This function generates a grid of scatter plots, one for each model, allowing
+direct visual comparison of model performance. Each model uses a consistent
+color scheme and displays bootstrap statistics.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<a class="reference internal" href="dataset.html#maple.dataset.FEPDataset" title="maple.dataset.FEPDataset"><em>FEPDataset</em></a>) – Dataset object containing model predictions</p></li>
+<li><p><strong>models</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – List of model column names to compare (e.g., [‘MAP’, ‘GMVI’, ‘WCC’]).
+This gives control over which models in the dataset should be evaluated.
+If None, automatically detects common model columns (MAP, VI, GMVI, MLE, WCC, etc.)</p></li>
+<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;nodes&quot;</em>) – Type of data to plot: “nodes” for ΔG or “edges” for ΔΔG</p></li>
+<li><p><strong>model_colors</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#dict" title="(in Python v3.14)"><em>dict</em></a><em>, </em><em>optional</em>) – Dictionary mapping model names to colors. Default:
+{‘MAP’: ‘blue’, ‘VI’: ‘green’, ‘GMVI’: ‘orange’, ‘MLE’: ‘purple’, ‘WCC’: ‘red’, …}</p></li>
+<li><p><strong>performance_metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – List of performance metrics/statistics to display in statistics box.
+Available options: ‘RMSE’, ‘MUE’, ‘R2’, ‘rho’ (Pearson), ‘KTAU’ (Kendall’s tau), ‘RAE’
+Default: [‘RMSE’, ‘MUE’, ‘R2’, ‘rho’, ‘KTAU’]</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save plot. If None, displays in notebook</p></li>
+<li><p><strong>stats_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save statistics DataFrame as CSV. If None, doesn’t save</p></li>
+<li><p><strong>figsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>, </em><em>optional</em>) – Figure size (width, height) in inches. If None, calculated based on grid layout</p></li>
+<li><p><strong>grid_layout</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em> of </em><em>(</em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>)</em><em>, </em><em>optional</em>) – Grid arrangement as (nrows, ncols). For example:
+- (1, 2) for 2 models in a single row
+- (2, 2) for 4 models in a 2x2 grid
+- (4, 1) for 4 models in a single column
+Takes precedence over nrows/ncols if provided.</p></li>
+<li><p><strong>nrows</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Number of rows in subplot grid. If None, uses single row layout.
+Ignored if grid_layout is provided.</p></li>
+<li><p><strong>ncols</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>optional</em>) – Number of columns in subplot grid. If None, calculated based on number of models.
+Ignored if grid_layout is provided.</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Overall title for the figure. If None, generates automatically</p></li>
+<li><p><strong>target_name</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of the target/system being analyzed. If provided, prepended to the title</p></li>
+<li><p><strong>show_statistics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = True</em>) – Whether to display statistics text box on each subplot</p></li>
+<li><p><strong>return_stats</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = True</em>) – Whether to return the statistics DataFrame</p></li>
+<li><p><strong>nbootstrap</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default = 1000</em>) – Number of bootstrap samples to draw for computing statistics and confidence intervals</p></li>
+<li><p><strong>metrics</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#list" title="(in Python v3.14)"><em>list</em></a><em>, </em><em>optional</em>) – Deprecated. Use performance_metrics instead.</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to matplotlib</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Figure object (None if saved to file)</p></li>
+<li><p>DataFrame with statistics for each model/metric combination (None if return_stats=False)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a> of (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.8)">matplotlib.figure.Figure</a> or None, <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.0)">pandas.DataFrame</a> or None)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get both plot and statistics - default single row</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_correlation</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;nodes&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Select specific models to compare with 2x1 layout</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_correlation</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">grid_layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;nodes&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Custom 2x2 grid layout for 4 models with specific metrics</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_correlation</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;VI&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">,</span> <span class="s1">&#39;WCC&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">performance_metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">grid_layout</span><span class="o">=</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">stats_filename</span><span class="o">=</span><span class="s1">&#39;correlation_stats.csv&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Single column layout for 3 models</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_model_comparison_correlation</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">models</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;MAP&#39;</span><span class="p">,</span> <span class="s1">&#39;GMVI&#39;</span><span class="p">,</span> <span class="s1">&#39;WCC&#39;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">grid_layout</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">data_type</span><span class="o">=</span><span class="s2">&quot;edges&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="error-analysis">
+<h4>Error Analysis<a class="headerlink" href="#error-analysis" title="Link to this heading"></a></h4>
+<p>Analyze prediction error distributions to assess model quality and determine appropriate error models.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="maple.graph_analysis.plot_error_distribution">
+<span class="sig-prename descclassname"><span class="pre">maple.graph_analysis.</span></span><span class="sig-name descname"><span class="pre">plot_error_distribution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">predicted_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">experimental_column</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">data_type</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'edges'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fit_distribution</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'normal'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stats_filename</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">figsize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(12,</span> <span class="pre">8)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">title</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bins</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_statistics</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_stats</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../_modules/maple/graph_analysis/plotting_performance.html#plot_error_distribution"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#maple.graph_analysis.plot_error_distribution" title="Link to this definition"></a></dt>
+<dd><p>Plot error distribution between predicted and experimental values with KDE.</p>
+<p>This function creates a kernel density estimate (KDE) plot of the errors
+between predicted and experimental values, overlaid with a fitted distribution.
+Useful for assessing the error characteristics of FEP predictions.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>dataset</strong> (<a class="reference internal" href="dataset.html#maple.dataset.FEPDataset" title="maple.dataset.FEPDataset"><em>FEPDataset</em></a>) – Dataset object containing predictions and experimental values</p></li>
+<li><p><strong>predicted_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of column containing predicted values. If None, auto-detects
+common prediction columns (MAP, VI, GMVI, MLE, WCC, etc.)</p></li>
+<li><p><strong>experimental_column</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Name of column containing experimental values. If None, uses default
+experimental column for the data type</p></li>
+<li><p><strong>data_type</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;edges&quot;</em>) – Type of data to analyze: “edges” for ΔΔG or “nodes” for ΔG</p></li>
+<li><p><strong>fit_distribution</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>default = &quot;normal&quot;</em>) – Distribution to fit to errors. Options: “normal”, “none”</p></li>
+<li><p><strong>filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save plot. If None, displays in notebook</p></li>
+<li><p><strong>stats_filename</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Filename to save error statistics DataFrame as CSV. If None, doesn’t save</p></li>
+<li><p><strong>figsize</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)"><em>tuple</em></a><em>, </em><em>default =</em><em> (</em><em>12</em><em>, </em><em>8</em><em>)</em>) – Figure size (width, height) in inches</p></li>
+<li><p><strong>title</strong> (<a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str" title="(in Python v3.14)"><em>str</em></a><em>, </em><em>optional</em>) – Title for the plot. If None, generates automatically</p></li>
+<li><p><strong>bins</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.14)"><em>int</em></a><em>, </em><em>default = 20</em>) – Number of bins for histogram overlay</p></li>
+<li><p><strong>show_statistics</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = True</em>) – Whether to display statistics box on plot</p></li>
+<li><p><strong>return_stats</strong> (<a class="reference external" href="https://docs.python.org/3/library/functions.html#bool" title="(in Python v3.14)"><em>bool</em></a><em>, </em><em>default = True</em>) – Whether to return the error statistics DataFrame</p></li>
+<li><p><strong>**kwargs</strong> – Additional arguments passed to matplotlib</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><ul class="simple">
+<li><p>Figure object (None if saved to file)</p></li>
+<li><p>DataFrame with error statistics (None if return_stats=False)</p></li>
+</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#tuple" title="(in Python v3.14)">tuple</a> of (<a class="reference external" href="https://matplotlib.org/stable/api/_as_gen/matplotlib.figure.Figure.html#matplotlib.figure.Figure" title="(in Matplotlib v3.10.8)">matplotlib.figure.Figure</a> or None, <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html#pandas.DataFrame" title="(in pandas v3.0.0)">pandas.DataFrame</a> or None)</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get plot and error statistics</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_error_distribution</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;MAP&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">stats_df</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Save statistics to CSV</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fig</span><span class="p">,</span> <span class="n">stats_df</span> <span class="o">=</span> <span class="n">plot_error_distribution</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">dataset</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">predicted_column</span><span class="o">=</span><span class="s1">&#39;WCC&#39;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">stats_filename</span><span class="o">=</span><span class="s1">&#39;wcc_error_stats.csv&#39;</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="utils.html" class="btn btn-neutral float-left" title="Utils Package (maple.utils)" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../tutorials/index.html" class="btn btn-neutral float-right" title="Interactive Tutorials" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAPLE Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,1441 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>maple.utils.performance_tracker &mdash; MAPLE-fep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html">
+            
+              <img src="../../../_static/MAPLE_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/installation.html#standard-installation">Standard Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/installation.html#optional-dependencies">Optional Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/installation.html#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/installation.html#common-installation-issues">Common Installation Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/installation.html#development-environment">Development Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#data-format">Data Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#edge-dataframe">Edge DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#node-dataframe">Node DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#from-benchmark-data">From Benchmark Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#variationalestimator-map-vi-mle">VariationalEstimator (MAP/VI/MLE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#gaussianmixturevi-outlier-robust">GaussianMixtureVI (Outlier-Robust)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#spectralcorrection-wsfc-sfc">SpectralCorrection (WSFC/SFC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#key-concepts">Key Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/quickstart.html#the-add-predictions-to-dataset-pattern">The add_predictions_to_dataset() Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#performance-analysis">Performance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/architecture.html">Architecture and Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#design-philosophy">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#module-overview">Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#model-dataset-interaction-pattern">Model-Dataset Interaction Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/architecture.html#probabilistic-models-models-probabilistic">Probabilistic Models (<code class="docutils literal notranslate"><span class="pre">models.probabilistic</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/architecture.html#deterministic-models-models-deterministic">Deterministic Models (<code class="docutils literal notranslate"><span class="pre">models.deterministic</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#key-design-patterns">Key Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/architecture.html#configuration-via-pydantic">Configuration via Pydantic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/architecture.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/architecture.html#estimator-registry">Estimator Registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/architecture.html#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/tutorials.html#tutorial-1-understanding-the-dataset-model-workflow">Tutorial 1: Understanding the Dataset-Model Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#the-central-concept">The Central Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-1-create-your-dataset">Step 1: Create Your Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-2-train-a-model-and-add-predictions">Step 2: Train a Model and Add Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-3-add-more-models">Step 3: Add More Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-4-compare-models-from-dataset">Step 4: Compare Models from Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/tutorials.html#tutorial-2-complete-fep-analysis-workflow">Tutorial 2: Complete FEP Analysis Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-1-load-and-inspect-data">Step 1: Load and Inspect Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-2-train-multiple-inference-methods">Step 2: Train Multiple Inference Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-3-comprehensive-performance-analysis">Step 3: Comprehensive Performance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-4-outlier-analysis-gmvi">Step 4: Outlier Analysis (GMVI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-5-publication-ready-visualization">Step 5: Publication-Ready Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/tutorials.html#tutorial-3-working-with-your-own-data">Tutorial 3: Working with Your Own Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-1-prepare-your-data">Step 1: Prepare Your Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-2-create-dataset">Step 2: Create Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-3-automatic-node-derivation-if-no-experimental-data">Step 3: Automatic Node Derivation (If No Experimental Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#step-4-train-and-compare-models">Step 4: Train and Compare Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/tutorials.html#tutorial-4-understanding-model-uncertainties">Tutorial 4: Understanding Model Uncertainties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#variational-inference-uncertainties">Variational Inference Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#gmvi-uncertainties-and-outlier-detection">GMVI Uncertainties and Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/tutorials.html#visualizing-uncertainties">Visualizing Uncertainties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/tutorials.html#tutorial-5-batch-processing-multiple-datasets">Tutorial 5: Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/tutorials.html#summary-key-patterns-to-remember">Summary: Key Patterns to Remember</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../user_guide/parameter_optimization.html">Parameter Optimization Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#simple-parameter-sweep">Simple Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#direct-notebook-replication">Direct Notebook Replication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#parametersweep-class">ParameterSweep Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#single-parameter-sweeps">Single Parameter Sweeps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#learning-rate-optimization">Learning Rate Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#prior-parameter-investigation">Prior Parameter Investigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#training-steps-optimization">Training Steps Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#multi-parameter-optimization">Multi-Parameter Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#grid-search">Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#sequential-optimization">Sequential Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#cross-dataset-analysis">Cross-Dataset Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#multi-dataset-parameter-sweeps">Multi-Dataset Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#dataset-specific-optimization">Dataset-Specific Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#advanced-analysis-techniques">Advanced Analysis Techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#parameter-interaction-analysis">Parameter Interaction Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#sensitivity-analysis">Sensitivity Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#bayesian-optimization">Bayesian Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#visualization-and-reporting">Visualization and Reporting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#parameter-effect-plots">Parameter Effect Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#heatmaps-for-multi-parameter-analysis">Heatmaps for Multi-Parameter Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#performance-summary-reports">Performance Summary Reports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#experimental-design">Experimental Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#parameter-selection">Parameter Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#statistical-considerations">Statistical Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#prior-parameter-study">Prior Parameter Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#comprehensive-parameter-study">Comprehensive Parameter Study</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#error-handling-and-failure-tracking">Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#automatic-failure-tracking">Automatic Failure Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#analyzing-failed-experiments">Analyzing Failed Experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#robust-parameter-exploration">Robust Parameter Exploration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#best-practices-for-robust-optimization">Best Practices for Robust Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#common-failure-scenarios">Common Failure Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../user_guide/parameter_optimization.html#recovery-and-continuation">Recovery and Continuation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Methods &amp; Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../methods_comparison.html">Methods Comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#quick-selection-guide">Quick Selection Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#method-details">Method Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#map-maximum-a-posteriori">MAP — Maximum A Posteriori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#mle-maximum-likelihood-estimation">MLE — Maximum Likelihood Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#vi-variational-inference">VI — Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#gmvi-gaussian-mixture-variational-inference">GMVI — Gaussian Mixture Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#wcc-weighted-cycle-closure">WCC — Weighted Cycle Closure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#wsfc-weighted-spectral-free-energy-correction">WSFC — Weighted Spectral Free-energy Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#sfc-spectral-free-energy-correction">SFC — Spectral Free-energy Correction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#comparison-table">Comparison Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#method-relationships">Method Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../methods_comparison.html#usage-examples">Usage Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../methods_comparison.html#running-all-methods">Running All Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/models.html">Models Package (<code class="docutils literal notranslate"><span class="pre">maple.models</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#package-structure">Package Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#available-models">Available Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#the-add-predictions-to-dataset-method">The add_predictions_to_dataset() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#probabilistic-models">Probabilistic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#variationalestimator">VariationalEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#how-variationalestimator-determines-column-names">How VariationalEstimator Determines Column Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#gaussianmixturevi">GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id1">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id2">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#deterministic-models">Deterministic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#cycleclosurecorrection">CycleClosureCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id3">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#spectralcorrection">SpectralCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id5">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id6">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#id7">Probabilistic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id8">VariationalEstimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id12">GaussianMixtureVI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#id13">Deterministic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id14">CycleClosureCorrection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#id15">SpectralCorrection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#configuration-classes">Configuration Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#variationalestimatorconfig">VariationalEstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#gaussianmixtureviconfig">GaussianMixtureVIConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#cycleclosurecorrectionconfig">CycleClosureCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#spectralcorrectionconfig">SpectralCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#baseestimatorconfig">BaseEstimatorConfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#configuration-enums">Configuration Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#priortype">PriorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#guidetype">GuideType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#errordistributiontype">ErrorDistributionType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#data-structures">Data Structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#graphdata">GraphData</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/models.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/models.html#create-config">create_config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/models.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/dataset.html">Dataset Package (<code class="docutils literal notranslate"><span class="pre">maple.dataset</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#data-flow-how-models-interact-with-dataset">Data Flow: How Models Interact with Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#dataset-attributes">Dataset Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/dataset.html#maple.dataset.BaseDataset"><code class="docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#main-dataset-classes">Main Dataset Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/dataset.html#fepdataset">FEPDataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/dataset.html#fepbenchmarkdataset">FEPBenchmarkDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#specialized-datasets">Specialized Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/dataset.html#syntheticfepdataset">SyntheticFEPDataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/dataset.html#derive-nodes-from-edges">derive_nodes_from_edges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/dataset.html#example-multi-model-comparison">Example: Multi-Model Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/utils.html">Utils Package (<code class="docutils literal notranslate"><span class="pre">maple.utils</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/utils.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/utils.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/utils.html#performance-tracking">Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/utils.html#parameter-sweeps">Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/utils.html#failure-tracking">Failure Tracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/utils.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/utils.html#id1">Performance Tracking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.PerformanceTracker"><code class="docutils literal notranslate"><span class="pre">PerformanceTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.ModelRun"><code class="docutils literal notranslate"><span class="pre">ModelRun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.load_performance_history"><code class="docutils literal notranslate"><span class="pre">load_performance_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.compare_model_runs"><code class="docutils literal notranslate"><span class="pre">compare_model_runs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/utils.html#parameter-optimization">Parameter Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.ParameterSweep"><code class="docutils literal notranslate"><span class="pre">ParameterSweep</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/utils.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.create_prior_sweep_experiment"><code class="docutils literal notranslate"><span class="pre">create_prior_sweep_experiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/utils.html#maple.utils.create_comprehensive_parameter_study"><code class="docutils literal notranslate"><span class="pre">create_comprehensive_parameter_study()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../api/graph_analysis.html">Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/graph_analysis.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/graph_analysis.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/graph_analysis.html#performance-statistics">Performance Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/graph_analysis.html#plotting">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../api/graph_analysis.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/graph_analysis.html#id1">Performance Statistics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#maple.graph_analysis.calculate_mae"><code class="docutils literal notranslate"><span class="pre">calculate_mae()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#maple.graph_analysis.calculate_rmse"><code class="docutils literal notranslate"><span class="pre">calculate_rmse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#maple.graph_analysis.calculate_r2"><code class="docutils literal notranslate"><span class="pre">calculate_r2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#maple.graph_analysis.calculate_correlation"><code class="docutils literal notranslate"><span class="pre">calculate_correlation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#maple.graph_analysis.bootstrap_statistic"><code class="docutils literal notranslate"><span class="pre">bootstrap_statistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#maple.graph_analysis.compute_simple_statistics"><code class="docutils literal notranslate"><span class="pre">compute_simple_statistics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../../../api/graph_analysis.html#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#single-model-plotting">Single Model Plotting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#multi-model-comparison">Multi-Model Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../../../api/graph_analysis.html#error-analysis">Error Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interactive Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../tutorials/index.html">Interactive Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/index.html#getting-started-tutorial">Getting Started Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/index.html#source-files">Source Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../tutorials/index.html#running-tutorials-locally">Running Tutorials Locally</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/basic_usage.html">Basic Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#core-concept-dataset-as-central-hub">Core Concept: Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#loading-and-preparing-data">Loading and Preparing Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#from-your-own-data">From Your Own Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#training-models-and-adding-predictions">Training Models and Adding Predictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#map-inference-with-variationalestimator">MAP Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#variational-inference-with-variationalestimator">Variational Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#gmvi-with-outlier-detection">GMVI with Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#complete-multi-model-workflow">Complete Multi-Model Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#working-with-results">Working with Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#accessing-predictions-from-dataset">Accessing Predictions from Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#creating-comparison-dataframe">Creating Comparison DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#model-comparison-plot">Model Comparison Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#predictions-with-uncertainties">Predictions with Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/basic_usage.html#outlier-analysis">Outlier Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#batch-processing-multiple-datasets">Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/basic_usage.html#best-practices-summary">Best Practices Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/parameter_sweeps.html">Parameter Sweep Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/parameter_sweeps.html#example-1-learning-rate-optimization">Example 1: Learning Rate Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#execute-parameter-sweep">Execute Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#analyze-results">Analyze Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#visualize-results">Visualize Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/parameter_sweeps.html#example-2-prior-parameter-investigation">Example 2: Prior Parameter Investigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#setup-and-execution">Setup and Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#create-publication-quality-plots">Create Publication-Quality Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#statistical-analysis">Statistical Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/parameter_sweeps.html#example-3-multi-parameter-grid-search">Example 3: Multi-Parameter Grid Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#define-parameter-grid">Define Parameter Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#execute-grid-search">Execute Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#analyze-grid-search-results">Analyze Grid Search Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#visualize-grid-search-results">Visualize Grid Search Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/parameter_sweeps.html#example-4-cross-dataset-parameter-study">Example 4: Cross-Dataset Parameter Study</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#setup-multiple-datasets">Setup Multiple Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#cross-dataset-parameter-sweep">Cross-Dataset Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#find-universal-optimal-parameters">Find Universal Optimal Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#cross-dataset-visualization">Cross-Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/parameter_sweeps.html#example-5-error-handling-and-failure-tracking">Example 5: Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#robust-parameter-sweep">Robust Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#failure-analysis-and-recovery">Failure Analysis and Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#recovery-strategies">Recovery Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#parameter-validation-and-preprocessing">Parameter Validation and Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/parameter_sweeps.html#best-practices-for-robust-parameter-sweeps">Best Practices for Robust Parameter Sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/parameter_sweeps.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html">FEP Benchmark Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#setup-and-imports">Setup and Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#fep-benchmark-dataset-tutorial">FEP Benchmark Dataset Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#available-datasets">Available Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#examining-the-data-structure">Examining the Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#dataset-visualization">Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#performance-tracker-tutorial">Performance Tracker Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#setting-up-performance-tracking">Setting Up Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#recording-model-runs">Recording Model Runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#comparing-models">Comparing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#advanced-performance-analysis">Advanced Performance Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#working-with-real-fep-data">Working with Real FEP Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#summary-and-best-practices">Summary and Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#key-takeaways">Key Takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../examples/fep_benchmark_tutorial.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../developer/contributing.html">Contributing to MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer/contributing.html#development-setup">Development Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../developer/contributing.html#fork-and-clone">Fork and Clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../developer/contributing.html#development-environment">Development Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../developer/contributing.html#running-tests">Running Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer/contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer/contributing.html#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../developer/contributing.html#building-documentation">Building Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../../developer/contributing.html#writing-documentation">Writing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer/contributing.html#submitting-changes">Submitting Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../../developer/contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../../../developer/contributing.html#reporting-issues">Reporting Issues</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">MAPLE-fep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">maple.utils.performance_tracker</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for maple.utils.performance_tracker</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Performance Tracking and Model Comparison Utilities</span>
+
+<span class="sd">This module provides comprehensive tools for tracking model performance,</span>
+<span class="sd">storing results, and comparing different model runs over time.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">json</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pickle</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">dataclasses</span><span class="w"> </span><span class="kn">import</span> <span class="n">asdict</span><span class="p">,</span> <span class="n">dataclass</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">datetime</span><span class="w"> </span><span class="kn">import</span> <span class="n">datetime</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">typing</span><span class="w"> </span><span class="kn">import</span> <span class="n">Any</span><span class="p">,</span> <span class="n">Dict</span><span class="p">,</span> <span class="n">List</span><span class="p">,</span> <span class="n">Optional</span><span class="p">,</span> <span class="n">Union</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">..graph_analysis.performance_stats</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span><span class="n">bootstrap_statistic</span><span class="p">,</span>
+                                                <span class="n">compute_simple_statistics</span><span class="p">)</span>
+
+
+<div class="viewcode-block" id="ModelRun">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.ModelRun">[docs]</a>
+<span class="nd">@dataclass</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">ModelRun</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Container for a single model run&#39;s performance data.</span>
+
+<span class="sd">    This class stores all relevant information about a model run including</span>
+<span class="sd">    configuration, performance metrics, and metadata for easy comparison</span>
+<span class="sd">    and persistence.</span>
+
+<span class="sd">    Attributes</span>
+<span class="sd">    ----------</span>
+<span class="sd">    run_id : str</span>
+<span class="sd">        Unique identifier for this model run</span>
+<span class="sd">    timestamp : str</span>
+<span class="sd">        ISO timestamp when the run was executed</span>
+<span class="sd">    model_config : Dict[str, Any]</span>
+<span class="sd">        Configuration parameters used for the model</span>
+<span class="sd">    dataset_info : Dict[str, Any]</span>
+<span class="sd">        Information about the dataset used</span>
+<span class="sd">    performance_metrics : Dict[str, float]</span>
+<span class="sd">        Basic performance statistics (RMSE, MUE, R2, etc.)</span>
+<span class="sd">    bootstrap_metrics : Dict[str, Dict[str, float]]</span>
+<span class="sd">        Bootstrap statistics with confidence intervals</span>
+<span class="sd">    predictions : Dict[str, np.ndarray]</span>
+<span class="sd">        Arrays of true and predicted values</span>
+<span class="sd">    metadata : Dict[str, Any]</span>
+<span class="sd">        Additional metadata (notes, tags, etc.)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">timestamp</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">model_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">dataset_info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+    <span class="n">performance_metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="n">bootstrap_metrics</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">float</span><span class="p">]]</span>
+    <span class="n">predictions</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span>
+    <span class="n">metadata</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span>
+
+<div class="viewcode-block" id="ModelRun.to_dict">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.ModelRun.to_dict">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">to_dict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Convert ModelRun to dictionary for serialization.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c1"># Convert numpy arrays to lists for JSON serialization</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="n">value</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="ModelRun.from_dict">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.ModelRun.from_dict">[docs]</a>
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">from_dict</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">data</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="s2">&quot;ModelRun&quot;</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Create ModelRun from dictionary.&quot;&quot;&quot;</span>
+        <span class="c1"># Convert lists back to numpy arrays</span>
+        <span class="n">data</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="n">key</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">value</span><span class="p">)</span> <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">value</span><span class="p">,</span> <span class="nb">list</span><span class="p">)</span> <span class="k">else</span> <span class="n">value</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">data</span><span class="p">[</span><span class="s2">&quot;predictions&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+        <span class="p">}</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ModelRun.get_summary">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.ModelRun.get_summary">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_summary</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a human-readable summary of the model run.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">Model Run Summary</span>
+<span class="s2">=================</span>
+<span class="s2">Run ID: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">run_id</span><span class="si">}</span>
+<span class="s2">Timestamp: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">timestamp</span><span class="si">}</span>
+<span class="s2">Dataset: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;Unknown&#39;</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">N Samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">predictions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;y_true&#39;</span><span class="p">,</span><span class="w"> </span><span class="p">[]))</span><span class="si">}</span>
+
+<span class="s2">Performance Metrics:</span>
+<span class="s2">- RMSE: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span>
+<span class="s2">- MUE:  </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;MUE&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span>
+<span class="s2">- R²:   </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;R2&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span>
+<span class="s2">- ρ:    </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;rho&#39;</span><span class="p">,</span><span class="w"> </span><span class="s1">&#39;N/A&#39;</span><span class="p">)</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span>
+
+<span class="s2">Model Configuration:</span>
+<span class="si">{</span><span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">model_config</span><span class="p">,</span><span class="w"> </span><span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span><span class="si">}</span>
+<span class="s2">        &quot;&quot;&quot;</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span></div>
+</div>
+
+
+
+<div class="viewcode-block" id="PerformanceTracker">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PerformanceTracker</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Comprehensive performance tracking system for MAPLE models.</span>
+
+<span class="sd">    This class provides functionality to:</span>
+<span class="sd">    - Track model performance across multiple runs</span>
+<span class="sd">    - Store results persistently</span>
+<span class="sd">    - Compare different model configurations</span>
+<span class="sd">    - Generate performance reports and visualizations</span>
+<span class="sd">    - Export data for external analysis</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    storage_dir : str or Path</span>
+<span class="sd">        Directory to store performance data</span>
+<span class="sd">    auto_save : bool, default=True</span>
+<span class="sd">        Whether to automatically save data after each run</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; tracker = PerformanceTracker(&quot;./model_results&quot;)</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Record a model run</span>
+<span class="sd">    &gt;&gt;&gt; tracker.record_run(</span>
+<span class="sd">    ...     run_id=&quot;baseline_v1&quot;,</span>
+<span class="sd">    ...     y_true=y_true,</span>
+<span class="sd">    ...     y_pred=y_pred,</span>
+<span class="sd">    ...     model_config={&quot;prior_type&quot;: &quot;normal&quot;, &quot;learning_rate&quot;: 0.001},</span>
+<span class="sd">    ...     dataset_info={&quot;name&quot;: &quot;synthetic_100&quot;, &quot;n_nodes&quot;: 100}</span>
+<span class="sd">    ... )</span>
+<span class="sd">    &gt;&gt;&gt;</span>
+<span class="sd">    &gt;&gt;&gt; # Compare multiple runs</span>
+<span class="sd">    &gt;&gt;&gt; comparison = tracker.compare_runs([&quot;baseline_v1&quot;, &quot;improved_v2&quot;])</span>
+<span class="sd">    &gt;&gt;&gt; print(comparison)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">storage_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">],</span> <span class="n">auto_save</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialize the performance tracker.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">storage_dir</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">storage_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">parents</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">auto_save</span> <span class="o">=</span> <span class="n">auto_save</span>
+
+        <span class="c1"># Storage files</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runs_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage_dir</span> <span class="o">/</span> <span class="s2">&quot;model_runs.json&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage_dir</span> <span class="o">/</span> <span class="s2">&quot;performance_data.pkl&quot;</span>
+
+        <span class="c1"># In-memory storage</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">ModelRun</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Load existing data</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_load_data</span><span class="p">()</span>
+
+<div class="viewcode-block" id="PerformanceTracker.record_run">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.record_run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">record_run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+        <span class="n">y_true</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">,</span>
+        <span class="n">model_config</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">dataset_info</span><span class="p">:</span> <span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">],</span>
+        <span class="n">y_true_err</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">y_pred_err</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">bootstrap_stats</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">metadata</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">Dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ModelRun</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Record a complete model run with performance statistics.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        run_id : str</span>
+<span class="sd">            Unique identifier for this run</span>
+<span class="sd">        y_true : np.ndarray</span>
+<span class="sd">            True values</span>
+<span class="sd">        y_pred : np.ndarray</span>
+<span class="sd">            Predicted values</span>
+<span class="sd">        model_config : Dict[str, Any]</span>
+<span class="sd">            Model configuration parameters</span>
+<span class="sd">        dataset_info : Dict[str, Any]</span>
+<span class="sd">            Dataset information</span>
+<span class="sd">        y_true_err : np.ndarray, optional</span>
+<span class="sd">            Uncertainties in true values</span>
+<span class="sd">        y_pred_err : np.ndarray, optional</span>
+<span class="sd">            Uncertainties in predicted values</span>
+<span class="sd">        bootstrap_stats : List[str], optional</span>
+<span class="sd">            Statistics to compute with bootstrap (default: [&#39;RMSE&#39;, &#39;MUE&#39;, &#39;R2&#39;])</span>
+<span class="sd">        metadata : Dict[str, Any], optional</span>
+<span class="sd">            Additional metadata</span>
+<span class="sd">        tags : List[str], optional</span>
+<span class="sd">            Tags for categorizing runs</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        ModelRun</span>
+<span class="sd">            The created model run object</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="k">if</span> <span class="n">run_id</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+            <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+                <span class="sa">f</span><span class="s2">&quot;Run ID &#39;</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">&#39; already exists. Overwriting previous run.&quot;</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Default bootstrap statistics</span>
+        <span class="k">if</span> <span class="n">bootstrap_stats</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">bootstrap_stats</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MUE&quot;</span><span class="p">,</span> <span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="s2">&quot;rho&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Default metadata</span>
+        <span class="k">if</span> <span class="n">metadata</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metadata</span> <span class="o">=</span> <span class="p">{}</span>
+
+        <span class="c1"># Add tags to metadata</span>
+        <span class="k">if</span> <span class="n">tags</span><span class="p">:</span>
+            <span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">tags</span>
+
+        <span class="c1"># Compute basic performance metrics</span>
+        <span class="n">performance_metrics</span> <span class="o">=</span> <span class="n">compute_simple_statistics</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+        <span class="c1"># Compute bootstrap statistics with confidence intervals</span>
+        <span class="n">bootstrap_metrics</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">stat</span> <span class="ow">in</span> <span class="n">bootstrap_stats</span><span class="p">:</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">bootstrap_result</span> <span class="o">=</span> <span class="n">bootstrap_statistic</span><span class="p">(</span>
+                    <span class="n">y_true</span><span class="p">,</span>
+                    <span class="n">y_pred</span><span class="p">,</span>
+                    <span class="n">dy_true</span><span class="o">=</span><span class="n">y_true_err</span><span class="p">,</span>
+                    <span class="n">dy_pred</span><span class="o">=</span><span class="n">y_pred_err</span><span class="p">,</span>
+                    <span class="n">statistic</span><span class="o">=</span><span class="n">stat</span><span class="p">,</span>
+                    <span class="n">nbootstrap</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span>
+                    <span class="n">include_true_uncertainty</span><span class="o">=</span><span class="n">y_true_err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+                    <span class="n">include_pred_uncertainty</span><span class="o">=</span><span class="n">y_pred_err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">,</span>
+                <span class="p">)</span>
+                <span class="n">bootstrap_metrics</span><span class="p">[</span><span class="n">stat</span><span class="p">]</span> <span class="o">=</span> <span class="n">bootstrap_result</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Could not compute bootstrap </span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="n">bootstrap_metrics</span><span class="p">[</span><span class="n">stat</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s2">&quot;mle&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                    <span class="s2">&quot;mean&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                    <span class="s2">&quot;stderr&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                    <span class="s2">&quot;low&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                    <span class="s2">&quot;high&quot;</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span>
+                <span class="p">}</span>
+
+        <span class="c1"># Create model run object</span>
+        <span class="n">model_run</span> <span class="o">=</span> <span class="n">ModelRun</span><span class="p">(</span>
+            <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+            <span class="n">timestamp</span><span class="o">=</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">isoformat</span><span class="p">(),</span>
+            <span class="n">model_config</span><span class="o">=</span><span class="n">model_config</span><span class="p">,</span>
+            <span class="n">dataset_info</span><span class="o">=</span><span class="n">dataset_info</span><span class="p">,</span>
+            <span class="n">performance_metrics</span><span class="o">=</span><span class="n">performance_metrics</span><span class="p">,</span>
+            <span class="n">bootstrap_metrics</span><span class="o">=</span><span class="n">bootstrap_metrics</span><span class="p">,</span>
+            <span class="n">predictions</span><span class="o">=</span><span class="p">{</span>
+                <span class="s2">&quot;y_true&quot;</span><span class="p">:</span> <span class="n">y_true</span><span class="p">,</span>
+                <span class="s2">&quot;y_pred&quot;</span><span class="p">:</span> <span class="n">y_pred</span><span class="p">,</span>
+                <span class="s2">&quot;y_true_err&quot;</span><span class="p">:</span> <span class="n">y_true_err</span> <span class="k">if</span> <span class="n">y_true_err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span>
+                <span class="s2">&quot;y_pred_err&quot;</span><span class="p">:</span> <span class="n">y_pred_err</span> <span class="k">if</span> <span class="n">y_pred_err</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([]),</span>
+            <span class="p">},</span>
+            <span class="n">metadata</span><span class="o">=</span><span class="n">metadata</span><span class="p">,</span>
+        <span class="p">)</span>
+
+        <span class="c1"># Store the run</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">model_run</span>
+
+        <span class="c1"># Auto-save if enabled</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">auto_save</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">save_data</span><span class="p">()</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Recorded model run &#39;</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">&#39; with </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span><span class="si">}</span><span class="s2"> samples&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">model_run</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.get_run">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.get_run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">run_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="n">ModelRun</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Get a specific model run by ID.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.list_runs">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.list_runs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">list_runs</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">tags</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        List all run IDs, optionally filtered by tags.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        tags : List[str], optional</span>
+<span class="sd">            Filter runs that have all specified tags</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        List[str]</span>
+<span class="sd">            List of run IDs</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">tags</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">return</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="n">filtered_runs</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">run_tags</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;tags&quot;</span><span class="p">,</span> <span class="p">[])</span>
+            <span class="k">if</span> <span class="nb">all</span><span class="p">(</span><span class="n">tag</span> <span class="ow">in</span> <span class="n">run_tags</span> <span class="k">for</span> <span class="n">tag</span> <span class="ow">in</span> <span class="n">tags</span><span class="p">):</span>
+                <span class="n">filtered_runs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">filtered_runs</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.compare_runs">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.compare_runs">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">compare_runs</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">run_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span> <span class="n">metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Compare performance metrics across multiple runs.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        run_ids : List[str]</span>
+<span class="sd">            List of run IDs to compare</span>
+<span class="sd">        metrics : List[str], optional</span>
+<span class="sd">            Metrics to include in comparison (default: all available)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        pd.DataFrame</span>
+<span class="sd">            Comparison table with runs as rows and metrics as columns</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># Get all available metrics from first run</span>
+            <span class="k">if</span> <span class="n">run_ids</span> <span class="ow">and</span> <span class="n">run_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+                <span class="n">metrics</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="n">run_ids</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MUE&quot;</span><span class="p">,</span> <span class="s2">&quot;R2&quot;</span><span class="p">,</span> <span class="s2">&quot;rho&quot;</span><span class="p">,</span> <span class="s2">&quot;KTAU&quot;</span><span class="p">]</span>
+
+        <span class="n">comparison_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">run_id</span> <span class="ow">in</span> <span class="n">run_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">run_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Run &#39;</span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">&#39; not found&quot;</span><span class="p">)</span>
+                <span class="k">continue</span>
+
+            <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span>
+            <span class="n">row_data</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="n">run_id</span><span class="p">,</span> <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">run</span><span class="o">.</span><span class="n">timestamp</span><span class="p">}</span>
+
+            <span class="c1"># Add performance metrics</span>
+            <span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+            <span class="c1"># Add dataset info</span>
+            <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;dataset&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">)</span>
+            <span class="n">row_data</span><span class="p">[</span><span class="s2">&quot;n_samples&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">predictions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;y_true&quot;</span><span class="p">,</span> <span class="p">[]))</span>
+
+            <span class="c1"># Add key config parameters</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">row_data</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;config_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="n">comparison_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row_data</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">comparison_data</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.get_best_run">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.get_best_run">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">get_best_run</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span> <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="n">minimize</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Find the best performing run based on a specific metric.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        metric : str, default=&#39;RMSE&#39;</span>
+<span class="sd">            Metric to optimize</span>
+<span class="sd">        minimize : bool, default=True</span>
+<span class="sd">            Whether to minimize (True) or maximize (False) the metric</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str or None</span>
+<span class="sd">            Run ID of the best performing run</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">None</span>
+
+        <span class="n">best_run_id</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">best_value</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;inf&quot;</span><span class="p">)</span> <span class="k">if</span> <span class="n">minimize</span> <span class="k">else</span> <span class="nb">float</span><span class="p">(</span><span class="s2">&quot;-inf&quot;</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="k">continue</span>
+
+            <span class="k">if</span> <span class="n">minimize</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&lt;</span> <span class="n">best_value</span><span class="p">:</span>
+                <span class="n">best_value</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">best_run_id</span> <span class="o">=</span> <span class="n">run_id</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="n">minimize</span> <span class="ow">and</span> <span class="n">value</span> <span class="o">&gt;</span> <span class="n">best_value</span><span class="p">:</span>
+                <span class="n">best_value</span> <span class="o">=</span> <span class="n">value</span>
+                <span class="n">best_run_id</span> <span class="o">=</span> <span class="n">run_id</span>
+
+        <span class="k">return</span> <span class="n">best_run_id</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.plot_performance_trends">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.plot_performance_trends">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_performance_trends</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">metric</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;RMSE&quot;</span><span class="p">,</span>
+        <span class="n">run_ids</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Plot performance trends over time.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        metric : str, default=&#39;RMSE&#39;</span>
+<span class="sd">            Metric to plot</span>
+<span class="sd">        run_ids : List[str], optional</span>
+<span class="sd">            Specific runs to include (default: all runs)</span>
+<span class="sd">        figsize : tuple, default=(12, 6)</span>
+<span class="sd">            Figure size</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        plt.Figure</span>
+<span class="sd">            The created figure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">run_ids</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">run_ids</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+
+        <span class="c1"># Prepare data</span>
+        <span class="n">timestamps</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">values</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="n">labels</span> <span class="o">=</span> <span class="p">[]</span>
+
+        <span class="k">for</span> <span class="n">run_id</span> <span class="ow">in</span> <span class="n">run_ids</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">run_id</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">:</span>
+                <span class="k">continue</span>
+
+            <span class="n">run</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span>
+            <span class="n">value</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">metric</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+            <span class="k">if</span> <span class="ow">not</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+                <span class="n">timestamps</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">timestamp</span><span class="p">))</span>
+                <span class="n">values</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+                <span class="n">labels</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">run_id</span><span class="p">)</span>
+
+        <span class="c1"># Create plot</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+        <span class="c1"># Sort by timestamp</span>
+        <span class="n">sorted_data</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">timestamps</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">labels</span><span class="p">))</span>
+        <span class="n">timestamps_sorted</span><span class="p">,</span> <span class="n">values_sorted</span><span class="p">,</span> <span class="n">labels_sorted</span> <span class="o">=</span> <span class="nb">zip</span><span class="p">(</span><span class="o">*</span><span class="n">sorted_data</span><span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">timestamps_sorted</span><span class="p">,</span> <span class="n">values_sorted</span><span class="p">,</span> <span class="s2">&quot;o-&quot;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">8</span><span class="p">)</span>
+
+        <span class="c1"># Add labels</span>
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">label</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">sorted_data</span><span class="p">):</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+                <span class="n">label</span><span class="p">,</span>
+                <span class="p">(</span><span class="n">timestamp</span><span class="p">,</span> <span class="n">value</span><span class="p">),</span>
+                <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+                <span class="n">textcoords</span><span class="o">=</span><span class="s2">&quot;offset points&quot;</span><span class="p">,</span>
+                <span class="n">fontsize</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span>
+                <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Time&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">metric</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2"> Performance Over Time&quot;</span><span class="p">)</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.plot_run_comparison">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.plot_run_comparison">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">plot_run_comparison</span><span class="p">(</span>
+        <span class="bp">self</span><span class="p">,</span>
+        <span class="n">run_ids</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">],</span>
+        <span class="n">metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+        <span class="n">figsize</span><span class="p">:</span> <span class="nb">tuple</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span>
+    <span class="p">)</span> <span class="o">-&gt;</span> <span class="n">plt</span><span class="o">.</span><span class="n">Figure</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Create a bar plot comparing multiple runs across metrics.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        run_ids : List[str]</span>
+<span class="sd">            Runs to compare</span>
+<span class="sd">        metrics : List[str], optional</span>
+<span class="sd">            Metrics to include (default: [&#39;RMSE&#39;, &#39;MUE&#39;, &#39;R2&#39;])</span>
+<span class="sd">        figsize : tuple, default=(10, 6)</span>
+<span class="sd">            Figure size</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        plt.Figure</span>
+<span class="sd">            The created figure</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">metrics</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MUE&quot;</span><span class="p">,</span> <span class="s2">&quot;R2&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Prepare data</span>
+        <span class="n">comparison_df</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">compare_runs</span><span class="p">(</span><span class="n">run_ids</span><span class="p">,</span> <span class="n">metrics</span><span class="p">)</span>
+
+        <span class="c1"># Create subplots</span>
+        <span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">,</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">metrics</span><span class="p">)</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">axes</span> <span class="o">=</span> <span class="p">[</span><span class="n">axes</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">metric</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">metrics</span><span class="p">):</span>
+            <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+
+            <span class="n">values</span> <span class="o">=</span> <span class="n">comparison_df</span><span class="p">[</span><span class="n">metric</span><span class="p">]</span>
+            <span class="n">run_labels</span> <span class="o">=</span> <span class="n">comparison_df</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span>
+
+            <span class="n">bars</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)),</span> <span class="n">values</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)))</span>
+            <span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">run_labels</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s2">&quot;right&quot;</span><span class="p">)</span>
+
+            <span class="c1"># Color bars based on performance (lower is better for RMSE/MUE)</span>
+            <span class="k">if</span> <span class="n">metric</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;RMSE&quot;</span><span class="p">,</span> <span class="s2">&quot;MUE&quot;</span><span class="p">]:</span>
+                <span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdYlGn_r</span><span class="p">(</span><span class="n">values</span> <span class="o">/</span> <span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+            <span class="k">else</span><span class="p">:</span>  <span class="c1"># R2, rho - higher is better</span>
+                <span class="n">colors</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">RdYlGn</span><span class="p">(</span><span class="n">values</span> <span class="o">/</span> <span class="n">values</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+
+            <span class="k">for</span> <span class="n">bar</span><span class="p">,</span> <span class="n">color</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bars</span><span class="p">,</span> <span class="n">colors</span><span class="p">):</span>
+                <span class="n">bar</span><span class="o">.</span><span class="n">set_color</span><span class="p">(</span><span class="n">color</span><span class="p">)</span>
+
+        <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">fig</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.export_data">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.export_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">export_data</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filename</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="nb">format</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;csv&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Export performance data to external format.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filename : str, optional</span>
+<span class="sd">            Output filename (default: auto-generated)</span>
+<span class="sd">        format : str, default=&#39;csv&#39;</span>
+<span class="sd">            Export format (&#39;csv&#39;, &#39;json&#39;, &#39;excel&#39;)</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        str</span>
+<span class="sd">            Path to exported file</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">filename</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">timestamp</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%Y%m</span><span class="si">%d</span><span class="s2">_%H%M%S&quot;</span><span class="p">)</span>
+            <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;model_performance_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span>
+
+        <span class="n">output_path</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">storage_dir</span> <span class="o">/</span> <span class="n">filename</span>
+
+        <span class="c1"># Create comprehensive export data</span>
+        <span class="n">export_data</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">row</span> <span class="o">=</span> <span class="p">{</span>
+                <span class="s2">&quot;run_id&quot;</span><span class="p">:</span> <span class="n">run_id</span><span class="p">,</span>
+                <span class="s2">&quot;timestamp&quot;</span><span class="p">:</span> <span class="n">run</span><span class="o">.</span><span class="n">timestamp</span><span class="p">,</span>
+                <span class="s2">&quot;dataset_name&quot;</span><span class="p">:</span> <span class="n">run</span><span class="o">.</span><span class="n">dataset_info</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="s2">&quot;Unknown&quot;</span><span class="p">),</span>
+                <span class="s2">&quot;n_samples&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">predictions</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;y_true&quot;</span><span class="p">,</span> <span class="p">[])),</span>
+            <span class="p">}</span>
+
+            <span class="c1"># Add performance metrics</span>
+            <span class="n">row</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="p">)</span>
+
+            <span class="c1"># Add bootstrap confidence intervals</span>
+            <span class="k">for</span> <span class="n">stat</span><span class="p">,</span> <span class="n">bootstrap_data</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">bootstrap_metrics</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">row</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">_ci_low&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bootstrap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;low&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+                <span class="n">row</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">_ci_high&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bootstrap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;high&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+                <span class="n">row</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">stat</span><span class="si">}</span><span class="s2">_stderr&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">bootstrap_data</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;stderr&quot;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">)</span>
+
+            <span class="c1"># Add flattened config</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">model_config</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="n">row</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;config_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="c1"># Add metadata</span>
+            <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">metadata</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                <span class="k">if</span> <span class="n">key</span> <span class="o">!=</span> <span class="s2">&quot;tags&quot;</span><span class="p">:</span>  <span class="c1"># Handle tags separately</span>
+                    <span class="n">row</span><span class="p">[</span><span class="sa">f</span><span class="s2">&quot;meta_</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+
+            <span class="k">if</span> <span class="s2">&quot;tags&quot;</span> <span class="ow">in</span> <span class="n">run</span><span class="o">.</span><span class="n">metadata</span><span class="p">:</span>
+                <span class="n">row</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;,&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">run</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s2">&quot;tags&quot;</span><span class="p">])</span>
+
+            <span class="n">export_data</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
+
+        <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">export_data</span><span class="p">)</span>
+
+        <span class="c1"># Export in requested format</span>
+        <span class="k">if</span> <span class="nb">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;csv&quot;</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;json&quot;</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">orient</span><span class="o">=</span><span class="s2">&quot;records&quot;</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">format</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;excel&quot;</span><span class="p">:</span>
+            <span class="n">df</span><span class="o">.</span><span class="n">to_excel</span><span class="p">(</span><span class="n">output_path</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Unsupported format: </span><span class="si">{</span><span class="nb">format</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Exported data to </span><span class="si">{</span><span class="n">output_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">str</span><span class="p">(</span><span class="n">output_path</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="PerformanceTracker.save_data">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.PerformanceTracker.save_data">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="nf">save_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Save all data to disk.&quot;&quot;&quot;</span>
+        <span class="c1"># Save runs metadata as JSON</span>
+        <span class="n">runs_dict</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="k">for</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">run</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="n">runs_dict</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span><span class="o">.</span><span class="n">to_dict</span><span class="p">()</span>
+
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">runs_dict</span><span class="p">,</span> <span class="n">f</span><span class="p">,</span> <span class="n">indent</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+        <span class="c1"># Save full data (including numpy arrays) as pickle</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">,</span> <span class="s2">&quot;wb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">pickle</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span>
+
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 Saved </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">)</span><span class="si">}</span><span class="s2"> runs to </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">storage_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">_load_data</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;Load existing data from disk.&quot;&quot;&quot;</span>
+        <span class="c1"># Try to load from pickle first (includes numpy arrays)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="p">,</span> <span class="s2">&quot;rb&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">runs</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📂 Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">)</span><span class="si">}</span><span class="s2"> runs from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">data_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+                <span class="k">return</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Could not load pickle data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Fallback to JSON (without numpy arrays)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">runs_file</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="k">try</span><span class="p">:</span>
+                <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs_file</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+                    <span class="n">runs_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+
+                <span class="bp">self</span><span class="o">.</span><span class="n">runs</span> <span class="o">=</span> <span class="p">{}</span>
+                <span class="k">for</span> <span class="n">run_id</span><span class="p">,</span> <span class="n">run_data</span> <span class="ow">in</span> <span class="n">runs_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+                    <span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">ModelRun</span><span class="o">.</span><span class="n">from_dict</span><span class="p">(</span><span class="n">run_data</span><span class="p">)</span>
+
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📂 Loaded </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">runs</span><span class="p">)</span><span class="si">}</span><span class="s2"> runs from </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">runs_file</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+            <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Warning: Could not load JSON data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="load_performance_history">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.load_performance_history">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_performance_history</span><span class="p">(</span><span class="n">storage_dir</span><span class="p">:</span> <span class="n">Union</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Path</span><span class="p">])</span> <span class="o">-&gt;</span> <span class="n">PerformanceTracker</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load an existing performance tracking history.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    storage_dir : str or Path</span>
+<span class="sd">        Directory containing saved performance data</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    PerformanceTracker</span>
+<span class="sd">        Loaded performance tracker</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">PerformanceTracker</span><span class="p">(</span><span class="n">storage_dir</span><span class="p">,</span> <span class="n">auto_save</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span></div>
+
+
+
+<div class="viewcode-block" id="compare_model_runs">
+<a class="viewcode-back" href="../../../api/utils.html#maple.utils.compare_model_runs">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">compare_model_runs</span><span class="p">(</span>
+    <span class="n">runs</span><span class="p">:</span> <span class="n">List</span><span class="p">[</span><span class="n">ModelRun</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="n">List</span><span class="p">[</span><span class="nb">str</span><span class="p">]]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">save_plot</span><span class="p">:</span> <span class="n">Optional</span><span class="p">[</span><span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Compare multiple model runs and optionally create visualization.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    runs : List[ModelRun]</span>
+<span class="sd">        List of model runs to compare</span>
+<span class="sd">    metrics : List[str], optional</span>
+<span class="sd">        Metrics to compare (default: all available)</span>
+<span class="sd">    save_plot : str, optional</span>
+<span class="sd">        Path to save comparison plot</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    pd.DataFrame</span>
+<span class="sd">        Comparison table</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Create temporary tracker for comparison functionality</span>
+    <span class="n">tracker</span> <span class="o">=</span> <span class="n">PerformanceTracker</span><span class="p">(</span>
+        <span class="n">storage_dir</span><span class="o">=</span><span class="n">Path</span><span class="o">.</span><span class="n">cwd</span><span class="p">()</span> <span class="o">/</span> <span class="s2">&quot;temp_comparison&quot;</span><span class="p">,</span> <span class="n">auto_save</span><span class="o">=</span><span class="kc">False</span>
+    <span class="p">)</span>
+
+    <span class="c1"># Add runs to tracker</span>
+    <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">:</span>
+        <span class="n">tracker</span><span class="o">.</span><span class="n">runs</span><span class="p">[</span><span class="n">run</span><span class="o">.</span><span class="n">run_id</span><span class="p">]</span> <span class="o">=</span> <span class="n">run</span>
+
+    <span class="c1"># Generate comparison</span>
+    <span class="n">comparison_df</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">compare_runs</span><span class="p">([</span><span class="n">run</span><span class="o">.</span><span class="n">run_id</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">],</span> <span class="n">metrics</span><span class="p">)</span>
+
+    <span class="c1"># Create plot if requested</span>
+    <span class="k">if</span> <span class="n">save_plot</span><span class="p">:</span>
+        <span class="n">fig</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">plot_run_comparison</span><span class="p">([</span><span class="n">run</span><span class="o">.</span><span class="n">run_id</span> <span class="k">for</span> <span class="n">run</span> <span class="ow">in</span> <span class="n">runs</span><span class="p">],</span> <span class="n">metrics</span><span class="p">)</span>
+        <span class="n">fig</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="n">save_plot</span><span class="p">,</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">,</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s2">&quot;tight&quot;</span><span class="p">)</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">(</span><span class="n">fig</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Saved comparison plot to </span><span class="si">{</span><span class="n">save_plot</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">comparison_df</span></div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAPLE Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

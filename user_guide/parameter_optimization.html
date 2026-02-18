@@ -1,0 +1,1247 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parameter Optimization Guide &mdash; MAPLE-fep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Methods Comparison" href="../methods_comparison.html" />
+    <link rel="prev" title="Tutorials" href="tutorials.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/MAPLE_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#standard-installation">Standard Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#optional-dependencies">Optional Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#common-installation-issues">Common Installation Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#development-environment">Development Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#data-format">Data Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#edge-dataframe">Edge DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#node-dataframe">Node DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#from-benchmark-data">From Benchmark Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#variationalestimator-map-vi-mle">VariationalEstimator (MAP/VI/MLE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#gaussianmixturevi-outlier-robust">GaussianMixtureVI (Outlier-Robust)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#spectralcorrection-wsfc-sfc">SpectralCorrection (WSFC/SFC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#key-concepts">Key Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quickstart.html#the-add-predictions-to-dataset-pattern">The add_predictions_to_dataset() Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#performance-analysis">Performance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture and Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#design-philosophy">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#module-overview">Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#model-dataset-interaction-pattern">Model-Dataset Interaction Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#probabilistic-models-models-probabilistic">Probabilistic Models (<code class="docutils literal notranslate"><span class="pre">models.probabilistic</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#deterministic-models-models-deterministic">Deterministic Models (<code class="docutils literal notranslate"><span class="pre">models.deterministic</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#key-design-patterns">Key Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#configuration-via-pydantic">Configuration via Pydantic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#estimator-registry">Estimator Registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#tutorial-1-understanding-the-dataset-model-workflow">Tutorial 1: Understanding the Dataset-Model Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#the-central-concept">The Central Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-1-create-your-dataset">Step 1: Create Your Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-2-train-a-model-and-add-predictions">Step 2: Train a Model and Add Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-3-add-more-models">Step 3: Add More Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-4-compare-models-from-dataset">Step 4: Compare Models from Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#tutorial-2-complete-fep-analysis-workflow">Tutorial 2: Complete FEP Analysis Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-1-load-and-inspect-data">Step 1: Load and Inspect Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-2-train-multiple-inference-methods">Step 2: Train Multiple Inference Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-3-comprehensive-performance-analysis">Step 3: Comprehensive Performance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-4-outlier-analysis-gmvi">Step 4: Outlier Analysis (GMVI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-5-publication-ready-visualization">Step 5: Publication-Ready Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#tutorial-3-working-with-your-own-data">Tutorial 3: Working with Your Own Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-1-prepare-your-data">Step 1: Prepare Your Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-2-create-dataset">Step 2: Create Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-3-automatic-node-derivation-if-no-experimental-data">Step 3: Automatic Node Derivation (If No Experimental Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#step-4-train-and-compare-models">Step 4: Train and Compare Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#tutorial-4-understanding-model-uncertainties">Tutorial 4: Understanding Model Uncertainties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#variational-inference-uncertainties">Variational Inference Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#gmvi-uncertainties-and-outlier-detection">GMVI Uncertainties and Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="tutorials.html#visualizing-uncertainties">Visualizing Uncertainties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#tutorial-5-batch-processing-multiple-datasets">Tutorial 5: Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#summary-key-patterns-to-remember">Summary: Key Patterns to Remember</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Parameter Optimization Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#simple-parameter-sweep">Simple Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#direct-notebook-replication">Direct Notebook Replication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parametersweep-class">ParameterSweep Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#single-parameter-sweeps">Single Parameter Sweeps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#learning-rate-optimization">Learning Rate Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#prior-parameter-investigation">Prior Parameter Investigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#training-steps-optimization">Training Steps Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-parameter-optimization">Multi-Parameter Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#grid-search">Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sequential-optimization">Sequential Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cross-dataset-analysis">Cross-Dataset Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#multi-dataset-parameter-sweeps">Multi-Dataset Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-specific-optimization">Dataset-Specific Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-analysis-techniques">Advanced Analysis Techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-interaction-analysis">Parameter Interaction Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sensitivity-analysis">Sensitivity Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bayesian-optimization">Bayesian Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#visualization-and-reporting">Visualization and Reporting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-effect-plots">Parameter Effect Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#heatmaps-for-multi-parameter-analysis">Heatmaps for Multi-Parameter Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#performance-summary-reports">Performance Summary Reports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#experimental-design">Experimental Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parameter-selection">Parameter Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#statistical-considerations">Statistical Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#prior-parameter-study">Prior Parameter Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comprehensive-parameter-study">Comprehensive Parameter Study</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#error-handling-and-failure-tracking">Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#automatic-failure-tracking">Automatic Failure Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyzing-failed-experiments">Analyzing Failed Experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robust-parameter-exploration">Robust Parameter Exploration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#best-practices-for-robust-optimization">Best Practices for Robust Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-failure-scenarios">Common Failure Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recovery-and-continuation">Recovery and Continuation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Methods &amp; Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../methods_comparison.html">Methods Comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#quick-selection-guide">Quick Selection Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#method-details">Method Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#map-maximum-a-posteriori">MAP — Maximum A Posteriori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#mle-maximum-likelihood-estimation">MLE — Maximum Likelihood Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#vi-variational-inference">VI — Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#gmvi-gaussian-mixture-variational-inference">GMVI — Gaussian Mixture Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#wcc-weighted-cycle-closure">WCC — Weighted Cycle Closure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#wsfc-weighted-spectral-free-energy-correction">WSFC — Weighted Spectral Free-energy Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#sfc-spectral-free-energy-correction">SFC — Spectral Free-energy Correction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#comparison-table">Comparison Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#method-relationships">Method Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#usage-examples">Usage Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#running-all-methods">Running All Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models Package (<code class="docutils literal notranslate"><span class="pre">maple.models</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#package-structure">Package Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#available-models">Available Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#the-add-predictions-to-dataset-method">The add_predictions_to_dataset() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#probabilistic-models">Probabilistic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#variationalestimator">VariationalEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#how-variationalestimator-determines-column-names">How VariationalEstimator Determines Column Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#gaussianmixturevi">GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id1">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id2">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#deterministic-models">Deterministic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#cycleclosurecorrection">CycleClosureCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id3">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#spectralcorrection">SpectralCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id5">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id6">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#id7">Probabilistic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id8">VariationalEstimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id12">GaussianMixtureVI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#id13">Deterministic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id14">CycleClosureCorrection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id15">SpectralCorrection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#configuration-classes">Configuration Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#variationalestimatorconfig">VariationalEstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#gaussianmixtureviconfig">GaussianMixtureVIConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#cycleclosurecorrectionconfig">CycleClosureCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#spectralcorrectionconfig">SpectralCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#baseestimatorconfig">BaseEstimatorConfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#configuration-enums">Configuration Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#priortype">PriorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#guidetype">GuideType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#errordistributiontype">ErrorDistributionType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#data-structures">Data Structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#graphdata">GraphData</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#create-config">create_config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/dataset.html">Dataset Package (<code class="docutils literal notranslate"><span class="pre">maple.dataset</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#data-flow-how-models-interact-with-dataset">Data Flow: How Models Interact with Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#dataset-attributes">Dataset Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#maple.dataset.BaseDataset"><code class="docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#main-dataset-classes">Main Dataset Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#fepdataset">FEPDataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#fepbenchmarkdataset">FEPBenchmarkDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#specialized-datasets">Specialized Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#syntheticfepdataset">SyntheticFEPDataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#derive-nodes-from-edges">derive_nodes_from_edges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#example-multi-model-comparison">Example: Multi-Model Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utils Package (<code class="docutils literal notranslate"><span class="pre">maple.utils</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#performance-tracking">Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#parameter-sweeps">Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#failure-tracking">Failure Tracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#id1">Performance Tracking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.PerformanceTracker"><code class="docutils literal notranslate"><span class="pre">PerformanceTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.ModelRun"><code class="docutils literal notranslate"><span class="pre">ModelRun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.load_performance_history"><code class="docutils literal notranslate"><span class="pre">load_performance_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.compare_model_runs"><code class="docutils literal notranslate"><span class="pre">compare_model_runs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#parameter-optimization">Parameter Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.ParameterSweep"><code class="docutils literal notranslate"><span class="pre">ParameterSweep</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.create_prior_sweep_experiment"><code class="docutils literal notranslate"><span class="pre">create_prior_sweep_experiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.create_comprehensive_parameter_study"><code class="docutils literal notranslate"><span class="pre">create_comprehensive_parameter_study()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/graph_analysis.html">Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/graph_analysis.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/graph_analysis.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#performance-statistics">Performance Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#plotting">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/graph_analysis.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#id1">Performance Statistics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_mae"><code class="docutils literal notranslate"><span class="pre">calculate_mae()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_rmse"><code class="docutils literal notranslate"><span class="pre">calculate_rmse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_r2"><code class="docutils literal notranslate"><span class="pre">calculate_r2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_correlation"><code class="docutils literal notranslate"><span class="pre">calculate_correlation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.bootstrap_statistic"><code class="docutils literal notranslate"><span class="pre">bootstrap_statistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.compute_simple_statistics"><code class="docutils literal notranslate"><span class="pre">compute_simple_statistics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#single-model-plotting">Single Model Plotting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#multi-model-comparison">Multi-Model Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#error-analysis">Error Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interactive Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Interactive Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#getting-started-tutorial">Getting Started Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#source-files">Source Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#running-tutorials-locally">Running Tutorials Locally</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/basic_usage.html">Basic Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#core-concept-dataset-as-central-hub">Core Concept: Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#loading-and-preparing-data">Loading and Preparing Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-your-own-data">From Your Own Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#training-models-and-adding-predictions">Training Models and Adding Predictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#map-inference-with-variationalestimator">MAP Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#variational-inference-with-variationalestimator">Variational Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#gmvi-with-outlier-detection">GMVI with Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#complete-multi-model-workflow">Complete Multi-Model Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#working-with-results">Working with Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#accessing-predictions-from-dataset">Accessing Predictions from Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#creating-comparison-dataframe">Creating Comparison DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#model-comparison-plot">Model Comparison Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#predictions-with-uncertainties">Predictions with Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/basic_usage.html#outlier-analysis">Outlier Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#batch-processing-multiple-datasets">Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/basic_usage.html#best-practices-summary">Best Practices Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/parameter_sweeps.html">Parameter Sweep Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-1-learning-rate-optimization">Example 1: Learning Rate Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#execute-parameter-sweep">Execute Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#analyze-results">Analyze Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#visualize-results">Visualize Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-2-prior-parameter-investigation">Example 2: Prior Parameter Investigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#setup-and-execution">Setup and Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#create-publication-quality-plots">Create Publication-Quality Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#statistical-analysis">Statistical Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-3-multi-parameter-grid-search">Example 3: Multi-Parameter Grid Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#define-parameter-grid">Define Parameter Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#execute-grid-search">Execute Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#analyze-grid-search-results">Analyze Grid Search Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#visualize-grid-search-results">Visualize Grid Search Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-4-cross-dataset-parameter-study">Example 4: Cross-Dataset Parameter Study</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#setup-multiple-datasets">Setup Multiple Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#cross-dataset-parameter-sweep">Cross-Dataset Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#find-universal-optimal-parameters">Find Universal Optimal Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#cross-dataset-visualization">Cross-Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#example-5-error-handling-and-failure-tracking">Example 5: Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#robust-parameter-sweep">Robust Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#failure-analysis-and-recovery">Failure Analysis and Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#recovery-strategies">Recovery Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#parameter-validation-and-preprocessing">Parameter Validation and Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/parameter_sweeps.html#best-practices-for-robust-parameter-sweeps">Best Practices for Robust Parameter Sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/parameter_sweeps.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html">FEP Benchmark Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#setup-and-imports">Setup and Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#fep-benchmark-dataset-tutorial">FEP Benchmark Dataset Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#available-datasets">Available Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#examining-the-data-structure">Examining the Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#dataset-visualization">Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#performance-tracker-tutorial">Performance Tracker Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#setting-up-performance-tracking">Setting Up Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#recording-model-runs">Recording Model Runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#comparing-models">Comparing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#advanced-performance-analysis">Advanced Performance Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#working-with-real-fep-data">Working with Real FEP Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#summary-and-best-practices">Summary and Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#key-takeaways">Key Takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../examples/fep_benchmark_tutorial.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contributing.html">Contributing to MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#development-setup">Development Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#fork-and-clone">Fork and Clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#development-environment">Development Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#running-tests">Running Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#building-documentation">Building Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#writing-documentation">Writing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#submitting-changes">Submitting Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#reporting-issues">Reporting Issues</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLE-fep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Parameter Optimization Guide</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/aakankschit/MAPLE-fep/blob/main/docs/user_guide/parameter_optimization.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="parameter-optimization-guide">
+<h1>Parameter Optimization Guide<a class="headerlink" href="#parameter-optimization-guide" title="Link to this heading"></a></h1>
+<p>This guide provides comprehensive approaches for investigating parameter effects on model performance in MAPLE, including systematic parameter sweeps, optimization, and visualization techniques.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The MAPLE parameter investigation system offers multiple approaches for exploring how different parameters affect model performance:</p>
+<ol class="arabic simple">
+<li><p><strong>Direct Replication</strong> - Exact recreation of existing analysis workflows</p></li>
+<li><p><strong>Parameter Sweeps</strong> - Systematic exploration of individual parameters</p></li>
+<li><p><strong>Grid Search</strong> - Multi-parameter optimization</p></li>
+<li><p><strong>Advanced Analysis</strong> - Parameter interactions and cross-dataset studies</p></li>
+</ol>
+</section>
+<section id="quick-start">
+<h2>Quick Start<a class="headerlink" href="#quick-start" title="Link to this heading"></a></h2>
+<section id="simple-parameter-sweep">
+<h3>Simple Parameter Sweep<a class="headerlink" href="#simple-parameter-sweep" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maple.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">ParameterSweep</span><span class="p">,</span> <span class="n">PerformanceTracker</span>
+
+<span class="n">tracker</span> <span class="o">=</span> <span class="n">PerformanceTracker</span><span class="p">(</span><span class="s2">&quot;./results&quot;</span><span class="p">)</span>
+<span class="n">sweep</span> <span class="o">=</span> <span class="n">ParameterSweep</span><span class="p">(</span><span class="n">tracker</span><span class="p">,</span> <span class="n">base_config</span><span class="p">,</span> <span class="n">datasets</span><span class="p">)</span>
+
+<span class="c1"># Investigate prior standard deviation effect</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="s1">&#39;prior_std&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Create visualization</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">plot_parameter_effects</span><span class="p">(</span><span class="n">results</span><span class="p">,</span> <span class="s1">&#39;prior_std&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="direct-notebook-replication">
+<h3>Direct Notebook Replication<a class="headerlink" href="#direct-notebook-replication" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">maple.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">create_prior_sweep_experiment</span>
+
+<span class="c1"># Replicate existing notebook analysis</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">create_prior_sweep_experiment</span><span class="p">(</span>
+    <span class="n">tracker</span><span class="o">=</span><span class="n">tracker</span><span class="p">,</span>
+    <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span>
+    <span class="n">prior_std_values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="core-components">
+<h2>Core Components<a class="headerlink" href="#core-components" title="Link to this heading"></a></h2>
+<section id="parametersweep-class">
+<h3>ParameterSweep Class<a class="headerlink" href="#parametersweep-class" title="Link to this heading"></a></h3>
+<p>The main class for systematic parameter exploration:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sweep</span> <span class="o">=</span> <span class="n">ParameterSweep</span><span class="p">(</span>
+    <span class="n">tracker</span><span class="o">=</span><span class="n">tracker</span><span class="p">,</span>        <span class="c1"># PerformanceTracker instance</span>
+    <span class="n">base_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>     <span class="c1"># Base ModelConfig to modify</span>
+    <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span>       <span class="c1"># Dict of datasets to test on</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Key methods:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">sweep_parameter()</span></code>: Sweep a single parameter with automatic failure tracking</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">grid_search()</span></code>: Multi-parameter grid search with error handling</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">find_optimal_parameters()</span></code>: Identify best parameter values</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">plot_parameter_effects()</span></code>: Visualize parameter effects</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">get_failed_experiments()</span></code>: Retrieve details of failed parameter combinations</p></li>
+</ul>
+</section>
+</section>
+<section id="single-parameter-sweeps">
+<h2>Single Parameter Sweeps<a class="headerlink" href="#single-parameter-sweeps" title="Link to this heading"></a></h2>
+<section id="learning-rate-optimization">
+<h3>Learning Rate Optimization<a class="headerlink" href="#learning-rate-optimization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sweep learning rate</span>
+<span class="n">lr_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="n">parameter_name</span><span class="o">=</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">],</span>
+    <span class="n">n_runs</span><span class="o">=</span><span class="mi">3</span>  <span class="c1"># Multiple runs for statistical reliability</span>
+<span class="p">)</span>
+
+<span class="c1"># Find optimal value</span>
+<span class="n">optimal_lr</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">find_optimal_parameters</span><span class="p">(</span><span class="n">lr_results</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Optimal learning rate: </span><span class="si">{</span><span class="n">optimal_lr</span><span class="p">[</span><span class="s1">&#39;optimal_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Check for any parameter combinations that failed</span>
+<span class="n">failed_experiments</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">get_failed_experiments</span><span class="p">()</span>
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failed_experiments</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Note: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">failed_experiments</span><span class="p">)</span><span class="si">}</span><span class="s2"> parameter combinations failed during optimization&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="prior-parameter-investigation">
+<h3>Prior Parameter Investigation<a class="headerlink" href="#prior-parameter-investigation" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Investigate prior standard deviation</span>
+<span class="n">prior_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="n">parameter_name</span><span class="o">=</span><span class="s1">&#39;prior_parameters&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="p">]</span> <span class="k">for</span> <span class="n">std</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">]],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;correlation&#39;</span><span class="p">],</span>
+    <span class="n">center_data</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>         <span class="c1"># Center FEP data</span>
+    <span class="n">bootstrap_stats</span><span class="o">=</span><span class="kc">True</span>      <span class="c1"># Include confidence intervals</span>
+<span class="p">)</span>
+
+<span class="c1"># Plot effects</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">plot_parameter_effects</span><span class="p">(</span>
+    <span class="n">results_df</span><span class="o">=</span><span class="n">prior_results</span><span class="p">,</span>
+    <span class="n">parameter_name</span><span class="o">=</span><span class="s1">&#39;prior_std&#39;</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;prior_effects.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="training-steps-optimization">
+<h3>Training Steps Optimization<a class="headerlink" href="#training-steps-optimization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optimize number of training steps</span>
+<span class="n">steps_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="s1">&#39;num_steps&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">],</span>
+    <span class="n">track_convergence</span><span class="o">=</span><span class="kc">True</span>  <span class="c1"># Monitor training progress</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="multi-parameter-optimization">
+<h2>Multi-Parameter Optimization<a class="headerlink" href="#multi-parameter-optimization" title="Link to this heading"></a></h2>
+<section id="grid-search">
+<h3>Grid Search<a class="headerlink" href="#grid-search" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Define parameter grid</span>
+<span class="n">parameter_grid</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+    <span class="s1">&#39;prior_std&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span>
+    <span class="s1">&#39;error_std&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="c1"># Run grid search</span>
+<span class="n">grid_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">grid_search</span><span class="p">(</span>
+    <span class="n">parameter_grid</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">],</span>
+    <span class="n">n_runs</span><span class="o">=</span><span class="mi">2</span>  <span class="c1"># Multiple runs per combination</span>
+<span class="p">)</span>
+
+<span class="c1"># Find best combination</span>
+<span class="n">best_params</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">find_optimal_parameters</span><span class="p">(</span><span class="n">grid_results</span><span class="p">,</span> <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Best parameter combination:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">best_params</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sequential-optimization">
+<h3>Sequential Optimization<a class="headerlink" href="#sequential-optimization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Optimize parameters sequentially</span>
+<span class="n">base_config</span> <span class="o">=</span> <span class="n">ModelConfig</span><span class="p">()</span>
+
+<span class="c1"># Step 1: Optimize learning rate</span>
+<span class="n">lr_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="n">optimal_lr</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">find_optimal_parameters</span><span class="p">(</span><span class="n">lr_results</span><span class="p">,</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="n">base_config</span><span class="o">.</span><span class="n">learning_rate</span> <span class="o">=</span> <span class="n">optimal_lr</span><span class="p">[</span><span class="s1">&#39;optimal_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Step 2: Optimize prior with optimal learning rate</span>
+<span class="n">sweep</span><span class="o">.</span><span class="n">base_config</span> <span class="o">=</span> <span class="n">base_config</span>
+<span class="n">prior_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="s1">&#39;prior_parameters&#39;</span><span class="p">,</span>
+    <span class="p">[[</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">std</span><span class="p">]</span> <span class="k">for</span> <span class="n">std</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]]</span>
+<span class="p">)</span>
+<span class="n">optimal_prior</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">find_optimal_parameters</span><span class="p">(</span><span class="n">prior_results</span><span class="p">,</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="n">base_config</span><span class="o">.</span><span class="n">prior_parameters</span> <span class="o">=</span> <span class="n">optimal_prior</span><span class="p">[</span><span class="s1">&#39;optimal_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="cross-dataset-analysis">
+<h2>Cross-Dataset Analysis<a class="headerlink" href="#cross-dataset-analysis" title="Link to this heading"></a></h2>
+<section id="multi-dataset-parameter-sweeps">
+<h3>Multi-Dataset Parameter Sweeps<a class="headerlink" href="#multi-dataset-parameter-sweeps" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load multiple datasets</span>
+<span class="n">datasets</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;dataset_A&quot;</span><span class="p">:</span> <span class="n">FEPDataset</span><span class="p">(</span><span class="s2">&quot;data_A.csv&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;dataset_B&quot;</span><span class="p">:</span> <span class="n">FEPDataset</span><span class="p">(</span><span class="s2">&quot;data_B.csv&quot;</span><span class="p">),</span>
+    <span class="s2">&quot;dataset_C&quot;</span><span class="p">:</span> <span class="n">FEPDataset</span><span class="p">(</span><span class="s2">&quot;data_C.csv&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Create sweep across all datasets</span>
+<span class="n">sweep</span> <span class="o">=</span> <span class="n">ParameterSweep</span><span class="p">(</span><span class="n">tracker</span><span class="p">,</span> <span class="n">base_config</span><span class="p">,</span> <span class="n">datasets</span><span class="p">)</span>
+
+<span class="c1"># Sweep parameter across all datasets</span>
+<span class="n">cross_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Find universally optimal parameters</span>
+<span class="n">universal_optimal</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">find_optimal_parameters</span><span class="p">(</span>
+    <span class="n">cross_results</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span>
+    <span class="n">aggregation</span><span class="o">=</span><span class="s1">&#39;mean&#39;</span>  <span class="c1"># Average across datasets</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dataset-specific-optimization">
+<h3>Dataset-Specific Optimization<a class="headerlink" href="#dataset-specific-optimization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Find optimal parameters for each dataset</span>
+<span class="n">dataset_optima</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="k">for</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="n">datasets</span><span class="o">.</span><span class="n">keys</span><span class="p">():</span>
+    <span class="n">dataset_results</span> <span class="o">=</span> <span class="n">cross_results</span><span class="p">[</span><span class="n">cross_results</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">dataset_name</span><span class="p">]</span>
+    <span class="n">optimal</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">find_optimal_parameters</span><span class="p">(</span><span class="n">dataset_results</span><span class="p">,</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+    <span class="n">dataset_optima</span><span class="p">[</span><span class="n">dataset_name</span><span class="p">]</span> <span class="o">=</span> <span class="n">optimal</span><span class="p">[</span><span class="s1">&#39;optimal_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dataset-specific optimal learning rates:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">dataset</span><span class="p">,</span> <span class="n">lr</span> <span class="ow">in</span> <span class="n">dataset_optima</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">lr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="advanced-analysis-techniques">
+<h2>Advanced Analysis Techniques<a class="headerlink" href="#advanced-analysis-techniques" title="Link to this heading"></a></h2>
+<section id="parameter-interaction-analysis">
+<h3>Parameter Interaction Analysis<a class="headerlink" href="#parameter-interaction-analysis" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Analyze parameter interactions</span>
+<span class="n">interaction_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">analyze_parameter_interactions</span><span class="p">(</span>
+    <span class="n">grid_results</span><span class="p">,</span>
+    <span class="n">parameters</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="s1">&#39;prior_std&#39;</span><span class="p">],</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span>
+<span class="p">)</span>
+
+<span class="c1"># Visualize interactions</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">plot_parameter_interactions</span><span class="p">(</span>
+    <span class="n">interaction_results</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;parameter_interactions.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="sensitivity-analysis">
+<h3>Sensitivity Analysis<a class="headerlink" href="#sensitivity-analysis" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Compute parameter sensitivity</span>
+<span class="n">sensitivity</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">compute_parameter_sensitivity</span><span class="p">(</span>
+    <span class="n">parameter_results</span><span class="o">=</span><span class="n">grid_results</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span>
+    <span class="n">baseline_config</span><span class="o">=</span><span class="n">base_config</span>
+<span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Parameter sensitivity (higher = more sensitive):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">param</span><span class="p">,</span> <span class="n">sens</span> <span class="ow">in</span> <span class="n">sensitivity</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">param</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">sens</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="bayesian-optimization">
+<h3>Bayesian Optimization<a class="headerlink" href="#bayesian-optimization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Advanced Bayesian optimization (requires additional packages)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maple.utils.optimization</span><span class="w"> </span><span class="kn">import</span> <span class="n">BayesianOptimizer</span>
+
+<span class="n">optimizer</span> <span class="o">=</span> <span class="n">BayesianOptimizer</span><span class="p">(</span>
+    <span class="n">objective_function</span><span class="o">=</span><span class="n">sweep</span><span class="o">.</span><span class="n">evaluate_config</span><span class="p">,</span>
+    <span class="n">parameter_bounds</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.0001</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">),</span>
+        <span class="s1">&#39;prior_std&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">),</span>
+        <span class="s1">&#39;error_std&#39;</span><span class="p">:</span> <span class="p">(</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Run optimization</span>
+<span class="n">best_config</span><span class="p">,</span> <span class="n">best_score</span> <span class="o">=</span> <span class="n">optimizer</span><span class="o">.</span><span class="n">optimize</span><span class="p">(</span><span class="n">n_calls</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="visualization-and-reporting">
+<h2>Visualization and Reporting<a class="headerlink" href="#visualization-and-reporting" title="Link to this heading"></a></h2>
+<section id="parameter-effect-plots">
+<h3>Parameter Effect Plots<a class="headerlink" href="#parameter-effect-plots" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create comprehensive parameter effect plots</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">plot_parameter_effects</span><span class="p">(</span>
+    <span class="n">results_df</span><span class="o">=</span><span class="n">results</span><span class="p">,</span>
+    <span class="n">parameter_name</span><span class="o">=</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">],</span>
+    <span class="n">groupby</span><span class="o">=</span><span class="s1">&#39;dataset&#39;</span><span class="p">,</span>
+    <span class="n">confidence_intervals</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;lr_effects.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="heatmaps-for-multi-parameter-analysis">
+<h3>Heatmaps for Multi-Parameter Analysis<a class="headerlink" href="#heatmaps-for-multi-parameter-analysis" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create parameter interaction heatmap</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">plot_parameter_heatmap</span><span class="p">(</span>
+    <span class="n">grid_results</span><span class="p">,</span>
+    <span class="n">x_param</span><span class="o">=</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+    <span class="n">y_param</span><span class="o">=</span><span class="s1">&#39;prior_std&#39;</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span>
+    <span class="n">save_path</span><span class="o">=</span><span class="s1">&#39;parameter_heatmap.png&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="performance-summary-reports">
+<h3>Performance Summary Reports<a class="headerlink" href="#performance-summary-reports" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generate comprehensive report</span>
+<span class="n">report</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">generate_optimization_report</span><span class="p">(</span>
+    <span class="n">parameter_results</span><span class="o">=</span><span class="n">grid_results</span><span class="p">,</span>
+    <span class="n">output_path</span><span class="o">=</span><span class="s1">&#39;optimization_report.html&#39;</span><span class="p">,</span>
+    <span class="n">include_plots</span><span class="o">=</span><span class="kc">True</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices">
+<h2>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h2>
+<section id="experimental-design">
+<h3>Experimental Design<a class="headerlink" href="#experimental-design" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>Start Simple</strong>: Begin with single-parameter sweeps</p></li>
+<li><p><strong>Use Multiple Runs</strong>: Include multiple runs for statistical reliability</p></li>
+<li><p><strong>Include Baselines</strong>: Always test default/literature values</p></li>
+<li><p><strong>Document Everything</strong>: Use descriptive run IDs and metadata</p></li>
+</ol>
+</section>
+<section id="parameter-selection">
+<h3>Parameter Selection<a class="headerlink" href="#parameter-selection" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Recommended parameter ranges for common sweeps</span>
+
+<span class="c1"># Learning rate (log scale)</span>
+<span class="n">learning_rates</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="o">**</span><span class="n">i</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="o">-</span><span class="mi">4</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>  <span class="c1"># 0.0001 to 0.1</span>
+
+<span class="c1"># Prior standard deviation</span>
+<span class="n">prior_stds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">,</span> <span class="mf">5.0</span><span class="p">,</span> <span class="mf">10.0</span><span class="p">]</span>
+
+<span class="c1"># Number of training steps</span>
+<span class="n">training_steps</span> <span class="o">=</span> <span class="p">[</span><span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">,</span> <span class="mi">10000</span><span class="p">]</span>
+
+<span class="c1"># Error standard deviation</span>
+<span class="n">error_stds</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="statistical-considerations">
+<h3>Statistical Considerations<a class="headerlink" href="#statistical-considerations" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Include proper statistical analysis</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">],</span>
+    <span class="n">n_runs</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>                    <span class="c1"># Multiple runs</span>
+    <span class="n">bootstrap_stats</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>        <span class="c1"># Bootstrap CIs</span>
+    <span class="n">statistical_tests</span><span class="o">=</span><span class="kc">True</span>       <span class="c1"># Significance tests</span>
+<span class="p">)</span>
+
+<span class="c1"># Check for significant differences</span>
+<span class="n">significance</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">test_parameter_significance</span><span class="p">(</span>
+    <span class="n">results</span><span class="p">,</span>
+    <span class="n">parameter</span><span class="o">=</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+    <span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="convenience-functions">
+<h2>Convenience Functions<a class="headerlink" href="#convenience-functions" title="Link to this heading"></a></h2>
+<p>For common workflows, MAPLE provides high-level convenience functions:</p>
+<section id="prior-parameter-study">
+<h3>Prior Parameter Study<a class="headerlink" href="#prior-parameter-study" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Replicate common prior parameter analysis</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">create_prior_sweep_experiment</span><span class="p">(</span>
+    <span class="n">tracker</span><span class="o">=</span><span class="n">tracker</span><span class="p">,</span>
+    <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span>
+    <span class="n">prior_std_values</span><span class="o">=</span><span class="p">[</span><span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;rho&#39;</span><span class="p">],</span>
+    <span class="n">n_runs</span><span class="o">=</span><span class="mi">3</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="comprehensive-parameter-study">
+<h3>Comprehensive Parameter Study<a class="headerlink" href="#comprehensive-parameter-study" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Full parameter exploration study</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">create_comprehensive_parameter_study</span><span class="p">(</span>
+    <span class="n">tracker</span><span class="o">=</span><span class="n">tracker</span><span class="p">,</span>
+    <span class="n">datasets</span><span class="o">=</span><span class="n">datasets</span><span class="p">,</span>
+    <span class="n">parameter_ranges</span><span class="o">=</span><span class="p">{</span>
+        <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+        <span class="s1">&#39;prior_std&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">],</span>
+        <span class="s1">&#39;num_steps&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">]</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="error-handling-and-failure-tracking">
+<h2>Error Handling and Failure Tracking<a class="headerlink" href="#error-handling-and-failure-tracking" title="Link to this heading"></a></h2>
+<p>MAPLE’s parameter sweep system includes robust error handling that allows exploration to continue even when individual parameter combinations fail:</p>
+<section id="automatic-failure-tracking">
+<h3>Automatic Failure Tracking<a class="headerlink" href="#automatic-failure-tracking" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameter sweep automatically handles failures gracefully</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+    <span class="s1">&#39;num_steps&#39;</span><span class="p">,</span>
+    <span class="n">values</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1000</span><span class="p">],</span>  <span class="c1"># Some values may fail validation</span>
+    <span class="n">metrics</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">]</span>
+<span class="p">)</span>
+
+<span class="c1"># Results contain only successful experiments</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successful experiments: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Access failure details</span>
+<span class="n">failed_experiments</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">get_failed_experiments</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed experiments: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">failed_experiments</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="analyzing-failed-experiments">
+<h3>Analyzing Failed Experiments<a class="headerlink" href="#analyzing-failed-experiments" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get detailed failure information</span>
+<span class="n">failures</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">get_failed_experiments</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failures</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="c1"># Group by error type</span>
+    <span class="n">error_counts</span> <span class="o">=</span> <span class="n">failures</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;error_type&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Error types encountered:&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">error_type</span><span class="p">,</span> <span class="n">count</span> <span class="ow">in</span> <span class="n">error_counts</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  </span><span class="si">{</span><span class="n">error_type</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">count</span><span class="si">}</span><span class="s2"> experiments&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Show specific failures</span>
+    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">failure</span> <span class="ow">in</span> <span class="n">failures</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Failed: </span><span class="si">{</span><span class="n">failure</span><span class="p">[</span><span class="s1">&#39;parameter&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="n">failure</span><span class="p">[</span><span class="s1">&#39;parameter_value&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Error: </span><span class="si">{</span><span class="n">failure</span><span class="p">[</span><span class="s1">&#39;error_type&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2"> - </span><span class="si">{</span><span class="n">failure</span><span class="p">[</span><span class="s1">&#39;error_message&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Dataset: </span><span class="si">{</span><span class="n">failure</span><span class="p">[</span><span class="s1">&#39;dataset&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="robust-parameter-exploration">
+<h3>Robust Parameter Exploration<a class="headerlink" href="#robust-parameter-exploration" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">robust_parameter_study</span><span class="p">(</span><span class="n">sweep</span><span class="p">,</span> <span class="n">param_ranges</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Conduct parameter study with comprehensive error handling.&quot;&quot;&quot;</span>
+    <span class="n">all_results</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">all_failures</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="k">for</span> <span class="n">param_name</span><span class="p">,</span> <span class="n">values</span> <span class="ow">in</span> <span class="n">param_ranges</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Exploring </span><span class="si">{</span><span class="n">param_name</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Run sweep</span>
+        <span class="n">results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">values</span><span class="p">)</span>
+        <span class="n">all_results</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+
+        <span class="c1"># Track failures</span>
+        <span class="n">failures</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">get_failed_experiments</span><span class="p">()</span>
+        <span class="n">param_failures</span> <span class="o">=</span> <span class="n">failures</span><span class="p">[</span><span class="n">failures</span><span class="p">[</span><span class="s1">&#39;parameter&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="n">param_name</span><span class="p">]</span>
+        <span class="n">all_failures</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">param_failures</span><span class="p">)</span>
+
+        <span class="c1"># Report status</span>
+        <span class="n">success_rate</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">results</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">values</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="k">else</span> <span class="mi">0</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Success rate: </span><span class="si">{</span><span class="n">success_rate</span><span class="si">:</span><span class="s2">.1%</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">param_failures</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Failed values: </span><span class="si">{</span><span class="n">param_failures</span><span class="p">[</span><span class="s1">&#39;parameter_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">all_results</span><span class="p">,</span> <span class="n">all_failures</span>
+</pre></div>
+</div>
+</section>
+<section id="best-practices-for-robust-optimization">
+<h3>Best Practices for Robust Optimization<a class="headerlink" href="#best-practices-for-robust-optimization" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 1. Always check for failures after parameter sweeps</span>
+<span class="n">results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">])</span>
+<span class="n">failures</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">get_failed_experiments</span><span class="p">()</span>
+
+<span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">failures</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;⚠️ Some parameter combinations failed - check failure details&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Use sweep.get_failed_experiments() for details&quot;</span><span class="p">)</span>
+
+<span class="c1"># 2. Validate parameter ranges before running expensive sweeps</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">validate_param_range</span><span class="p">(</span><span class="n">param_name</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">param_name</span> <span class="o">==</span> <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="mi">0</span> <span class="o">&lt;</span> <span class="n">v</span> <span class="o">&lt;=</span> <span class="mf">1.0</span><span class="p">]</span>
+    <span class="k">elif</span> <span class="n">param_name</span> <span class="o">==</span> <span class="s1">&#39;num_steps&#39;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">v</span> <span class="k">for</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">values</span> <span class="k">if</span> <span class="n">v</span> <span class="o">&gt;=</span> <span class="mi">10</span><span class="p">]</span>
+    <span class="k">return</span> <span class="n">values</span>
+
+<span class="c1"># 3. Use conservative parameter ranges for initial exploration</span>
+<span class="n">conservative_ranges</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.001</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>          <span class="c1"># Known good range</span>
+    <span class="s1">&#39;num_steps&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">,</span> <span class="mi">2000</span><span class="p">],</span>          <span class="c1"># Reasonable training lengths</span>
+    <span class="s1">&#39;error_std&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">]</span>                  <span class="c1"># Moderate uncertainty levels</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</section>
+<section id="common-failure-scenarios">
+<h3>Common Failure Scenarios<a class="headerlink" href="#common-failure-scenarios" title="Link to this heading"></a></h3>
+<p>The parameter sweep system tracks several common failure types:</p>
+<ul class="simple">
+<li><p><strong>ValidationError</strong>: Invalid parameter values (e.g., negative learning rates)</p></li>
+<li><p><strong>RuntimeError</strong>: Training convergence issues or numerical instability</p></li>
+<li><p><strong>AttributeError</strong>: Configuration object errors</p></li>
+<li><p><strong>ValueError</strong>: Data format or shape mismatches</p></li>
+<li><p><strong>TimeoutError</strong>: Experiments that exceed time limits</p></li>
+</ul>
+</section>
+<section id="recovery-and-continuation">
+<h3>Recovery and Continuation<a class="headerlink" href="#recovery-and-continuation" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Continue optimization after failures</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">continue_after_failures</span><span class="p">(</span><span class="n">sweep</span><span class="p">,</span> <span class="n">original_results</span><span class="p">,</span> <span class="n">failed_params</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Continue parameter search with modified ranges.&quot;&quot;&quot;</span>
+
+    <span class="c1"># Analyze successful parameter ranges</span>
+    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">original_results</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">successful_values</span> <span class="o">=</span> <span class="n">original_results</span><span class="p">[</span><span class="s1">&#39;parameter_value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Previously successful values: </span><span class="si">{</span><span class="n">successful_values</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Expand around successful values</span>
+        <span class="n">expanded_range</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">val</span> <span class="ow">in</span> <span class="n">successful_values</span><span class="p">:</span>
+            <span class="n">expanded_range</span><span class="o">.</span><span class="n">extend</span><span class="p">([</span><span class="n">val</span> <span class="o">*</span> <span class="mf">0.8</span><span class="p">,</span> <span class="n">val</span><span class="p">,</span> <span class="n">val</span> <span class="o">*</span> <span class="mf">1.2</span><span class="p">])</span>
+
+        <span class="c1"># Test expanded range</span>
+        <span class="n">new_results</span> <span class="o">=</span> <span class="n">sweep</span><span class="o">.</span><span class="n">sweep_parameter</span><span class="p">(</span>
+            <span class="n">parameter_name</span><span class="o">=</span><span class="s1">&#39;learning_rate&#39;</span><span class="p">,</span>
+            <span class="n">values</span><span class="o">=</span><span class="n">expanded_range</span><span class="p">,</span>
+            <span class="n">experiment_name</span><span class="o">=</span><span class="s1">&#39;recovery_sweep&#39;</span>
+        <span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">new_results</span>
+
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This comprehensive parameter optimization system enables systematic investigation of parameter effects, identification of optimal configurations, and creation of publication-quality visualizations while maintaining statistical rigor throughout the process. The robust error handling ensures that parameter exploration can continue productively even when individual configurations encounter issues.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="tutorials.html" class="btn btn-neutral float-left" title="Tutorials" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../methods_comparison.html" class="btn btn-neutral float-right" title="Methods Comparison" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAPLE Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

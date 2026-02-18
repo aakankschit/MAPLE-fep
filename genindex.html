@@ -1,0 +1,2210 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Index &mdash; MAPLE-fep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=01f34227"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="#" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/MAPLE_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/installation.html#standard-installation">Standard Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/installation.html#optional-dependencies">Optional Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/installation.html#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/installation.html#common-installation-issues">Common Installation Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/installation.html#development-environment">Development Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#data-format">Data Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#edge-dataframe">Edge DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#node-dataframe">Node DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#from-benchmark-data">From Benchmark Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#variationalestimator-map-vi-mle">VariationalEstimator (MAP/VI/MLE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#gaussianmixturevi-outlier-robust">GaussianMixtureVI (Outlier-Robust)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#spectralcorrection-wsfc-sfc">SpectralCorrection (WSFC/SFC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#key-concepts">Key Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/quickstart.html#the-add-predictions-to-dataset-pattern">The add_predictions_to_dataset() Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#performance-analysis">Performance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/architecture.html">Architecture and Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#design-philosophy">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#module-overview">Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#model-dataset-interaction-pattern">Model-Dataset Interaction Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/architecture.html#probabilistic-models-models-probabilistic">Probabilistic Models (<code class="docutils literal notranslate"><span class="pre">models.probabilistic</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/architecture.html#deterministic-models-models-deterministic">Deterministic Models (<code class="docutils literal notranslate"><span class="pre">models.deterministic</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#key-design-patterns">Key Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/architecture.html#configuration-via-pydantic">Configuration via Pydantic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/architecture.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/architecture.html#estimator-registry">Estimator Registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/architecture.html#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/tutorials.html#tutorial-1-understanding-the-dataset-model-workflow">Tutorial 1: Understanding the Dataset-Model Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#the-central-concept">The Central Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-1-create-your-dataset">Step 1: Create Your Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-2-train-a-model-and-add-predictions">Step 2: Train a Model and Add Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-3-add-more-models">Step 3: Add More Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-4-compare-models-from-dataset">Step 4: Compare Models from Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/tutorials.html#tutorial-2-complete-fep-analysis-workflow">Tutorial 2: Complete FEP Analysis Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-1-load-and-inspect-data">Step 1: Load and Inspect Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-2-train-multiple-inference-methods">Step 2: Train Multiple Inference Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-3-comprehensive-performance-analysis">Step 3: Comprehensive Performance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-4-outlier-analysis-gmvi">Step 4: Outlier Analysis (GMVI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-5-publication-ready-visualization">Step 5: Publication-Ready Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/tutorials.html#tutorial-3-working-with-your-own-data">Tutorial 3: Working with Your Own Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-1-prepare-your-data">Step 1: Prepare Your Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-2-create-dataset">Step 2: Create Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-3-automatic-node-derivation-if-no-experimental-data">Step 3: Automatic Node Derivation (If No Experimental Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#step-4-train-and-compare-models">Step 4: Train and Compare Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/tutorials.html#tutorial-4-understanding-model-uncertainties">Tutorial 4: Understanding Model Uncertainties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#variational-inference-uncertainties">Variational Inference Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#gmvi-uncertainties-and-outlier-detection">GMVI Uncertainties and Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/tutorials.html#visualizing-uncertainties">Visualizing Uncertainties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/tutorials.html#tutorial-5-batch-processing-multiple-datasets">Tutorial 5: Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/tutorials.html#summary-key-patterns-to-remember">Summary: Key Patterns to Remember</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_guide/parameter_optimization.html">Parameter Optimization Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#simple-parameter-sweep">Simple Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#direct-notebook-replication">Direct Notebook Replication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#parametersweep-class">ParameterSweep Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#single-parameter-sweeps">Single Parameter Sweeps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#learning-rate-optimization">Learning Rate Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#prior-parameter-investigation">Prior Parameter Investigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#training-steps-optimization">Training Steps Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#multi-parameter-optimization">Multi-Parameter Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#grid-search">Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#sequential-optimization">Sequential Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#cross-dataset-analysis">Cross-Dataset Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#multi-dataset-parameter-sweeps">Multi-Dataset Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#dataset-specific-optimization">Dataset-Specific Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#advanced-analysis-techniques">Advanced Analysis Techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#parameter-interaction-analysis">Parameter Interaction Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#sensitivity-analysis">Sensitivity Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#bayesian-optimization">Bayesian Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#visualization-and-reporting">Visualization and Reporting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#parameter-effect-plots">Parameter Effect Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#heatmaps-for-multi-parameter-analysis">Heatmaps for Multi-Parameter Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#performance-summary-reports">Performance Summary Reports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#experimental-design">Experimental Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#parameter-selection">Parameter Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#statistical-considerations">Statistical Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#prior-parameter-study">Prior Parameter Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#comprehensive-parameter-study">Comprehensive Parameter Study</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="user_guide/parameter_optimization.html#error-handling-and-failure-tracking">Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#automatic-failure-tracking">Automatic Failure Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#analyzing-failed-experiments">Analyzing Failed Experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#robust-parameter-exploration">Robust Parameter Exploration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#best-practices-for-robust-optimization">Best Practices for Robust Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#common-failure-scenarios">Common Failure Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="user_guide/parameter_optimization.html#recovery-and-continuation">Recovery and Continuation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Methods &amp; Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="methods_comparison.html">Methods Comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="methods_comparison.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods_comparison.html#quick-selection-guide">Quick Selection Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods_comparison.html#method-details">Method Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#map-maximum-a-posteriori">MAP — Maximum A Posteriori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#mle-maximum-likelihood-estimation">MLE — Maximum Likelihood Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#vi-variational-inference">VI — Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#gmvi-gaussian-mixture-variational-inference">GMVI — Gaussian Mixture Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#wcc-weighted-cycle-closure">WCC — Weighted Cycle Closure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#wsfc-weighted-spectral-free-energy-correction">WSFC — Weighted Spectral Free-energy Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#sfc-spectral-free-energy-correction">SFC — Spectral Free-energy Correction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="methods_comparison.html#comparison-table">Comparison Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods_comparison.html#method-relationships">Method Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="methods_comparison.html#usage-examples">Usage Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="methods_comparison.html#running-all-methods">Running All Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/models.html">Models Package (<code class="docutils literal notranslate"><span class="pre">maple.models</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#package-structure">Package Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#available-models">Available Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#the-add-predictions-to-dataset-method">The add_predictions_to_dataset() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#probabilistic-models">Probabilistic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#variationalestimator">VariationalEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#how-variationalestimator-determines-column-names">How VariationalEstimator Determines Column Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#gaussianmixturevi">GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id1">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id2">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#deterministic-models">Deterministic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#cycleclosurecorrection">CycleClosureCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id3">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#spectralcorrection">SpectralCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id5">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id6">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#id7">Probabilistic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id8">VariationalEstimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id12">GaussianMixtureVI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#id13">Deterministic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id14">CycleClosureCorrection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#id15">SpectralCorrection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#configuration-classes">Configuration Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#variationalestimatorconfig">VariationalEstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#gaussianmixtureviconfig">GaussianMixtureVIConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#cycleclosurecorrectionconfig">CycleClosureCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#spectralcorrectionconfig">SpectralCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#baseestimatorconfig">BaseEstimatorConfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#configuration-enums">Configuration Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#priortype">PriorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#guidetype">GuideType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#errordistributiontype">ErrorDistributionType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#data-structures">Data Structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#graphdata">GraphData</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/models.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/models.html#create-config">create_config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/models.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/dataset.html">Dataset Package (<code class="docutils literal notranslate"><span class="pre">maple.dataset</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#data-flow-how-models-interact-with-dataset">Data Flow: How Models Interact with Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#dataset-attributes">Dataset Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/dataset.html#maple.dataset.BaseDataset"><code class="docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#main-dataset-classes">Main Dataset Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/dataset.html#fepdataset">FEPDataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/dataset.html#fepbenchmarkdataset">FEPBenchmarkDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#specialized-datasets">Specialized Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/dataset.html#syntheticfepdataset">SyntheticFEPDataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/dataset.html#derive-nodes-from-edges">derive_nodes_from_edges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/dataset.html#example-multi-model-comparison">Example: Multi-Model Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/utils.html">Utils Package (<code class="docutils literal notranslate"><span class="pre">maple.utils</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/utils.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/utils.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#performance-tracking">Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#parameter-sweeps">Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#failure-tracking">Failure Tracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/utils.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#id1">Performance Tracking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.PerformanceTracker"><code class="docutils literal notranslate"><span class="pre">PerformanceTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.ModelRun"><code class="docutils literal notranslate"><span class="pre">ModelRun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.load_performance_history"><code class="docutils literal notranslate"><span class="pre">load_performance_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.compare_model_runs"><code class="docutils literal notranslate"><span class="pre">compare_model_runs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#parameter-optimization">Parameter Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.ParameterSweep"><code class="docutils literal notranslate"><span class="pre">ParameterSweep</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/utils.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.create_prior_sweep_experiment"><code class="docutils literal notranslate"><span class="pre">create_prior_sweep_experiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/utils.html#maple.utils.create_comprehensive_parameter_study"><code class="docutils literal notranslate"><span class="pre">create_comprehensive_parameter_study()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/graph_analysis.html">Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/graph_analysis.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/graph_analysis.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/graph_analysis.html#performance-statistics">Performance Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/graph_analysis.html#plotting">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/graph_analysis.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/graph_analysis.html#id1">Performance Statistics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#maple.graph_analysis.calculate_mae"><code class="docutils literal notranslate"><span class="pre">calculate_mae()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#maple.graph_analysis.calculate_rmse"><code class="docutils literal notranslate"><span class="pre">calculate_rmse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#maple.graph_analysis.calculate_r2"><code class="docutils literal notranslate"><span class="pre">calculate_r2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#maple.graph_analysis.calculate_correlation"><code class="docutils literal notranslate"><span class="pre">calculate_correlation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#maple.graph_analysis.bootstrap_statistic"><code class="docutils literal notranslate"><span class="pre">bootstrap_statistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#maple.graph_analysis.compute_simple_statistics"><code class="docutils literal notranslate"><span class="pre">compute_simple_statistics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="api/graph_analysis.html#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#single-model-plotting">Single Model Plotting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#multi-model-comparison">Multi-Model Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="api/graph_analysis.html#error-analysis">Error Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interactive Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="tutorials/index.html">Interactive Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#getting-started-tutorial">Getting Started Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#source-files">Source Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials/index.html#running-tutorials-locally">Running Tutorials Locally</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="examples/basic_usage.html">Basic Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#core-concept-dataset-as-central-hub">Core Concept: Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#loading-and-preparing-data">Loading and Preparing Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#from-your-own-data">From Your Own Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#training-models-and-adding-predictions">Training Models and Adding Predictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#map-inference-with-variationalestimator">MAP Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#variational-inference-with-variationalestimator">Variational Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#gmvi-with-outlier-detection">GMVI with Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#complete-multi-model-workflow">Complete Multi-Model Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#working-with-results">Working with Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#accessing-predictions-from-dataset">Accessing Predictions from Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#creating-comparison-dataframe">Creating Comparison DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#model-comparison-plot">Model Comparison Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#predictions-with-uncertainties">Predictions with Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/basic_usage.html#outlier-analysis">Outlier Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#batch-processing-multiple-datasets">Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/basic_usage.html#best-practices-summary">Best Practices Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/parameter_sweeps.html">Parameter Sweep Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/parameter_sweeps.html#example-1-learning-rate-optimization">Example 1: Learning Rate Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#execute-parameter-sweep">Execute Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#analyze-results">Analyze Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#visualize-results">Visualize Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/parameter_sweeps.html#example-2-prior-parameter-investigation">Example 2: Prior Parameter Investigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#setup-and-execution">Setup and Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#create-publication-quality-plots">Create Publication-Quality Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#statistical-analysis">Statistical Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/parameter_sweeps.html#example-3-multi-parameter-grid-search">Example 3: Multi-Parameter Grid Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#define-parameter-grid">Define Parameter Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#execute-grid-search">Execute Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#analyze-grid-search-results">Analyze Grid Search Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#visualize-grid-search-results">Visualize Grid Search Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/parameter_sweeps.html#example-4-cross-dataset-parameter-study">Example 4: Cross-Dataset Parameter Study</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#setup-multiple-datasets">Setup Multiple Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#cross-dataset-parameter-sweep">Cross-Dataset Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#find-universal-optimal-parameters">Find Universal Optimal Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#cross-dataset-visualization">Cross-Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/parameter_sweeps.html#example-5-error-handling-and-failure-tracking">Example 5: Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#robust-parameter-sweep">Robust Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#failure-analysis-and-recovery">Failure Analysis and Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#recovery-strategies">Recovery Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#parameter-validation-and-preprocessing">Parameter Validation and Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/parameter_sweeps.html#best-practices-for-robust-parameter-sweeps">Best Practices for Robust Parameter Sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/parameter_sweeps.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples/fep_benchmark_tutorial.html">FEP Benchmark Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#setup-and-imports">Setup and Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#fep-benchmark-dataset-tutorial">FEP Benchmark Dataset Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#available-datasets">Available Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#examining-the-data-structure">Examining the Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#dataset-visualization">Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#performance-tracker-tutorial">Performance Tracker Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#setting-up-performance-tracking">Setting Up Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#recording-model-runs">Recording Model Runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#comparing-models">Comparing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#advanced-performance-analysis">Advanced Performance Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#working-with-real-fep-data">Working with Real FEP Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#summary-and-best-practices">Summary and Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#key-takeaways">Key Takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="examples/fep_benchmark_tutorial.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="developer/contributing.html">Contributing to MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="developer/contributing.html#development-setup">Development Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/contributing.html#fork-and-clone">Fork and Clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/contributing.html#development-environment">Development Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/contributing.html#running-tests">Running Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer/contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="developer/contributing.html#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/contributing.html#building-documentation">Building Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="developer/contributing.html#writing-documentation">Writing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer/contributing.html#submitting-changes">Submitting Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="developer/contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="developer/contributing.html#reporting-issues">Reporting Issues</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">MAPLE-fep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Index</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/aakankschit/MAPLE-fep/blob/main/docs/genindex" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+
+<h1 id="index">Index</h1>
+
+<div class="genindex-jumpbox">
+ <a href="#_"><strong>_</strong></a>
+ | <a href="#A"><strong>A</strong></a>
+ | <a href="#B"><strong>B</strong></a>
+ | <a href="#C"><strong>C</strong></a>
+ | <a href="#D"><strong>D</strong></a>
+ | <a href="#E"><strong>E</strong></a>
+ | <a href="#F"><strong>F</strong></a>
+ | <a href="#G"><strong>G</strong></a>
+ | <a href="#I"><strong>I</strong></a>
+ | <a href="#J"><strong>J</strong></a>
+ | <a href="#K"><strong>K</strong></a>
+ | <a href="#L"><strong>L</strong></a>
+ | <a href="#M"><strong>M</strong></a>
+ | <a href="#N"><strong>N</strong></a>
+ | <a href="#O"><strong>O</strong></a>
+ | <a href="#P"><strong>P</strong></a>
+ | <a href="#R"><strong>R</strong></a>
+ | <a href="#S"><strong>S</strong></a>
+ | <a href="#T"><strong>T</strong></a>
+ | <a href="#U"><strong>U</strong></a>
+ | <a href="#V"><strong>V</strong></a>
+ | <a href="#Z"><strong>Z</strong></a>
+ 
+</div>
+<h2 id="_">_</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__copy__">__copy__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__copy__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__copy__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__copy__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__copy__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__deepcopy__">__deepcopy__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__deepcopy__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__deepcopy__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__deepcopy__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__deepcopy__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.__format__">__format__() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.__format__">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.__format__">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__get_pydantic_json_schema__">__get_pydantic_json_schema__() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__get_pydantic_json_schema__">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__get_pydantic_json_schema__">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__get_pydantic_json_schema__">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__get_pydantic_json_schema__">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__iter__">__iter__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__iter__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__iter__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__iter__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__iter__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__pretty__">__pretty__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__pretty__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__pretty__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__pretty__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__pretty__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__pydantic_init_subclass__">__pydantic_init_subclass__() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__pydantic_init_subclass__">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__pydantic_init_subclass__">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__pydantic_init_subclass__">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__pydantic_init_subclass__">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__pydantic_on_complete__">__pydantic_on_complete__() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__pydantic_on_complete__">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__pydantic_on_complete__">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__pydantic_on_complete__">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__pydantic_on_complete__">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__repr_name__">__repr_name__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__repr_name__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__repr_name__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__repr_name__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__repr_name__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__repr_recursion__">__repr_recursion__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__repr_recursion__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__repr_recursion__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__repr_recursion__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__repr_recursion__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.__rich_repr__">__rich_repr__() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.__rich_repr__">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.__rich_repr__">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.__rich_repr__">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.__rich_repr__">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="A">A</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/dataset.html#maple.dataset.BaseDataset.add_estimator_results">add_estimator_results() (maple.dataset.BaseDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.add_estimator_results">(maple.dataset.FEPBenchmarkDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.FEPDataset.add_estimator_results">(maple.dataset.FEPDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.add_estimator_results">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.add_noise_to_edges">add_noise_to_edges() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.add_predictions_to_dataset">add_predictions_to_dataset() (maple.models.CycleClosureCorrection method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.add_predictions_to_dataset">(maple.models.GaussianMixtureVI method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrection.add_predictions_to_dataset">(maple.models.SpectralCorrection method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimator.add_predictions_to_dataset">(maple.models.VariationalEstimator method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GuideType.AUTO_DELTA">AUTO_DELTA (maple.models.GuideType attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GuideType.AUTO_NORMAL">AUTO_NORMAL (maple.models.GuideType attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="B">B</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/dataset.html#maple.dataset.BaseDataset">BaseDataset (class in maple.dataset)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig">BaseEstimatorConfig (class in maple.models)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#id6">bootstrap_metrics (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.bootstrap_metrics">[1]</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.bootstrap_statistic">bootstrap_statistic() (in module maple.graph_analysis)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="C">C</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.VariationalEstimator.calculate_ccc">calculate_ccc() (maple.models.VariationalEstimator class method)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.calculate_correlation">calculate_correlation() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.calculate_mae">calculate_mae() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.calculate_r2">calculate_r2() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.calculate_rmse">calculate_rmse() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.capitalize">capitalize() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.capitalize">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.capitalize">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.casefold">casefold() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.casefold">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.casefold">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.center">center() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.center">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.center">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset.check_ccc_values">check_ccc_values() (maple.dataset.FEPDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.check_ccc_values">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.compare_model_runs">compare_model_runs() (in module maple.utils)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.compare_runs">compare_runs() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVI.compute_edge_outlier_probabilities">compute_edge_outlier_probabilities() (maple.models.GaussianMixtureVI method)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.compute_simple_statistics">compute_simple_statistics() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimator.config">config (maple.models.VariationalEstimator attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.construct">construct() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.construct">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.construct">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.construct">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.construct">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.copy">copy() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.copy">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.copy">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.copy">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.copy">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.count">count() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.count">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.count">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.create_comprehensive_parameter_study">create_comprehensive_parameter_study() (in module maple.utils)</a>
+</li>
+      <li><a href="api/models.html#maple.models.create_config">create_config() (in module maple.models)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.create_prior_sweep_experiment">create_prior_sweep_experiment() (in module maple.utils)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset.cycle_data">cycle_data (maple.dataset.FEPDataset attribute)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.cycle_data">(maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.cycle_detection_timeout">cycle_detection_timeout (maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection">CycleClosureCorrection (class in maple.models)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig">CycleClosureCorrectionConfig (class in maple.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="D">D</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.dataset">dataset (maple.models.CycleClosureCorrection attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.dataset">(maple.models.GaussianMixtureVI attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrection.dataset">(maple.models.SpectralCorrection attribute)</a>
+</li>
+        <li><a href="api/models.html#id0">(maple.models.VariationalEstimator attribute)</a>, <a href="api/models.html#maple.models.VariationalEstimator.dataset">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.dataset_edges">dataset_edges (maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+      <li><a href="api/utils.html#id4">dataset_info (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.dataset_info">[1]</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.dataset_nodes">dataset_nodes (maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset.derive_nodes_from_edges">derive_nodes_from_edges() (maple.dataset.FEPDataset class method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.derive_nodes_from_edges">(maple.dataset.SyntheticFEPDataset class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.dict">dict() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.dict">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.dict">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.dict">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.dict">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="E">E</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GraphData.edge_errors">edge_errors (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.edge_estimates">edge_estimates (maple.models.CycleClosureCorrection attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.edge_estimates">(maple.models.GaussianMixtureVI attribute)</a>
+</li>
+        <li><a href="api/models.html#id18">(maple.models.SpectralCorrection attribute)</a>, <a href="api/models.html#maple.models.SpectralCorrection.edge_estimates">[1]</a>
+</li>
+        <li><a href="api/models.html#id11">(maple.models.VariationalEstimator attribute)</a>, <a href="api/models.html#maple.models.VariationalEstimator.edge_estimates">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.edge_uncertainties">edge_uncertainties (maple.models.CycleClosureCorrection attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.edge_uncertainties">(maple.models.GaussianMixtureVI attribute)</a>
+</li>
+        <li><a href="api/models.html#id20">(maple.models.SpectralCorrection attribute)</a>, <a href="api/models.html#maple.models.SpectralCorrection.edge_uncertainties">[1]</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimator.edge_uncertainties">(maple.models.VariationalEstimator attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GraphData.edge_values">edge_values (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GraphData.edge_weights">edge_weights (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.encode">encode() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.encode">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.encode">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.endswith">endswith() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.endswith">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.endswith">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.error_distribution">error_distribution (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.error_skew">error_skew (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.error_std">error_std (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType">ErrorDistributionType (class in maple.models)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.expandtabs">expandtabs() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.expandtabs">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.expandtabs">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.export_data">export_data() (maple.utils.PerformanceTracker method)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="F">F</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset">FEPBenchmarkDataset (class in maple.dataset)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset">FEPDataset (class in maple.dataset)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.find">find() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.find">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.find">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.ParameterSweep.find_optimal_parameters">find_optimal_parameters() (maple.utils.ParameterSweep method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.fit">fit() (maple.models.CycleClosureCorrection method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.fit">(maple.models.GaussianMixtureVI method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrection.fit">(maple.models.SpectralCorrection method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimator.fit">(maple.models.VariationalEstimator method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.format">format() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.format">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.format">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.format_map">format_map() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.format_map">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.format_map">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.ModelRun.from_dict">from_dict() (maple.utils.ModelRun class method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.from_orm">from_orm() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.from_orm">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.from_orm">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.from_orm">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.from_orm">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="G">G</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.PriorType.GAMMA">GAMMA (maple.models.PriorType attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVI">GaussianMixtureVI (class in maple.models)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig">GaussianMixtureVIConfig (class in maple.models)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.generate_edges">generate_edges() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.get_best_run">get_best_run() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset.get_ccc_status">get_ccc_status() (maple.dataset.FEPDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_ccc_status">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.get_correction_quality_report">get_correction_quality_report() (maple.models.CycleClosureCorrection method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.BaseDataset.get_dataframes">get_dataframes() (maple.dataset.BaseDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.get_dataframes">(maple.dataset.FEPBenchmarkDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.FEPDataset.get_dataframes">(maple.dataset.FEPDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_dataframes">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.get_dataset">get_dataset() (maple.dataset.FEPBenchmarkDataset method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_edge_data">get_edge_data() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.BaseDataset.get_estimators">get_estimators() (maple.dataset.BaseDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.get_estimators">(maple.dataset.FEPBenchmarkDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.FEPDataset.get_estimators">(maple.dataset.FEPDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_estimators">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.ParameterSweep.get_failed_experiments">get_failed_experiments() (maple.utils.ParameterSweep method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.BaseDataset.get_graph_data">get_graph_data() (maple.dataset.BaseDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.get_graph_data">(maple.dataset.FEPBenchmarkDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.FEPDataset.get_graph_data">(maple.dataset.FEPDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_graph_data">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_node_data">get_node_data() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.BaseDataset.get_node_mapping">get_node_mapping() (maple.dataset.BaseDataset method)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.get_node_mapping">(maple.dataset.FEPBenchmarkDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.FEPDataset.get_node_mapping">(maple.dataset.FEPDataset method)</a>
+</li>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_node_mapping">(maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_perturbed_dataset">get_perturbed_dataset() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.get_perturbed_edges_mask">get_perturbed_edges_mask() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.get_results">get_results() (maple.models.CycleClosureCorrection method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.get_results">(maple.models.GaussianMixtureVI method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrection.get_results">(maple.models.SpectralCorrection method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimator.get_results">(maple.models.VariationalEstimator method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.get_run">get_run() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.ModelRun.get_summary">get_summary() (maple.utils.ModelRun method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.graph_data">graph_data (maple.models.CycleClosureCorrection attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.graph_data">(maple.models.GaussianMixtureVI attribute)</a>
+</li>
+        <li><a href="api/models.html#id16">(maple.models.SpectralCorrection attribute)</a>, <a href="api/models.html#maple.models.SpectralCorrection.graph_data">[1]</a>
+</li>
+        <li><a href="api/models.html#id9">(maple.models.VariationalEstimator attribute)</a>, <a href="api/models.html#maple.models.VariationalEstimator.graph_data">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GraphData">GraphData (class in maple.models)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.ParameterSweep.grid_search">grid_search() (maple.utils.ParameterSweep method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.guide_type">guide_type (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GuideType">GuideType (class in maple.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="I">I</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset.idx2node">idx2node (maple.dataset.FEPDataset attribute)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.idx2node">(maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GraphData.idx_to_node">idx_to_node (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.index">index() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.index">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.index">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isalnum">isalnum() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isalnum">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isalnum">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isalpha">isalpha() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isalpha">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isalpha">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isascii">isascii() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isascii">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isascii">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isdecimal">isdecimal() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isdecimal">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isdecimal">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isdigit">isdigit() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isdigit">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isdigit">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isidentifier">isidentifier() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isidentifier">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isidentifier">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.islower">islower() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.islower">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.islower">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isnumeric">isnumeric() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isnumeric">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isnumeric">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isprintable">isprintable() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isprintable">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isprintable">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isspace">isspace() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isspace">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isspace">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.istitle">istitle() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.istitle">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.istitle">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.isupper">isupper() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.isupper">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.isupper">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="J">J</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.join">join() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.join">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.join">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.json">json() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.json">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.json">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.json">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.json">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="K">K</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.kl_weight">kl_weight (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="L">L</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.PriorType.LAPLACE">LAPLACE (maple.models.PriorType attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.learning_rate">learning_rate (maple.models.BaseEstimatorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.learning_rate">(maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.learning_rate">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.list_runs">list_runs() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.ljust">ljust() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.ljust">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.ljust">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#maple.utils.load_performance_history">load_performance_history() (in module maple.utils)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.lower">lower() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.lower">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.lower">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.lstrip">lstrip() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.lstrip">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.lstrip">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="M">M</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.maketrans">maketrans() (maple.models.ErrorDistributionType static method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.maketrans">(maple.models.GuideType static method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.maketrans">(maple.models.PriorType static method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.max_cycle_length">max_cycle_length (maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.max_cycles">max_cycles (maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.max_iterations">max_iterations (maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+      <li><a href="api/utils.html#id8">metadata (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.metadata">[1]</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_computed_fields">model_computed_fields (maple.models.BaseEstimatorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_computed_fields">(maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_computed_fields">(maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_computed_fields">(maple.models.SpectralCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_computed_fields">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_config">model_config (maple.models.BaseEstimatorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_config">(maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_config">(maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_config">(maple.models.SpectralCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_config">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+        <li><a href="api/utils.html#id3">(maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.model_config">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_construct">model_construct() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_construct">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_construct">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_construct">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_construct">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_copy">model_copy() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_copy">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_copy">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_copy">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_copy">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_dump">model_dump() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_dump">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_dump">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_dump">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_dump">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_dump_json">model_dump_json() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_dump_json">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_dump_json">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_dump_json">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_dump_json">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_extra">model_extra (maple.models.BaseEstimatorConfig property)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_extra">(maple.models.CycleClosureCorrectionConfig property)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_extra">(maple.models.GaussianMixtureVIConfig property)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_extra">(maple.models.SpectralCorrectionConfig property)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_extra">(maple.models.VariationalEstimatorConfig property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_fields">model_fields (maple.models.BaseEstimatorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_fields">(maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_fields">(maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_fields">(maple.models.SpectralCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_fields">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_fields_set">model_fields_set (maple.models.BaseEstimatorConfig property)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_fields_set">(maple.models.CycleClosureCorrectionConfig property)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_fields_set">(maple.models.GaussianMixtureVIConfig property)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_fields_set">(maple.models.SpectralCorrectionConfig property)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_fields_set">(maple.models.VariationalEstimatorConfig property)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_json_schema">model_json_schema() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_json_schema">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_json_schema">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_json_schema">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_json_schema">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_parametrized_name">model_parametrized_name() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_parametrized_name">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_parametrized_name">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_parametrized_name">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_parametrized_name">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_post_init">model_post_init() (maple.models.BaseEstimatorConfig method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_post_init">(maple.models.CycleClosureCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_post_init">(maple.models.GaussianMixtureVIConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_post_init">(maple.models.SpectralCorrectionConfig method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_post_init">(maple.models.VariationalEstimatorConfig method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_rebuild">model_rebuild() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_rebuild">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_rebuild">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_rebuild">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_rebuild">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_type">model_type (maple.models.BaseEstimatorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_type">(maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_type">(maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_type">(maple.models.SpectralCorrectionConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_type">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_validate">model_validate() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_validate">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_validate">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_validate">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_validate">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_validate_json">model_validate_json() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_validate_json">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_validate_json">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_validate_json">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_validate_json">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.model_validate_strings">model_validate_strings() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.model_validate_strings">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.model_validate_strings">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.model_validate_strings">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.model_validate_strings">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.ModelRun">ModelRun (class in maple.utils)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="N">N</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.n_epochs">n_epochs (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.n_samples">n_samples (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.FEPDataset.node2idx">node2idx (maple.dataset.FEPDataset attribute)</a>
+
+      <ul>
+        <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.node2idx">(maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.node_estimates">node_estimates (maple.models.CycleClosureCorrection attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.node_estimates">(maple.models.GaussianMixtureVI attribute)</a>
+</li>
+        <li><a href="api/models.html#id17">(maple.models.SpectralCorrection attribute)</a>, <a href="api/models.html#maple.models.SpectralCorrection.node_estimates">[1]</a>
+</li>
+        <li><a href="api/models.html#id10">(maple.models.VariationalEstimator attribute)</a>, <a href="api/models.html#maple.models.VariationalEstimator.node_estimates">[1]</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GraphData.node_to_idx">node_to_idx (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.node_uncertainties">node_uncertainties (maple.models.CycleClosureCorrection attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVI.node_uncertainties">(maple.models.GaussianMixtureVI attribute)</a>
+</li>
+        <li><a href="api/models.html#id19">(maple.models.SpectralCorrection attribute)</a>, <a href="api/models.html#maple.models.SpectralCorrection.node_uncertainties">[1]</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimator.node_uncertainties">(maple.models.VariationalEstimator attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.NORMAL">NORMAL (maple.models.ErrorDistributionType attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.PriorType.NORMAL">(maple.models.PriorType attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.normal_std">normal_std (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GraphData.num_edges">num_edges (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GraphData.num_nodes">num_nodes (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.num_steps">num_steps (maple.models.BaseEstimatorConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.num_steps">(maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.num_steps">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.num_test_data">num_test_data (maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="O">O</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.outlier_prob">outlier_prob (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.outlier_std">outlier_std (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="P">P</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#maple.utils.ParameterSweep">ParameterSweep (class in maple.utils)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.parse_file">parse_file() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.parse_file">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.parse_file">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.parse_file">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.parse_file">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.parse_obj">parse_obj() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.parse_obj">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.parse_obj">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.parse_obj">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.parse_obj">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.parse_raw">parse_raw() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.parse_raw">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.parse_raw">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.parse_raw">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.parse_raw">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.partition">partition() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.partition">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.partition">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.patience">patience (maple.models.GaussianMixtureVIConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.patience">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#id5">performance_metrics (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.performance_metrics">[1]</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker">PerformanceTracker (class in maple.utils)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.perturbed_edges">perturbed_edges (maple.dataset.SyntheticFEPDataset attribute)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.plot_dataset_all_DDGs">plot_dataset_all_DDGs() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.plot_dataset_DDGs">plot_dataset_DDGs() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.plot_dataset_DGs">plot_dataset_DGs() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.plot_error_distribution">plot_error_distribution() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.plot_model_comparison_bars">plot_model_comparison_bars() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/graph_analysis.html#maple.graph_analysis.plot_model_comparison_correlation">plot_model_comparison_correlation() (in module maple.graph_analysis)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.ParameterSweep.plot_parameter_effects">plot_parameter_effects() (maple.utils.ParameterSweep method)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.plot_performance_trends">plot_performance_trends() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.plot_run_comparison">plot_run_comparison() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimator.plot_training_history">plot_training_history() (maple.models.VariationalEstimator method)</a>
+</li>
+      <li><a href="api/utils.html#id7">predictions (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.predictions">[1]</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrection.print_quality_report">print_quality_report() (maple.models.CycleClosureCorrection method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.prior_parameters">prior_parameters (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.prior_std">prior_std (maple.models.GaussianMixtureVIConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.prior_type">prior_type (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.PriorType">PriorType (class in maple.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="R">R</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.random_seed">random_seed (maple.models.GaussianMixtureVIConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.random_seed">(maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.record_run">record_run() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.removeprefix">removeprefix() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.removeprefix">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.removeprefix">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.removesuffix">removesuffix() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.removesuffix">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.removesuffix">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.replace">replace() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.replace">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.replace">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset.reset_noise_testing">reset_noise_testing() (maple.dataset.SyntheticFEPDataset method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.rfind">rfind() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.rfind">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.rfind">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.rindex">rindex() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.rindex">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.rindex">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.rjust">rjust() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.rjust">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.rjust">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.rpartition">rpartition() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.rpartition">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.rpartition">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.rsplit">rsplit() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.rsplit">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.rsplit">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.rstrip">rstrip() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.rstrip">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.rstrip">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#id0">run_id (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.run_id">[1]</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="S">S</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#maple.utils.PerformanceTracker.save_data">save_data() (maple.utils.PerformanceTracker method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.schema">schema() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.schema">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.schema">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.schema">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.schema">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.schema_json">schema_json() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.schema_json">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.schema_json">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.schema_json">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.schema_json">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.SKEWED_NORMAL">SKEWED_NORMAL (maple.models.ErrorDistributionType attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GraphData.source_nodes">source_nodes (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.SpectralCorrection">SpectralCorrection (class in maple.models)</a>
+</li>
+      <li><a href="api/models.html#maple.models.SpectralCorrectionConfig">SpectralCorrectionConfig (class in maple.models)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.split">split() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.split">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.split">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.splitlines">splitlines() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.splitlines">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.splitlines">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.startswith">startswith() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.startswith">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.startswith">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.strip">strip() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.strip">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.strip">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.PriorType.STUDENT_T">STUDENT_T (maple.models.PriorType attribute)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.FEPBenchmarkDataset.SUPPORTED_DATASETS">SUPPORTED_DATASETS (maple.dataset.FEPBenchmarkDataset attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.swapcase">swapcase() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.swapcase">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.swapcase">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/utils.html#maple.utils.ParameterSweep.sweep_parameter">sweep_parameter() (maple.utils.ParameterSweep method)</a>
+</li>
+      <li><a href="api/dataset.html#maple.dataset.SyntheticFEPDataset">SyntheticFEPDataset (class in maple.dataset)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="T">T</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GraphData.target_nodes">target_nodes (maple.models.GraphData attribute)</a>
+</li>
+      <li><a href="api/utils.html#id2">timestamp (maple.utils.ModelRun attribute)</a>, <a href="api/utils.html#maple.utils.ModelRun.timestamp">[1]</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.title">title() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.title">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.title">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/utils.html#maple.utils.ModelRun.to_dict">to_dict() (maple.utils.ModelRun method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.tolerance">tolerance (maple.models.CycleClosureCorrectionConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.translate">translate() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.translate">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.translate">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="U">U</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.PriorType.UNIFORM">UNIFORM (maple.models.PriorType attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.update_forward_refs">update_forward_refs() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.update_forward_refs">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.update_forward_refs">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.update_forward_refs">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.update_forward_refs">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.upper">upper() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.upper">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.upper">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.use_edge_weights">use_edge_weights (maple.models.VariationalEstimatorConfig attribute)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.use_weights">use_weights (maple.models.CycleClosureCorrectionConfig attribute)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.use_weights">(maple.models.SpectralCorrectionConfig attribute)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+<h2 id="V">V</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.BaseEstimatorConfig.validate">validate() (maple.models.BaseEstimatorConfig class method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.validate">(maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.validate">(maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.SpectralCorrectionConfig.validate">(maple.models.SpectralCorrectionConfig class method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.validate">(maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      </ul></li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.validate_max_cycle_length">validate_max_cycle_length() (maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.validate_outlier_prob">validate_outlier_prob() (maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig.validate_prior_parameters">validate_prior_parameters() (maple.models.VariationalEstimatorConfig class method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.GaussianMixtureVIConfig.validate_std_relationship">validate_std_relationship() (maple.models.GaussianMixtureVIConfig class method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.CycleClosureCorrectionConfig.validate_tolerance">validate_tolerance() (maple.models.CycleClosureCorrectionConfig class method)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimator">VariationalEstimator (class in maple.models)</a>
+</li>
+      <li><a href="api/models.html#maple.models.VariationalEstimatorConfig">VariationalEstimatorConfig (class in maple.models)</a>
+</li>
+  </ul></td>
+</tr></table>
+
+<h2 id="Z">Z</h2>
+<table style="width: 100%" class="indextable genindextable"><tr>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="api/models.html#maple.models.ErrorDistributionType.zfill">zfill() (maple.models.ErrorDistributionType method)</a>
+
+      <ul>
+        <li><a href="api/models.html#maple.models.GuideType.zfill">(maple.models.GuideType method)</a>
+</li>
+        <li><a href="api/models.html#maple.models.PriorType.zfill">(maple.models.PriorType method)</a>
+</li>
+      </ul></li>
+  </ul></td>
+</tr></table>
+
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAPLE Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

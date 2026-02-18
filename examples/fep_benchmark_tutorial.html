@@ -1,0 +1,1101 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FEP Benchmark Tutorial &mdash; MAPLE-fep 0.1.0 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/graphviz.css?v=4ae1632d" />
+
+  
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=01f34227"></script>
+      <script src="../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Contributing to MAPLE" href="../developer/contributing.html" />
+    <link rel="prev" title="Parameter Sweep Examples" href="parameter_sweeps.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/MAPLE_logo.png" class="logo" alt="Logo"/>
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">User Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#standard-installation">Standard Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#development-installation">Development Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#optional-dependencies">Optional Dependencies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#verification">Verification</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/installation.html#troubleshooting">Troubleshooting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/installation.html#common-installation-issues">Common Installation Issues</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/installation.html#development-environment">Development Environment</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/quickstart.html">Quick Start Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#basic-example">Basic Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#data-format">Data Format</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#edge-dataframe">Edge DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#node-dataframe">Node DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#from-benchmark-data">From Benchmark Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#variationalestimator-map-vi-mle">VariationalEstimator (MAP/VI/MLE)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#gaussianmixturevi-outlier-robust">GaussianMixtureVI (Outlier-Robust)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#spectralcorrection-wsfc-sfc">SpectralCorrection (WSFC/SFC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#key-concepts">Key Concepts</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/quickstart.html#the-add-predictions-to-dataset-pattern">The add_predictions_to_dataset() Pattern</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#performance-analysis">Performance Analysis</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#visualization">Visualization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/quickstart.html#next-steps">Next Steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/architecture.html">Architecture and Design</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#design-philosophy">Design Philosophy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#module-overview">Module Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#the-dataset-as-central-hub">The Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#model-dataset-interaction-pattern">Model-Dataset Interaction Pattern</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#available-models">Available Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#probabilistic-models-models-probabilistic">Probabilistic Models (<code class="docutils literal notranslate"><span class="pre">models.probabilistic</span></code>)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#deterministic-models-models-deterministic">Deterministic Models (<code class="docutils literal notranslate"><span class="pre">models.deterministic</span></code>)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#key-design-patterns">Key Design Patterns</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#configuration-via-pydantic">Configuration via Pydantic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/architecture.html#estimator-registry">Estimator Registry</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/architecture.html#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/tutorials.html">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-1-understanding-the-dataset-model-workflow">Tutorial 1: Understanding the Dataset-Model Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#the-central-concept">The Central Concept</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-1-create-your-dataset">Step 1: Create Your Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-2-train-a-model-and-add-predictions">Step 2: Train a Model and Add Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-3-add-more-models">Step 3: Add More Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-4-compare-models-from-dataset">Step 4: Compare Models from Dataset</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-2-complete-fep-analysis-workflow">Tutorial 2: Complete FEP Analysis Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-1-load-and-inspect-data">Step 1: Load and Inspect Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-2-train-multiple-inference-methods">Step 2: Train Multiple Inference Methods</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-3-comprehensive-performance-analysis">Step 3: Comprehensive Performance Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-4-outlier-analysis-gmvi">Step 4: Outlier Analysis (GMVI)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-5-publication-ready-visualization">Step 5: Publication-Ready Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-3-working-with-your-own-data">Tutorial 3: Working with Your Own Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-1-prepare-your-data">Step 1: Prepare Your Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-2-create-dataset">Step 2: Create Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-3-automatic-node-derivation-if-no-experimental-data">Step 3: Automatic Node Derivation (If No Experimental Data)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#step-4-train-and-compare-models">Step 4: Train and Compare Models</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-4-understanding-model-uncertainties">Tutorial 4: Understanding Model Uncertainties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#variational-inference-uncertainties">Variational Inference Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#gmvi-uncertainties-and-outlier-detection">GMVI Uncertainties and Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/tutorials.html#visualizing-uncertainties">Visualizing Uncertainties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#tutorial-5-batch-processing-multiple-datasets">Tutorial 5: Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/tutorials.html#summary-key-patterns-to-remember">Summary: Key Patterns to Remember</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../user_guide/parameter_optimization.html">Parameter Optimization Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#quick-start">Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#simple-parameter-sweep">Simple Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#direct-notebook-replication">Direct Notebook Replication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#core-components">Core Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parametersweep-class">ParameterSweep Class</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#single-parameter-sweeps">Single Parameter Sweeps</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#learning-rate-optimization">Learning Rate Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#prior-parameter-investigation">Prior Parameter Investigation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#training-steps-optimization">Training Steps Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#multi-parameter-optimization">Multi-Parameter Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#grid-search">Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#sequential-optimization">Sequential Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#cross-dataset-analysis">Cross-Dataset Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#multi-dataset-parameter-sweeps">Multi-Dataset Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#dataset-specific-optimization">Dataset-Specific Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#advanced-analysis-techniques">Advanced Analysis Techniques</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parameter-interaction-analysis">Parameter Interaction Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#sensitivity-analysis">Sensitivity Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#bayesian-optimization">Bayesian Optimization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#visualization-and-reporting">Visualization and Reporting</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parameter-effect-plots">Parameter Effect Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#heatmaps-for-multi-parameter-analysis">Heatmaps for Multi-Parameter Analysis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#performance-summary-reports">Performance Summary Reports</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#experimental-design">Experimental Design</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#parameter-selection">Parameter Selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#statistical-considerations">Statistical Considerations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#prior-parameter-study">Prior Parameter Study</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#comprehensive-parameter-study">Comprehensive Parameter Study</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../user_guide/parameter_optimization.html#error-handling-and-failure-tracking">Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#automatic-failure-tracking">Automatic Failure Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#analyzing-failed-experiments">Analyzing Failed Experiments</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#robust-parameter-exploration">Robust Parameter Exploration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#best-practices-for-robust-optimization">Best Practices for Robust Optimization</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#common-failure-scenarios">Common Failure Scenarios</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../user_guide/parameter_optimization.html#recovery-and-continuation">Recovery and Continuation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Methods &amp; Theory</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../methods_comparison.html">Methods Comparison</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#quick-selection-guide">Quick Selection Guide</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#method-details">Method Details</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#map-maximum-a-posteriori">MAP — Maximum A Posteriori</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#mle-maximum-likelihood-estimation">MLE — Maximum Likelihood Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#vi-variational-inference">VI — Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#gmvi-gaussian-mixture-variational-inference">GMVI — Gaussian Mixture Variational Inference</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#wcc-weighted-cycle-closure">WCC — Weighted Cycle Closure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#wsfc-weighted-spectral-free-energy-correction">WSFC — Weighted Spectral Free-energy Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#sfc-spectral-free-energy-correction">SFC — Spectral Free-energy Correction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#comparison-table">Comparison Table</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#method-relationships">Method Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../methods_comparison.html#usage-examples">Usage Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../methods_comparison.html#running-all-methods">Running All Methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html">Mathematical Foundations of MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#table-of-contents">Table of Contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#problem-formulation">1. Problem Formulation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-fep-graph-inverse-problem">1.1 The FEP Graph Inverse Problem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#graph-data-structure">1.2 Graph Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#indexing-conventions">1.3 Indexing Conventions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gauge-freedom">1.4 Gauge Freedom</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-map-and-variational-inference">2. VariationalEstimator: MAP and Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#probabilistic-model">2.1 Probabilistic Model</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#prior-distribution">Prior Distribution</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#likelihood-function">Likelihood Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#skewed-normal-error-distribution-optional">Skewed Normal Error Distribution (Optional)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#map-inference-autodelta-guide">2.2 MAP Inference (AutoDelta Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#objective-function">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation-with-pyro">Implementation with Pyro</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mle-inference-map-with-uniform-prior">2.3 MLE Inference (MAP with Uniform Prior)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-map">Relationship to MAP</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id1">Objective Function</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#comparison-map-vs-mle">Comparison: MAP vs MLE</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#implementation">Implementation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#when-to-use-mle-vs-map">When to Use MLE vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-inference-autonormal-guide">2.4 Variational Inference (AutoNormal Guide)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-objective">ELBO Objective</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id2">Implementation</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization">2.5 Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#learning-rate-schedule">Learning Rate Schedule</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#early-stopping">2.6 Early Stopping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation">2.7 Uncertainty Propagation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-by-step-how-pyro-computes-node-estimates">2.8 Step-by-Step: How Pyro Computes Node Estimates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview-the-three-key-components">Overview: The Three Key Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-2-model-definition-forward-pass">Step 2: Model Definition (Forward Pass)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-3-guide-definition-variational-approximation">Step 3: Guide Definition (Variational Approximation)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-4-elbo-computation-single-training-step">Step 4: ELBO Computation (Single Training Step)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-5-mathematical-details-of-elbo">Step 5: Mathematical Details of ELBO</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-6-extract-final-estimates">Step 6: Extract Final Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#step-7-compute-edge-estimates">Step 7: Compute Edge Estimates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#complete-example-tracing-through-one-iteration">Complete Example: Tracing Through One Iteration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary-key-takeaways">Summary: Key Takeaways</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-gaussian-mixture-variational-inference">3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#model-overview">3.1 Model Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id3">3.2 Prior Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mixture-likelihood-outlier-model">3.3 Mixture Likelihood (Outlier Model)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variational-posterior-full-rank-gaussian">3.4 Variational Posterior (Full-Rank Gaussian)</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cholesky-parameterization">Cholesky Parameterization</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#covariance-reconstruction">Covariance Reconstruction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#sampling-from-the-variational-distribution">3.5 Sampling from the Variational Distribution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#elbo-for-gaussianmixturevi">3.6 ELBO for GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#kl-divergence-multivariate-normal">KL Divergence (Multivariate Normal)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#expected-log-likelihood-monte-carlo-estimation">Expected Log-Likelihood (Monte Carlo Estimation)</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#edge-predictions">3.7 Edge Predictions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#outlier-probability-computation">3.8 Outlier Probability Computation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#training-loop">3.9 Training Loop</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-propagation-gaussianmixturevi">3.10 Uncertainty Propagation (GaussianMixtureVI)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-cycle-closure-wcc">4. Weighted Cycle Closure (WCC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#overview">4.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#optimization-objective">4.2 Optimization Objective</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycle-closure-error">4.3 Cycle Closure Error</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-correction">4.4 Weighted Correction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#convergence">4.5 Convergence</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#node-value-calculation">4.6 Node Value Calculation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#uncertainty-estimation">4.7 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-least-squares">4.8 Relationship to Least Squares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectral-free-energy-correction-wsfc-sfc">5. Spectral Free-energy Correction (WSFC/SFC)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id4">5.1 Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#mathematical-formulation">5.2 Mathematical Formulation</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#the-optimization-problem">The Optimization Problem</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#incidence-matrix">Incidence Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weight-matrix">Weight Matrix</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#weighted-graph-laplacian">Weighted Graph Laplacian</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#solution-via-pseudoinverse">5.3 Solution via Pseudoinverse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#id5">5.4 Uncertainty Estimation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#relationship-to-other-methods">5.5 Relationship to Other Methods</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-mle-unweighted">WSFC vs MLE (Unweighted)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-wcc">WSFC vs WCC</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#wsfc-vs-map">WSFC vs MAP</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#column-naming-convention">5.6 Column Naming Convention</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#code-to-equation-mapping">6. Code-to-Equation Mapping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#variationalestimator-mappings">6.1 VariationalEstimator Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#gaussianmixturevi-model-mappings">6.2 GaussianMixtureVI Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#cycleclosurecorrection-model-mappings">6.3 CycleClosureCorrection Model Mappings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#spectralcorrection-model-mappings">6.4 SpectralCorrection Model Mappings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#references">7. References</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#scientific-papers">Scientific Papers</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#software-documentation">Software Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../MATHEMATICAL_FOUNDATIONS.html#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/models.html">Models Package (<code class="docutils literal notranslate"><span class="pre">maple.models</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#package-structure">Package Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#available-models">Available Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#the-add-predictions-to-dataset-method">The add_predictions_to_dataset() Method</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#probabilistic-models">Probabilistic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#variationalestimator">VariationalEstimator</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#how-variationalestimator-determines-column-names">How VariationalEstimator Determines Column Names</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#configuration">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#gaussianmixturevi">GaussianMixtureVI</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id1">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id2">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#deterministic-models">Deterministic Models</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#cycleclosurecorrection">CycleClosureCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id3">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id4">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#spectralcorrection">SpectralCorrection</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id5">Configuration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id6">Usage</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#id7">Probabilistic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id8">VariationalEstimator</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id12">GaussianMixtureVI</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#id13">Deterministic Models</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id14">CycleClosureCorrection</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#id15">SpectralCorrection</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#configuration-classes">Configuration Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#variationalestimatorconfig">VariationalEstimatorConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#gaussianmixtureviconfig">GaussianMixtureVIConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#cycleclosurecorrectionconfig">CycleClosureCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#spectralcorrectionconfig">SpectralCorrectionConfig</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#baseestimatorconfig">BaseEstimatorConfig</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#configuration-enums">Configuration Enums</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#priortype">PriorType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#guidetype">GuideType</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#errordistributiontype">ErrorDistributionType</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#data-structures">Data Structures</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#graphdata">GraphData</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/models.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/models.html#create-config">create_config</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/models.html#best-practices">Best Practices</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/dataset.html">Dataset Package (<code class="docutils literal notranslate"><span class="pre">maple.dataset</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#quick-example">Quick Example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#creating-a-dataset">Creating a Dataset</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-dataframes">From DataFrames</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#data-flow-how-models-interact-with-dataset">Data Flow: How Models Interact with Dataset</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#dataset-attributes">Dataset Attributes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#column-naming-convention">Column Naming Convention</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#base-classes">Base Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#maple.dataset.BaseDataset"><code class="docutils literal notranslate"><span class="pre">BaseDataset</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#main-dataset-classes">Main Dataset Classes</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#fepdataset">FEPDataset</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#fepbenchmarkdataset">FEPBenchmarkDataset</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#specialized-datasets">Specialized Datasets</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/dataset.html#syntheticfepdataset">SyntheticFEPDataset</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#utility-functions">Utility Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/dataset.html#derive-nodes-from-edges">derive_nodes_from_edges</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#best-practices">Best Practices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/dataset.html#example-multi-model-comparison">Example: Multi-Model Comparison</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/utils.html">Utils Package (<code class="docutils literal notranslate"><span class="pre">maple.utils</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#performance-tracking">Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#parameter-sweeps">Parameter Sweeps</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#failure-tracking">Failure Tracking</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/utils.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#id1">Performance Tracking</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.PerformanceTracker"><code class="docutils literal notranslate"><span class="pre">PerformanceTracker</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.ModelRun"><code class="docutils literal notranslate"><span class="pre">ModelRun</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.load_performance_history"><code class="docutils literal notranslate"><span class="pre">load_performance_history()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.compare_model_runs"><code class="docutils literal notranslate"><span class="pre">compare_model_runs()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#parameter-optimization">Parameter Optimization</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.ParameterSweep"><code class="docutils literal notranslate"><span class="pre">ParameterSweep</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/utils.html#convenience-functions">Convenience Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.create_prior_sweep_experiment"><code class="docutils literal notranslate"><span class="pre">create_prior_sweep_experiment()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/utils.html#maple.utils.create_comprehensive_parameter_study"><code class="docutils literal notranslate"><span class="pre">create_comprehensive_parameter_study()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api/graph_analysis.html">Graph Analysis Package (<code class="docutils literal notranslate"><span class="pre">maple.graph_analysis</span></code>)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/graph_analysis.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/graph_analysis.html#quick-examples">Quick Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#performance-statistics">Performance Statistics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#plotting">Plotting</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../api/graph_analysis.html#api-reference">API Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#id1">Performance Statistics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_mae"><code class="docutils literal notranslate"><span class="pre">calculate_mae()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_rmse"><code class="docutils literal notranslate"><span class="pre">calculate_rmse()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_r2"><code class="docutils literal notranslate"><span class="pre">calculate_r2()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.calculate_correlation"><code class="docutils literal notranslate"><span class="pre">calculate_correlation()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.bootstrap_statistic"><code class="docutils literal notranslate"><span class="pre">bootstrap_statistic()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#maple.graph_analysis.compute_simple_statistics"><code class="docutils literal notranslate"><span class="pre">compute_simple_statistics()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../api/graph_analysis.html#plotting-functions">Plotting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#single-model-plotting">Single Model Plotting</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#multi-model-comparison">Multi-Model Comparison</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../api/graph_analysis.html#error-analysis">Error Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Interactive Tutorials</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../tutorials/index.html">Interactive Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#getting-started-tutorial">Getting Started Tutorial</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#source-files">Source Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tutorials/index.html#running-tutorials-locally">Running Tutorials Locally</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Examples</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="basic_usage.html">Basic Usage Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#core-concept-dataset-as-central-hub">Core Concept: Dataset as Central Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#loading-and-preparing-data">Loading and Preparing Data</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#from-benchmark-dataset">From Benchmark Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#from-your-own-data">From Your Own Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#from-csv-files">From CSV Files</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#from-edges-only">From Edges Only</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#training-models-and-adding-predictions">Training Models and Adding Predictions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#map-inference-with-variationalestimator">MAP Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#variational-inference-with-variationalestimator">Variational Inference with VariationalEstimator</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#gmvi-with-outlier-detection">GMVI with Outlier Detection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#complete-multi-model-workflow">Complete Multi-Model Workflow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#working-with-results">Working with Results</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#accessing-predictions-from-dataset">Accessing Predictions from Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#creating-comparison-dataframe">Creating Comparison DataFrame</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#visualization">Visualization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#model-comparison-plot">Model Comparison Plot</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#predictions-with-uncertainties">Predictions with Uncertainties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="basic_usage.html#outlier-analysis">Outlier Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#batch-processing-multiple-datasets">Batch Processing Multiple Datasets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="basic_usage.html#best-practices-summary">Best Practices Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="parameter_sweeps.html">Parameter Sweep Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="parameter_sweeps.html#example-1-learning-rate-optimization">Example 1: Learning Rate Optimization</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#execute-parameter-sweep">Execute Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#analyze-results">Analyze Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#visualize-results">Visualize Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parameter_sweeps.html#example-2-prior-parameter-investigation">Example 2: Prior Parameter Investigation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#setup-and-execution">Setup and Execution</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#create-publication-quality-plots">Create Publication-Quality Plots</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#statistical-analysis">Statistical Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parameter_sweeps.html#example-3-multi-parameter-grid-search">Example 3: Multi-Parameter Grid Search</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#define-parameter-grid">Define Parameter Grid</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#execute-grid-search">Execute Grid Search</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#analyze-grid-search-results">Analyze Grid Search Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#visualize-grid-search-results">Visualize Grid Search Results</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parameter_sweeps.html#example-4-cross-dataset-parameter-study">Example 4: Cross-Dataset Parameter Study</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#setup-multiple-datasets">Setup Multiple Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#cross-dataset-parameter-sweep">Cross-Dataset Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#find-universal-optimal-parameters">Find Universal Optimal Parameters</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#cross-dataset-visualization">Cross-Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parameter_sweeps.html#example-5-error-handling-and-failure-tracking">Example 5: Error Handling and Failure Tracking</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#robust-parameter-sweep">Robust Parameter Sweep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#failure-analysis-and-recovery">Failure Analysis and Recovery</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#recovery-strategies">Recovery Strategies</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#parameter-validation-and-preprocessing">Parameter Validation and Preprocessing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="parameter_sweeps.html#best-practices-for-robust-parameter-sweeps">Best Practices for Robust Parameter Sweeps</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="parameter_sweeps.html#summary">Summary</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">FEP Benchmark Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#setup-and-imports">Setup and Imports</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#fep-benchmark-dataset-tutorial">FEP Benchmark Dataset Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-datasets">Available Datasets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loading-a-dataset">Loading a Dataset</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#examining-the-data-structure">Examining the Data Structure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dataset-visualization">Dataset Visualization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#performance-tracker-tutorial">Performance Tracker Tutorial</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#setting-up-performance-tracking">Setting Up Performance Tracking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#recording-model-runs">Recording Model Runs</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analyzing-results">Analyzing Results</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comparing-models">Comparing Models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-performance-analysis">Advanced Performance Analysis</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-real-fep-data">Working with Real FEP Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-and-best-practices">Summary and Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#key-takeaways">Key Takeaways</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#best-practices">Best Practices</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Developer Guide</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../developer/contributing.html">Contributing to MAPLE</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#development-setup">Development Setup</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#fork-and-clone">Fork and Clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#development-environment">Development Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#running-tests">Running Tests</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#code-style">Code Style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#building-documentation">Building Documentation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#writing-documentation">Writing Documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#submitting-changes">Submitting Changes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../developer/contributing.html#pull-request-guidelines">Pull Request Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../developer/contributing.html#reporting-issues">Reporting Issues</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">MAPLE-fep</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content style-external-links">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">FEP Benchmark Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+              <a href="https://github.com/aakankschit/MAPLE-fep/blob/main/docs/examples/fep_benchmark_tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="fep-benchmark-tutorial">
+<h1>FEP Benchmark Tutorial<a class="headerlink" href="#fep-benchmark-tutorial" title="Link to this heading"></a></h1>
+<p>This tutorial demonstrates how to use two key components of the MAPLE package:</p>
+<ol class="arabic simple">
+<li><p><strong>FEPBenchmarkDataset</strong>: Loading and working with Free Energy Perturbation benchmark datasets</p></li>
+<li><p><strong>PerformanceTracker</strong>: Tracking, storing, and comparing model performance across runs</p></li>
+</ol>
+<section id="setup-and-imports">
+<h2>Setup and Imports<a class="headerlink" href="#setup-and-imports" title="Link to this heading"></a></h2>
+<p>Let’s start by importing the necessary libraries and MAPLE components:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard libraries</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">pd</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">seaborn</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sns</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+<span class="n">warnings</span><span class="o">.</span><span class="n">filterwarnings</span><span class="p">(</span><span class="s1">&#39;ignore&#39;</span><span class="p">)</span>
+
+<span class="c1"># MAPLE components</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maple.dataset.FEP_benchmark_dataset</span><span class="w"> </span><span class="kn">import</span> <span class="n">FEPBenchmarkDataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maple.utils.performance_tracker</span><span class="w"> </span><span class="kn">import</span> <span class="n">PerformanceTracker</span><span class="p">,</span> <span class="n">ModelRun</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">maple.graph_analysis.plotting_performance</span><span class="w"> </span><span class="kn">import</span> <span class="n">plot_dataset_DGs</span><span class="p">,</span> <span class="n">plot_dataset_DDGs</span>
+
+<span class="c1"># Set up plotting style</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;seaborn-v0_8&#39;</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">set_palette</span><span class="p">(</span><span class="s2">&quot;husl&quot;</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;✅ Imports completed successfully&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📦 MAPLE version: Available components loaded&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="fep-benchmark-dataset-tutorial">
+<h2>FEP Benchmark Dataset Tutorial<a class="headerlink" href="#fep-benchmark-dataset-tutorial" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">FEPBenchmarkDataset</span></code> class provides access to benchmark Free Energy Perturbation datasets from the Schindler et al. repository. These datasets contain experimental and computational free energy data for various protein-ligand systems.</p>
+<section id="available-datasets">
+<h3>Available Datasets<a class="headerlink" href="#available-datasets" title="Link to this heading"></a></h3>
+<p>The FEP benchmark includes 8 different protein targets with molecular dynamics data at different sampling times:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the dataset handler</span>
+<span class="n">fep_dataset</span> <span class="o">=</span> <span class="n">FEPBenchmarkDataset</span><span class="p">(</span><span class="n">cache_dir</span><span class="o">=</span><span class="s2">&quot;~/.maple_cache&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🎯 Available FEP Benchmark Datasets:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">dataset_name</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">fep_dataset</span><span class="o">.</span><span class="n">SUPPORTED_DATASETS</span><span class="p">,</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">. </span><span class="si">{</span><span class="n">dataset_name</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📊 Available sampling times: 5ns, 20ns&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📁 Cache directory: </span><span class="si">{</span><span class="n">fep_dataset</span><span class="o">.</span><span class="n">cache_dir</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Output:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>🎯 Available FEP Benchmark Datasets:
+   1. cdk8
+   2. cmet
+   3. eg5
+   4. hif2a
+   5. pfkfb3
+   6. shp2
+   7. syk
+   8. tnks2
+
+📊 Available sampling times: 5ns, 20ns
+📁 Cache directory: /Users/username/.maple_cache
+</pre></div>
+</div>
+</section>
+<section id="loading-a-dataset">
+<h3>Loading a Dataset<a class="headerlink" href="#loading-a-dataset" title="Link to this heading"></a></h3>
+<p>Let’s load a specific dataset and examine its structure:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the CDK8 dataset (5ns sampling)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">fep_dataset</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;cdk8&#39;</span><span class="p">,</span> <span class="n">sampling_time</span><span class="o">=</span><span class="s1">&#39;5ns&#39;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Successfully loaded CDK8 dataset&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Get basic information about the dataset</span>
+    <span class="n">graph_data</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_graph_data</span><span class="p">()</span>
+    <span class="n">edge_df</span><span class="p">,</span> <span class="n">node_df</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_dataframes</span><span class="p">()</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Dataset Statistics:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Number of nodes: </span><span class="si">{</span><span class="n">graph_data</span><span class="p">[</span><span class="s1">&#39;N&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Number of edges: </span><span class="si">{</span><span class="n">graph_data</span><span class="p">[</span><span class="s1">&#39;M&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Edge DataFrame shape: </span><span class="si">{</span><span class="n">edge_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • Node DataFrame shape: </span><span class="si">{</span><span class="n">node_df</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Failed to load dataset: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;💡 This may be due to network connectivity or cache issues&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="examining-the-data-structure">
+<h3>Examining the Data Structure<a class="headerlink" href="#examining-the-data-structure" title="Link to this heading"></a></h3>
+<p>Let’s explore the loaded dataset in detail:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Display first few rows of edge data</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;🔗 Edge Data (first 5 rows):&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">edge_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📝 Edge DataFrame columns:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">edge_df</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • </span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">edge_df</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">dtype</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Display node data if available</span>
+<span class="k">if</span> <span class="ow">not</span> <span class="n">node_df</span><span class="o">.</span><span class="n">empty</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Node Data (first 5 rows):&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">node_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🎯 Node Data: No explicit node data (nodes inferred from edges)&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="dataset-visualization">
+<h3>Dataset Visualization<a class="headerlink" href="#dataset-visualization" title="Link to this heading"></a></h3>
+<p>Create visualizations to understand the data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Plot experimental vs calculated free energies</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot ΔG values</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">plot_dataset_DGs</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax1</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Free Energy (ΔG) Comparison&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot ΔΔG values</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">plot_dataset_DDGs</span><span class="p">(</span><span class="n">dataset</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax2</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Relative Free Energy (ΔΔG) Comparison&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="performance-tracker-tutorial">
+<h2>Performance Tracker Tutorial<a class="headerlink" href="#performance-tracker-tutorial" title="Link to this heading"></a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">PerformanceTracker</span></code> class helps you systematically track and compare model performance across different runs and configurations.</p>
+<section id="setting-up-performance-tracking">
+<h3>Setting Up Performance Tracking<a class="headerlink" href="#setting-up-performance-tracking" title="Link to this heading"></a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Initialize the performance tracker</span>
+<span class="n">results_dir</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;./tutorial_results&quot;</span><span class="p">)</span>
+<span class="n">results_dir</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">exist_ok</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">tracker</span> <span class="o">=</span> <span class="n">PerformanceTracker</span><span class="p">(</span><span class="n">storage_dir</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">results_dir</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Performance tracker initialized&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;💾 Results will be stored in: </span><span class="si">{</span><span class="n">results_dir</span><span class="o">.</span><span class="n">absolute</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="recording-model-runs">
+<h3>Recording Model Runs<a class="headerlink" href="#recording-model-runs" title="Link to this heading"></a></h3>
+<p>Let’s simulate some model runs and track their performance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Simulate model predictions and track performance</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Create synthetic experimental data</span>
+<span class="n">n_samples</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>  <span class="c1"># Experimental values</span>
+
+<span class="c1"># Simulate different model configurations</span>
+<span class="n">model_configs</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s2">&quot;prior_std&quot;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span> <span class="s2">&quot;model_type&quot;</span><span class="p">:</span> <span class="s2">&quot;baseline&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s2">&quot;prior_std&quot;</span><span class="p">:</span> <span class="mf">1.0</span><span class="p">,</span> <span class="s2">&quot;model_type&quot;</span><span class="p">:</span> <span class="s2">&quot;optimized&quot;</span><span class="p">},</span>
+    <span class="p">{</span><span class="s2">&quot;learning_rate&quot;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span> <span class="s2">&quot;prior_std&quot;</span><span class="p">:</span> <span class="mf">2.0</span><span class="p">,</span> <span class="s2">&quot;model_type&quot;</span><span class="p">:</span> <span class="s2">&quot;robust&quot;</span><span class="p">}</span>
+<span class="p">]</span>
+
+<span class="c1"># Record runs for each configuration</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">config</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">model_configs</span><span class="p">):</span>
+    <span class="c1"># Simulate model predictions (with different noise levels)</span>
+    <span class="n">noise_level</span> <span class="o">=</span> <span class="mf">0.8</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span> <span class="o">*</span> <span class="mf">0.2</span><span class="p">)</span>  <span class="c1"># Decreasing noise = better models</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">y_true</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">noise_level</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">)</span>
+
+    <span class="c1"># Record the run</span>
+    <span class="n">run_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;experiment_</span><span class="si">{</span><span class="n">config</span><span class="p">[</span><span class="s1">&#39;model_type&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="n">tracker</span><span class="o">.</span><span class="n">record_run</span><span class="p">(</span>
+        <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">,</span>
+        <span class="n">model_config</span><span class="o">=</span><span class="n">config</span><span class="p">,</span>
+        <span class="n">dataset_info</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;synthetic_tutorial_data&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;n_samples&quot;</span><span class="p">:</span> <span class="n">n_samples</span><span class="p">,</span>
+            <span class="s2">&quot;data_type&quot;</span><span class="p">:</span> <span class="s2">&quot;simulated&quot;</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Recorded run: </span><span class="si">{</span><span class="n">run_id</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="analyzing-results">
+<h3>Analyzing Results<a class="headerlink" href="#analyzing-results" title="Link to this heading"></a></h3>
+<p>Now let’s analyze the tracked performance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Get run history</span>
+<span class="n">history</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_run_history</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📈 Performance Summary:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">history</span><span class="p">[[</span><span class="s1">&#39;run_id&#39;</span><span class="p">,</span> <span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">,</span> <span class="s1">&#39;correlation&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="c1"># Find the best performing model</span>
+<span class="n">best_run</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">find_best_run</span><span class="p">(</span><span class="n">metric</span><span class="o">=</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="n">minimize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">🏆 Best model: </span><span class="si">{</span><span class="n">best_run</span><span class="p">[</span><span class="s1">&#39;run_id&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • RMSE: </span><span class="si">{</span><span class="n">best_run</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • R²: </span><span class="si">{</span><span class="n">best_run</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="comparing-models">
+<h3>Comparing Models<a class="headerlink" href="#comparing-models" title="Link to this heading"></a></h3>
+<p>Create visualizations to compare model performance:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create performance comparison plots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">12</span><span class="p">))</span>
+
+<span class="c1"># Plot 1: RMSE comparison</span>
+<span class="n">ax1</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">runs</span> <span class="o">=</span> <span class="n">history</span><span class="p">[</span><span class="s1">&#39;run_id&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">rmse_values</span> <span class="o">=</span> <span class="n">history</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">rmse_values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;RMSE Comparison&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;RMSE&#39;</span><span class="p">)</span>
+<span class="n">ax1</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># Plot 2: R² comparison</span>
+<span class="n">ax2</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">r2_values</span> <span class="o">=</span> <span class="n">history</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">r2_values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;orange&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;R² Comparison&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;R²&#39;</span><span class="p">)</span>
+<span class="n">ax2</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+
+<span class="c1"># Plot 3: Scatter plot for best model</span>
+<span class="n">ax3</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span>
+<span class="n">best_run_data</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="n">best_run</span><span class="p">[</span><span class="s1">&#39;run_id&#39;</span><span class="p">])</span>
+<span class="n">y_true_best</span> <span class="o">=</span> <span class="n">best_run_data</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;y_true&#39;</span><span class="p">]</span>
+<span class="n">y_pred_best</span> <span class="o">=</span> <span class="n">best_run_data</span><span class="o">.</span><span class="n">predictions</span><span class="p">[</span><span class="s1">&#39;y_pred&#39;</span><span class="p">]</span>
+
+<span class="n">ax3</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">y_true_best</span><span class="p">,</span> <span class="n">y_pred_best</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span>
+<span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">y_true_best</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_pred_best</span><span class="o">.</span><span class="n">min</span><span class="p">()),</span> <span class="nb">max</span><span class="p">(</span><span class="n">y_true_best</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="n">y_pred_best</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="p">[</span><span class="n">min_val</span><span class="p">,</span> <span class="n">max_val</span><span class="p">],</span> <span class="s1">&#39;r--&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Perfect Prediction&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Experimental Values&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Predicted Values&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Best Model: </span><span class="si">{</span><span class="n">best_run</span><span class="p">[</span><span class="s2">&quot;run_id&quot;</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax3</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="c1"># Plot 4: Performance evolution</span>
+<span class="n">ax4</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">metrics</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">,</span> <span class="s1">&#39;R2&#39;</span><span class="p">,</span> <span class="s1">&#39;MUE&#39;</span><span class="p">]</span>
+<span class="k">for</span> <span class="n">metric</span> <span class="ow">in</span> <span class="n">metrics</span><span class="p">:</span>
+    <span class="n">ax4</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">runs</span><span class="p">,</span> <span class="n">history</span><span class="p">[</span><span class="n">metric</span><span class="p">],</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">metric</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Performance Metrics Across Models&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Metric Value&#39;</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">)</span>
+<span class="n">ax4</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="advanced-performance-analysis">
+<h3>Advanced Performance Analysis<a class="headerlink" href="#advanced-performance-analysis" title="Link to this heading"></a></h3>
+<p>Let’s perform some advanced analysis:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistical comparison between models</span>
+<span class="n">comparison</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">compare_runs</span><span class="p">([</span>
+    <span class="s2">&quot;experiment_baseline&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;experiment_optimized&quot;</span>
+<span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;📊 Statistical Comparison (Baseline vs Optimized):&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">metric</span><span class="p">,</span> <span class="n">stats</span> <span class="ow">in</span> <span class="n">comparison</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">stats</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   </span><span class="si">{</span><span class="n">metric</span><span class="si">}</span><span class="s2">:&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">stats</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;     • </span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Export results for external analysis</span>
+<span class="n">export_path</span> <span class="o">=</span> <span class="n">results_dir</span> <span class="o">/</span> <span class="s2">&quot;performance_summary.csv&quot;</span>
+<span class="n">tracker</span><span class="o">.</span><span class="n">export_results</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">export_path</span><span class="p">),</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;csv&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">💾 Results exported to: </span><span class="si">{</span><span class="n">export_path</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="working-with-real-fep-data">
+<h2>Working with Real FEP Data<a class="headerlink" href="#working-with-real-fep-data" title="Link to this heading"></a></h2>
+<p>Now let’s combine both components to analyze real FEP benchmark data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load a real dataset and analyze with performance tracking</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="c1"># Load dataset</span>
+    <span class="n">real_dataset</span> <span class="o">=</span> <span class="n">fep_dataset</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;cdk8&#39;</span><span class="p">,</span> <span class="n">sampling_time</span><span class="o">=</span><span class="s1">&#39;5ns&#39;</span><span class="p">)</span>
+    <span class="n">edge_df</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">real_dataset</span><span class="o">.</span><span class="n">get_dataframes</span><span class="p">()</span>
+
+    <span class="c1"># Extract experimental and calculated values</span>
+    <span class="n">y_exp</span> <span class="o">=</span> <span class="n">edge_df</span><span class="p">[</span><span class="s1">&#39;exp_DDG&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+    <span class="n">y_calc</span> <span class="o">=</span> <span class="n">edge_df</span><span class="p">[</span><span class="s1">&#39;calc_DDG&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span>
+
+    <span class="c1"># Remove any NaN values</span>
+    <span class="n">mask</span> <span class="o">=</span> <span class="o">~</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">y_exp</span><span class="p">)</span> <span class="o">|</span> <span class="n">np</span><span class="o">.</span><span class="n">isnan</span><span class="p">(</span><span class="n">y_calc</span><span class="p">))</span>
+    <span class="n">y_exp_clean</span> <span class="o">=</span> <span class="n">y_exp</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+    <span class="n">y_calc_clean</span> <span class="o">=</span> <span class="n">y_calc</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+    <span class="c1"># Record this as a model run</span>
+    <span class="n">tracker</span><span class="o">.</span><span class="n">record_run</span><span class="p">(</span>
+        <span class="n">run_id</span><span class="o">=</span><span class="s2">&quot;cdk8_fep_benchmark&quot;</span><span class="p">,</span>
+        <span class="n">y_true</span><span class="o">=</span><span class="n">y_exp_clean</span><span class="p">,</span>
+        <span class="n">y_pred</span><span class="o">=</span><span class="n">y_calc_clean</span><span class="p">,</span>
+        <span class="n">model_config</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;method&quot;</span><span class="p">:</span> <span class="s2">&quot;FEP+&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;sampling_time&quot;</span><span class="p">:</span> <span class="s2">&quot;5ns&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;force_field&quot;</span><span class="p">:</span> <span class="s2">&quot;AMBER&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;water_model&quot;</span><span class="p">:</span> <span class="s2">&quot;TIP3P&quot;</span>
+        <span class="p">},</span>
+        <span class="n">dataset_info</span><span class="o">=</span><span class="p">{</span>
+            <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;CDK8&quot;</span><span class="p">,</span>
+            <span class="s2">&quot;n_samples&quot;</span><span class="p">:</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_exp_clean</span><span class="p">),</span>
+            <span class="s2">&quot;data_source&quot;</span><span class="p">:</span> <span class="s2">&quot;Schindler_benchmark&quot;</span>
+        <span class="p">}</span>
+    <span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;✅ Recorded FEP benchmark run&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;📊 Samples: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">y_exp_clean</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Get performance metrics for the real data</span>
+    <span class="n">fep_run</span> <span class="o">=</span> <span class="n">tracker</span><span class="o">.</span><span class="n">get_run</span><span class="p">(</span><span class="s2">&quot;cdk8_fep_benchmark&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">📈 FEP Benchmark Performance:&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • RMSE: </span><span class="si">{</span><span class="n">fep_run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="p">[</span><span class="s1">&#39;RMSE&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • R²: </span><span class="si">{</span><span class="n">fep_run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="p">[</span><span class="s1">&#39;R2&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   • MUE: </span><span class="si">{</span><span class="n">fep_run</span><span class="o">.</span><span class="n">performance_metrics</span><span class="p">[</span><span class="s1">&#39;MUE&#39;</span><span class="p">]</span><span class="si">:</span><span class="s2">.3f</span><span class="si">}</span><span class="s2"> kcal/mol&quot;</span><span class="p">)</span>
+
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;❌ Could not process FEP data: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="summary-and-best-practices">
+<h2>Summary and Best Practices<a class="headerlink" href="#summary-and-best-practices" title="Link to this heading"></a></h2>
+<section id="key-takeaways">
+<h3>Key Takeaways<a class="headerlink" href="#key-takeaways" title="Link to this heading"></a></h3>
+<ol class="arabic simple">
+<li><p><strong>FEPBenchmarkDataset</strong>:
+- Provides standardized access to benchmark FEP datasets
+- Supports multiple protein targets and sampling times
+- Handles data caching and preprocessing automatically</p></li>
+<li><p><strong>PerformanceTracker</strong>:
+- Systematic tracking of model performance across runs
+- Statistical comparison capabilities
+- Export functionality for external analysis
+- Visualization tools for performance assessment</p></li>
+</ol>
+</section>
+<section id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Link to this heading"></a></h3>
+<p><strong>For FEP Datasets:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Always check data availability</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">dataset</span> <span class="o">=</span> <span class="n">fep_dataset</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s1">&#39;target&#39;</span><span class="p">,</span> <span class="s1">&#39;sampling_time&#39;</span><span class="p">)</span>
+    <span class="c1"># Process dataset</span>
+<span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Dataset not available: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Examine data quality</span>
+<span class="n">edge_df</span><span class="p">,</span> <span class="n">node_df</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">get_dataframes</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Missing values in experimental data: </span><span class="si">{</span><span class="n">edge_df</span><span class="p">[</span><span class="s1">&#39;exp_DDG&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isna</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>For Performance Tracking:</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Use descriptive run IDs</span>
+<span class="n">run_id</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">dataset</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">parameter_config</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">timestamp</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="c1"># Include comprehensive metadata</span>
+<span class="n">tracker</span><span class="o">.</span><span class="n">record_run</span><span class="p">(</span>
+    <span class="n">run_id</span><span class="o">=</span><span class="n">run_id</span><span class="p">,</span>
+    <span class="n">y_true</span><span class="o">=</span><span class="n">y_true</span><span class="p">,</span>
+    <span class="n">y_pred</span><span class="o">=</span><span class="n">y_pred</span><span class="p">,</span>
+    <span class="n">model_config</span><span class="o">=</span><span class="p">{</span><span class="o">...</span><span class="p">},</span>  <span class="c1"># Complete model configuration</span>
+    <span class="n">dataset_info</span><span class="o">=</span><span class="p">{</span><span class="o">...</span><span class="p">},</span>  <span class="c1"># Dataset characteristics</span>
+    <span class="n">metadata</span><span class="o">=</span><span class="p">{</span>
+        <span class="s2">&quot;notes&quot;</span><span class="p">:</span> <span class="s2">&quot;Description of this run&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;git_commit&quot;</span><span class="p">:</span> <span class="s2">&quot;abc123&quot;</span><span class="p">,</span>  <span class="c1"># For reproducibility</span>
+        <span class="s2">&quot;random_seed&quot;</span><span class="p">:</span> <span class="mi">42</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1"># Regular exports for backup</span>
+<span class="n">tracker</span><span class="o">.</span><span class="n">export_results</span><span class="p">(</span><span class="s2">&quot;backup.json&quot;</span><span class="p">,</span> <span class="nb">format</span><span class="o">=</span><span class="s2">&quot;json&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This tutorial demonstrates the core functionality of MAPLE’s FEP benchmark dataset handling and performance tracking capabilities. These tools provide a solid foundation for systematic FEP analysis and model development.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="parameter_sweeps.html" class="btn btn-neutral float-left" title="Parameter Sweep Examples" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../developer/contributing.html" class="btn btn-neutral float-right" title="Contributing to MAPLE" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2025, MAPLE Contributors.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
