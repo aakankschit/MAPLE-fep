@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from maple.dataset.synthetic_dataset import SyntheticFEPDataset
-from maple.models.node_model import ModelConfig
+from maple.models.config import VariationalEstimatorConfig as ModelConfig
 # Import MAPLE components
 from maple.utils import PerformanceTracker
 
@@ -125,7 +125,7 @@ def run_model_comparison_example():
             try:
                 # For this example, we'll simulate model predictions
                 # In practice, you would initialize and train the model:
-                # model = NodeModel(model_config, dataset)
+                # model = VariationalEstimator(model_config, dataset)
                 # model_predictions = model.predict(X_test)
                 model_predictions = y_true + np.random.normal(0, 0.3, len(y_true))
 

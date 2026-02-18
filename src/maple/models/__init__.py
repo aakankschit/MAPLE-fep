@@ -1,34 +1,45 @@
 """
 MAPLE Models Package
 
-This package provides the node model implementation for FEP analysis.
+This package provides estimators for FEP analysis, organized into
+probabilistic (variational inference) and deterministic (closed-form) methods.
 """
 
-from .node_model import NodeModel, GraphData
-from .gaussian_markov_model import GMVI_model
-from .wcc_model import WCC_model
-from .model_config import (
-    BaseModelConfig,
-    NodeModelConfig,
-    GMVIConfig,
-    WCCConfig,
+from .base import BaseEstimator
+from .graph_data import GraphData
+from .config import (
+    BaseEstimatorConfig,
+    VariationalEstimatorConfig,
+    GaussianMixtureVIConfig,
+    CycleClosureCorrectionConfig,
+    SpectralCorrectionConfig,
     PriorType,
     GuideType,
     ErrorDistributionType,
-    create_config
+    create_config,
 )
+from .probabilistic import VariationalEstimator, GaussianMixtureVI
+from .deterministic import CycleClosureCorrection, SpectralCorrection
 
 __all__ = [
-    "NodeModel",
-    "GMVI_model",
-    "WCC_model",
+    # Base
+    "BaseEstimator",
     "GraphData",
-    "BaseModelConfig",
-    "NodeModelConfig",
-    "GMVIConfig",
-    "WCCConfig",
+    # Estimators
+    "VariationalEstimator",
+    "GaussianMixtureVI",
+    "CycleClosureCorrection",
+    "SpectralCorrection",
+    # Configs
+    "BaseEstimatorConfig",
+    "VariationalEstimatorConfig",
+    "GaussianMixtureVIConfig",
+    "CycleClosureCorrectionConfig",
+    "SpectralCorrectionConfig",
+    # Enums
     "PriorType",
     "GuideType",
     "ErrorDistributionType",
+    # Factory
     "create_config",
 ]

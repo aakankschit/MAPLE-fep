@@ -15,7 +15,7 @@ import seaborn as sns
 from tqdm import tqdm
 
 from ..graph_analysis.performance_stats import bootstrap_statistic
-from ..models import NodeModel, NodeModelConfig, GMVI_model, GMVIConfig, PriorType
+from ..models import VariationalEstimator, VariationalEstimatorConfig, GaussianMixtureVI, GaussianMixtureVIConfig, PriorType
 from .performance_tracker import PerformanceTracker
 
 
@@ -30,7 +30,7 @@ class ParameterSweep:
     ----------
     tracker : PerformanceTracker
         Performance tracker instance for storing results
-    base_config : NodeModelConfig
+    base_config : VariationalEstimatorConfig
         Base model configuration to modify during sweeps
     datasets : Dict[str, Any]
         Dictionary of datasets to test across
@@ -57,7 +57,7 @@ class ParameterSweep:
     def __init__(
         self,
         tracker: PerformanceTracker,
-        base_config: Any,  # Can be NodeModelConfig or GMVIConfig
+        base_config: Any,  # Can be VariationalEstimatorConfig or GaussianMixtureVIConfig
         datasets: Dict[str, Any],
     ):
         """Initialize parameter sweep system."""
@@ -68,14 +68,14 @@ class ParameterSweep:
         self.failed_experiments = []  # Store failed parameter combinations
 
         # Detect model type from config
-        if isinstance(base_config, GMVIConfig):
-            self.model_type = "GMVI"
-            self.model_class = GMVI_model
-        elif isinstance(base_config, NodeModelConfig):
-            self.model_type = "NodeModel"
-            self.model_class = NodeModel
+        if isinstance(base_config, GaussianMixtureVIConfig):
+            self.model_type = "GaussianMixtureVI"
+            self.model_class = GaussianMixtureVI
+        elif isinstance(base_config, VariationalEstimatorConfig):
+            self.model_type = "VariationalEstimator"
+            self.model_class = VariationalEstimator
         else:
-            raise ValueError(f"Unsupported config type: {type(base_config)}. Must be NodeModelConfig or GMVIConfig.")
+            raise ValueError(f"Unsupported config type: {type(base_config)}. Must be VariationalEstimatorConfig or GaussianMixtureVIConfig.")
 
     def sweep_parameter(
         self,
@@ -93,7 +93,7 @@ class ParameterSweep:
         Parameters
         ----------
         parameter_name : str
-            Name of the parameter to sweep (must be valid NodeModelConfig attribute)
+            Name of the parameter to sweep (must be valid VariationalEstimatorConfig attribute)
         values : List[Any]
             List of parameter values to test
         metrics : List[str], default=['RMSE', 'MUE', 'R2', 'rho']
@@ -140,31 +140,30 @@ class ParameterSweep:
                     config_dict = self.base_config.__dict__.copy()
 
                     # Handle special parameter types based on model type
-                    if self.model_type == "NodeModel":
+                    if self.model_type == "VariationalEstimator":
                         if parameter_name == "prior_std" and hasattr(
                             self.base_config, "prior_parameters"
                         ):
-                            # Modify prior standard deviation for NodeModel
+                            # Modify prior standard deviation for VariationalEstimator
                             config_dict["prior_parameters"] = [0.0, param_value]
                         else:
                             config_dict[parameter_name] = param_value
-                        modified_config = NodeModelConfig(**config_dict)
-                    elif self.model_type == "GMVI":
+                        modified_config = VariationalEstimatorConfig(**config_dict)
+                    elif self.model_type == "GaussianMixtureVI":
                         # For GMVI, directly set the parameter
                         config_dict[parameter_name] = param_value
-                        modified_config = GMVIConfig(**config_dict)
+                        modified_config = GaussianMixtureVIConfig(**config_dict)
 
                     # Train model with modified config
                     model = self.model_class(config=modified_config, dataset=dataset)
 
                     # Call appropriate training method
-                    if self.model_type == "NodeModel":
-                        model.train()
+                    if self.model_type == "VariationalEstimator":
+                        model.fit()
                         model_results = model.get_results()
                         y_pred = np.array(list(model_results["node_estimates"].values()))
-                    elif self.model_type == "GMVI":
+                    elif self.model_type == "GaussianMixtureVI":
                         model.fit()
-                        model.get_posterior_estimates()
                         y_pred = np.array(list(model.node_estimates.values()))
 
                     # Handle node mapping if needed
@@ -397,28 +396,27 @@ class ParameterSweep:
                     # Create modified config based on model type
                     config_dict = self.base_config.__dict__.copy()
 
-                    if self.model_type == "NodeModel":
+                    if self.model_type == "VariationalEstimator":
                         for param_name, param_value in param_combo.items():
                             if param_name == "prior_std":
                                 config_dict["prior_parameters"] = [0.0, param_value]
                             else:
                                 config_dict[param_name] = param_value
-                        modified_config = NodeModelConfig(**config_dict)
-                    elif self.model_type == "GMVI":
+                        modified_config = VariationalEstimatorConfig(**config_dict)
+                    elif self.model_type == "GaussianMixtureVI":
                         for param_name, param_value in param_combo.items():
                             config_dict[param_name] = param_value
-                        modified_config = GMVIConfig(**config_dict)
+                        modified_config = GaussianMixtureVIConfig(**config_dict)
 
                     # Train model with appropriate method
                     model = self.model_class(config=modified_config, dataset=dataset)
 
-                    if self.model_type == "NodeModel":
-                        model.train()
+                    if self.model_type == "VariationalEstimator":
+                        model.fit()
                         model_results = model.get_results()
                         y_pred = np.array(list(model_results["node_estimates"].values()))
-                    elif self.model_type == "GMVI":
+                    elif self.model_type == "GaussianMixtureVI":
                         model.fit()
-                        model.get_posterior_estimates()
                         y_pred = np.array(list(model.node_estimates.values()))
 
                     # Align predictions with experimental data
@@ -810,7 +808,7 @@ class ParameterSweep:
         return np.random.randn(n_nodes) * 2.0
 
     def _align_predictions_with_experimental(
-        self, y_pred: np.ndarray, y_true: np.ndarray, dataset: Any, model: NodeModel
+        self, y_pred: np.ndarray, y_true: np.ndarray, dataset: Any, model: VariationalEstimator
     ) -> np.ndarray:
         """
         Align model predictions with experimental data order.
@@ -858,10 +856,10 @@ def create_prior_sweep_experiment(
     tracker: PerformanceTracker,
     datasets: Dict[str, Any],
     prior_std_values: List[float] = [0.01, 0.1, 0.5, 1, 2, 4, 6],
-    base_config: Optional[NodeModelConfig] = None,
+    base_config: Optional[VariationalEstimatorConfig] = None,
 ) -> pd.DataFrame:
     """
-    Create a prior standard deviation sweep experiment for NodeModel.
+    Create a prior standard deviation sweep experiment for VariationalEstimator.
 
     This function replicates the functionality from your attached code but
     using the parameter sweep system.
@@ -874,7 +872,7 @@ def create_prior_sweep_experiment(
         Dictionary of datasets to test
     prior_std_values : List[float]
         Prior standard deviation values to test
-    base_config : NodeModelConfig, optional
+    base_config : VariationalEstimatorConfig, optional
         Base configuration (will use defaults if not provided)
 
     Returns
@@ -884,7 +882,7 @@ def create_prior_sweep_experiment(
     """
 
     if base_config is None:
-        base_config = NodeModelConfig(
+        base_config = VariationalEstimatorConfig(
             learning_rate=0.001,
             num_steps=1000,
             prior_type=PriorType.NORMAL,
@@ -918,10 +916,10 @@ def create_gmvi_prior_sweep_experiment(
     tracker: PerformanceTracker,
     datasets: Dict[str, Any],
     prior_std_values: List[float] = [0.01, 0.1, 0.5, 1, 2, 4, 6, 10],
-    base_config: Optional[GMVIConfig] = None,
+    base_config: Optional[GaussianMixtureVIConfig] = None,
 ) -> pd.DataFrame:
     """
-    Create a prior standard deviation sweep experiment for GMVI_model.
+    Create a prior standard deviation sweep experiment for GaussianMixtureVI.
 
     This function provides parameter sweep functionality specifically
     for the GMVI model with Gaussian Markov variational inference.
@@ -934,7 +932,7 @@ def create_gmvi_prior_sweep_experiment(
         Dictionary of datasets to test
     prior_std_values : List[float]
         Prior standard deviation values to test
-    base_config : GMVIConfig, optional
+    base_config : GaussianMixtureVIConfig, optional
         Base configuration (will use defaults if not provided)
 
     Returns
@@ -944,7 +942,7 @@ def create_gmvi_prior_sweep_experiment(
     """
 
     if base_config is None:
-        base_config = GMVIConfig(
+        base_config = GaussianMixtureVIConfig(
             learning_rate=0.01,
             n_epochs=1000,
             prior_std=5.0,  # Will be modified during sweep
@@ -989,7 +987,7 @@ def create_comprehensive_parameter_study(
     This function demonstrates various parameter sweep scenarios.
     """
 
-    base_config = NodeModelConfig()
+    base_config = VariationalEstimatorConfig()
     sweep = ParameterSweep(tracker, base_config, datasets)
 
     results = {}

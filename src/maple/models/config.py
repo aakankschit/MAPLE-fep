@@ -1,8 +1,9 @@
 """
-Configuration classes for MAPLE models
+Configuration classes for MAPLE estimators.
 
-This module provides configuration classes for different model types in MAPLE,
-including the NodeModel and GMVI_model, with proper validation using Pydantic.
+This module provides configuration classes for different estimator types in MAPLE,
+including the VariationalEstimator and GaussianMixtureVI, with proper validation
+using Pydantic.
 """
 
 from abc import ABC
@@ -34,54 +35,54 @@ class ErrorDistributionType(str, Enum):
     SKEWED_NORMAL = "skewed_normal"
 
 
-class BaseModelConfig(BaseModel, ABC):
-    """Base configuration class for all MAPLE models"""
-    
+class BaseEstimatorConfig(BaseModel, ABC):
+    """Base configuration class for all MAPLE probabilistic estimators"""
+
     learning_rate: float = Field(
-        default=0.001, ge=1e-6, le=1.0, 
+        default=0.001, ge=1e-6, le=1.0,
         description="Learning rate for optimization"
     )
-    
+
     num_steps: int = Field(
-        default=5000, ge=10, le=100000, 
+        default=5000, ge=10, le=100000,
         description="Number of optimization steps"
     )
-    
+
     model_type: str = Field(
-        description="Type of model (NodeModel or GMVI)"
+        description="Type of estimator (VariationalEstimator or GaussianMixtureVI)"
     )
 
 
-class NodeModelConfig(BaseModelConfig):
-    """Configuration specific to NodeModel"""
-    
-    model_type: str = Field(default="NodeModel", frozen=True)
-    
+class VariationalEstimatorConfig(BaseEstimatorConfig):
+    """Configuration specific to VariationalEstimator"""
+
+    model_type: str = Field(default="VariationalEstimator", frozen=True)
+
     prior_type: PriorType = Field(
         default=PriorType.NORMAL,
         description="Type of prior distribution for node values"
     )
-    
+
     prior_parameters: List[float] = Field(
-        default=[0.0, 1.0], 
+        default=[0.0, 1.0],
         description="Parameters for the prior distribution"
     )
-    
+
     error_std: float = Field(
-        default=1.0, gt=0.0, 
+        default=1.0, gt=0.0,
         description="Standard deviation of cycle errors"
     )
-    
+
     error_distribution: ErrorDistributionType = Field(
         default=ErrorDistributionType.NORMAL,
         description="Type of distribution for cycle errors"
     )
-    
+
     error_skew: float = Field(
         default=0.0,
         description="Skewness parameter for skewed normal error distribution"
     )
-    
+
     guide_type: GuideType = Field(
         default=GuideType.AUTO_DELTA,
         description="Type of guide for variational inference"
@@ -92,68 +93,79 @@ class NodeModelConfig(BaseModelConfig):
         description="Early stopping patience: stop training if no improvement after this many steps"
     )
 
+    random_seed: Optional[int] = Field(
+        default=None,
+        description="Random seed for reproducibility. If None, no seed is set."
+    )
+
+    use_edge_weights: bool = Field(
+        default=False,
+        description="If True and edge uncertainties are available, use per-edge sigma_ij "
+                    "for heteroscedastic likelihood instead of global error_std."
+    )
+
     @field_validator("prior_parameters")
     @classmethod
     def validate_prior_parameters(cls, v, info):
         """Validate prior parameters based on prior type"""
         prior_type = info.data.get("prior_type", PriorType.NORMAL)
-        
+
         if prior_type == PriorType.NORMAL:
             if len(v) != 2:
                 raise ValueError("Normal prior requires exactly 2 parameters: [mean, std]")
             if v[1] <= 0:
                 raise ValueError("Standard deviation must be positive")
-                
+
         elif prior_type == PriorType.GAMMA:
             if len(v) != 2:
                 raise ValueError("Gamma prior requires exactly 2 parameters: [alpha, beta]")
             if v[0] <= 0 or v[1] <= 0:
                 raise ValueError("Gamma parameters must be positive")
-                
+
         elif prior_type == PriorType.UNIFORM:
             if len(v) != 2:
                 raise ValueError("Uniform prior requires exactly 2 parameters: [lower, upper]")
             if v[0] >= v[1]:
                 raise ValueError("Uniform prior: lower bound must be less than upper bound")
-                
+
         elif prior_type == PriorType.STUDENT_T:
             if len(v) != 2:
                 raise ValueError("Student-T prior requires exactly 2 parameters: [df, scale]")
             if v[0] <= 0 or v[1] <= 0:
                 raise ValueError("Student-T parameters must be positive")
-                
+
         elif prior_type == PriorType.LAPLACE:
             if len(v) != 2:
                 raise ValueError("Laplace prior requires exactly 2 parameters: [loc, scale]")
             if v[1] <= 0:
                 raise ValueError("Laplace scale parameter must be positive")
-                
+
         return v
 
 
-class GMVIConfig(BaseModelConfig):
-    """Configuration specific to GMVI_model"""
+class GaussianMixtureVIConfig(BaseEstimatorConfig):
+    """Configuration specific to GaussianMixtureVI"""
 
-    model_type: str = Field(default="GMVI", frozen=True)
+    model_type: str = Field(default="GaussianMixtureVI", frozen=True)
 
     prior_std: float = Field(
         default=5.0, gt=0.0,
-        description="Prior standard deviation for node values (σ₀)"
+        description="Prior standard deviation for node values (sigma_0)"
     )
 
     normal_std: float = Field(
         default=1.0, gt=0.0,
-        description="Standard deviation for normal edges (σ₁)"
+        description="Standard deviation for normal edges (sigma_1)"
     )
 
     outlier_std: float = Field(
         default=3.0, gt=0.0,
-        description="Standard deviation for outlier edges (σ₂)"
+        description="Standard deviation for outlier edges (sigma_2)"
     )
 
     outlier_prob: float = Field(
         default=0.2, ge=0.0, le=1.0,
-        description="Global probability of an edge being an outlier (π)"
+        description="Global probability of an edge being an outlier (pi)"
     )
 
     kl_weight: float = Field(
@@ -182,6 +194,11 @@ class GMVIConfig(BaseModelConfig):
         description="Learning rate for ADAM optimizer"
     )
 
+    random_seed: Optional[int] = Field(
+        default=None,
+        description="Random seed for reproducibility. If None, no seed is set."
+    )
+
     @field_validator("outlier_prob")
     @classmethod
     def validate_outlier_prob(cls, v):
@@ -194,15 +211,13 @@ class GMVIConfig(BaseModelConfig):
     @classmethod
     def validate_std_relationship(cls, v, info):
         """Optionally validate relationship between normal and outlier stds"""
-        # This is optional but can help ensure outlier_std > normal_std
-        # which is typically expected
         return v
 
 
-class WCCConfig(BaseModel):
-    """Configuration specific to WCC_model (Weighted Cycle Closure)"""
+class CycleClosureCorrectionConfig(BaseModel):
+    """Configuration specific to CycleClosureCorrection (Weighted Cycle Closure)"""
 
-    model_type: str = Field(default="WCC", frozen=True)
+    model_type: str = Field(default="CycleClosureCorrection", frozen=True)
 
     tolerance: float = Field(
         default=1e-6, gt=0.0,
@@ -257,33 +272,56 @@ class WCCConfig(BaseModel):
         return v
 
 
-def create_config(model_type: str = "NodeModel", **kwargs) -> Union[BaseModelConfig, 'WCCConfig']:
+class SpectralCorrectionConfig(BaseModel):
+    """Configuration specific to SpectralCorrection (Weighted Spectral Free-energy Correction)"""
+
+    model_type: str = Field(default="SpectralCorrection", frozen=True)
+
+    use_weights: bool = Field(
+        default=True,
+        description="If True (WSFC), use per-edge 1/sigma^2 weights derived from "
+                    "DeltaDeltaG Error. If False (SFC), use uniform weights (W=I)."
+    )
+
+
+def create_config(
+    model_type: str = "VariationalEstimator", **kwargs
+) -> Union[BaseEstimatorConfig, CycleClosureCorrectionConfig, SpectralCorrectionConfig]:
     """
     Factory function to create appropriate config based on model type.
 
     Parameters
     ----------
     model_type : str
-        Type of model ("NodeModel", "GMVI", or "WCC")
+        Type of estimator ("VariationalEstimator", "GaussianMixtureVI",
+        "CycleClosureCorrection", or "SpectralCorrection")
     **kwargs
-        Configuration parameters for the specific model
+        Configuration parameters for the specific estimator
 
     Returns
     -------
-    BaseModelConfig or WCCConfig
-        Appropriate configuration object for the model type
+    BaseEstimatorConfig or CycleClosureCorrectionConfig or SpectralCorrectionConfig
+        Appropriate configuration object for the estimator type
 
     Examples
     --------
-    >>> config = create_config("NodeModel", learning_rate=0.001)
-    >>> gmvi_config = create_config("GMVI", prior_std=5.0, outlier_prob=0.3)
-    >>> wcc_config = create_config("WCC", tolerance=1e-6, max_iterations=1000)
+    >>> config = create_config("VariationalEstimator", learning_rate=0.001)
+    >>> gmvi_config = create_config("GaussianMixtureVI", prior_std=5.0, outlier_prob=0.3)
+    >>> wcc_config = create_config("CycleClosureCorrection", tolerance=1e-6, max_iterations=1000)
+    >>> sfc_config = create_config("SpectralCorrection", use_weights=False)
     """
-    if model_type.upper() == "NODEMODEL" or model_type == "NodeModel":
-        return NodeModelConfig(**kwargs)
-    elif model_type.upper() == "GMVI":
-        return GMVIConfig(**kwargs)
-    elif model_type.upper() == "WCC":
-        return WCCConfig(**kwargs)
+    normalized = model_type.upper().replace("_", "")
+    if normalized in ("VARIATIONALESTIMATOR",):
+        return VariationalEstimatorConfig(**kwargs)
+    elif normalized in ("GAUSSIANMIXTUREVI",):
+        return GaussianMixtureVIConfig(**kwargs)
+    elif normalized in ("CYCLECLOSURECORRECTION",):
+        return CycleClosureCorrectionConfig(**kwargs)
+    elif normalized in ("SPECTRALCORRECTION",):
+        return SpectralCorrectionConfig(**kwargs)
     else:
-        raise ValueError(f"Unknown model type: {model_type}. Use 'NodeModel', 'GMVI', or 'WCC'")
+        raise ValueError(
+            f"Unknown model type: {model_type}. "
+            "Use 'VariationalEstimator', 'GaussianMixtureVI', "
+            "'CycleClosureCorrection', or 'SpectralCorrection'"
+        )

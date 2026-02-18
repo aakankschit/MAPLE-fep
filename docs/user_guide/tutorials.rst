@@ -36,9 +36,9 @@ The Central Concept
    |  +----+-------------+------+------+------+-----------------+     |
    |                           ^      ^      ^                        |
    |                           |      |      |                        |
-   |              NodeModel ---+      |      +--- GMVI_model          |
+   |     VariationalEstimator ---+    |      +--- GaussianMixtureVI    |
    |                                  |                               |
-   |              NodeModel(VI) ------+                               |
+   |     VariationalEstimator(VI) ----+                               |
    |                                                                   |
    |  estimators: ['MAP', 'VI', 'GMVI']                               |
    +------------------------------------------------------------------+
@@ -65,20 +65,20 @@ Step 2: Train a Model and Add Predictions
 
 .. code-block:: python
 
-   from maple.models import NodeModel, NodeModelConfig, PriorType, GuideType
-   
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, PriorType, GuideType
+
    # Configure MAP inference
-   config = NodeModelConfig(
+   config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,
        num_steps=5000
    )
-   
+
    # Create model with dataset reference
-   model = NodeModel(config=config, dataset=dataset)
-   
+   model = VariationalEstimator(config=config, dataset=dataset)
+
    # Train the model
-   model.train()
+   model.fit()
    
    # KEY STEP: Add predictions to dataset
    model.add_predictions_to_dataset()
@@ -95,11 +95,11 @@ Step 3: Add More Models
 
 .. code-block:: python
 
-   from maple.models import GMVI_model, GMVIConfig
-   
+   from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
+
    # Train GMVI
-   gmvi_config = GMVIConfig(prior_std=5.0, outlier_prob=0.2)
-   gmvi = GMVI_model(dataset=dataset, config=gmvi_config)
+   gmvi_config = GaussianMixtureVIConfig(prior_std=5.0, outlier_prob=0.2)
+   gmvi = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
    gmvi.fit()
    gmvi.get_posterior_estimates()  # Required for GMVI!
    gmvi.add_predictions_to_dataset()
@@ -158,50 +158,50 @@ Step 2: Train Multiple Inference Methods
 .. code-block:: python
 
    from maple.models import (
-       NodeModel, NodeModelConfig,
-       GMVI_model, GMVIConfig,
+       VariationalEstimator, VariationalEstimatorConfig,
+       GaussianMixtureVI, GaussianMixtureVIConfig,
        PriorType, GuideType
    )
-   
+
    # ============================================================
    # MAP Inference (point estimates)
    # ============================================================
-   map_config = NodeModelConfig(
+   map_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,
        learning_rate=0.01,
        num_steps=5000
    )
-   map_model = NodeModel(config=map_config, dataset=dataset)
-   map_model.train()
+   map_model = VariationalEstimator(config=map_config, dataset=dataset)
+   map_model.fit()
    map_model.add_predictions_to_dataset()
    print(f"MAP training complete. Estimators: {dataset.estimators}")
-   
+
    # ============================================================
    # VI Inference (with uncertainties)
    # ============================================================
-   vi_config = NodeModelConfig(
+   vi_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_NORMAL,
        learning_rate=0.01,
        num_steps=5000
    )
-   vi_model = NodeModel(config=vi_config, dataset=dataset)
-   vi_model.train()
+   vi_model = VariationalEstimator(config=vi_config, dataset=dataset)
+   vi_model.fit()
    vi_model.add_predictions_to_dataset()
    print(f"VI training complete. Estimators: {dataset.estimators}")
-   
+
    # ============================================================
    # GMVI (outlier-robust with full covariance)
    # ============================================================
-   gmvi_config = GMVIConfig(
+   gmvi_config = GaussianMixtureVIConfig(
        prior_std=5.0,
        normal_std=1.0,
        outlier_std=3.0,
        outlier_prob=0.2,
        n_epochs=2000
    )
-   gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+   gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
    gmvi_model.fit()
    gmvi_model.get_posterior_estimates()
    gmvi_model.add_predictions_to_dataset()
@@ -392,26 +392,26 @@ Step 4: Train and Compare Models
 .. code-block:: python
 
    from maple.models import (
-       NodeModel, NodeModelConfig,
-       GMVI_model, GMVIConfig,
+       VariationalEstimator, VariationalEstimatorConfig,
+       GaussianMixtureVI, GaussianMixtureVIConfig,
        PriorType, GuideType
    )
-   
+
    # MAP
-   map_model = NodeModel(
-       config=NodeModelConfig(
+   map_model = VariationalEstimator(
+       config=VariationalEstimatorConfig(
            prior_type=PriorType.NORMAL,
            guide_type=GuideType.AUTO_DELTA
        ),
        dataset=dataset
    )
-   map_model.train()
+   map_model.fit()
    map_model.add_predictions_to_dataset()
-   
+
    # GMVI
-   gmvi_model = GMVI_model(
+   gmvi_model = GaussianMixtureVI(
        dataset=dataset,
-       config=GMVIConfig(prior_std=5.0, outlier_prob=0.2)
+       config=GaussianMixtureVIConfig(prior_std=5.0, outlier_prob=0.2)
    )
    gmvi_model.fit()
    gmvi_model.get_posterior_estimates()
@@ -430,16 +430,16 @@ Variational Inference Uncertainties
 
 .. code-block:: python
 
-   from maple.models import NodeModel, NodeModelConfig, GuideType
-   
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, GuideType
+
    # Use AutoNormal guide for VI
-   vi_config = NodeModelConfig(
+   vi_config = VariationalEstimatorConfig(
        guide_type=GuideType.AUTO_NORMAL,  # This enables uncertainty estimation
        num_steps=5000
    )
-   
-   vi_model = NodeModel(config=vi_config, dataset=dataset)
-   vi_model.train()
+
+   vi_model = VariationalEstimator(config=vi_config, dataset=dataset)
+   vi_model.fit()
    vi_model.add_predictions_to_dataset()
    
    # Access uncertainties
@@ -453,11 +453,11 @@ GMVI Uncertainties and Outlier Detection
 
 .. code-block:: python
 
-   from maple.models import GMVI_model, GMVIConfig
-   
-   gmvi = GMVI_model(
+   from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
+
+   gmvi = GaussianMixtureVI(
        dataset=dataset,
-       config=GMVIConfig(
+       config=GaussianMixtureVIConfig(
            prior_std=5.0,
            normal_std=1.0,
            outlier_std=3.0,  # Higher std for outliers
@@ -531,27 +531,27 @@ This tutorial shows how to analyze multiple datasets systematically.
 
    from maple.dataset import FEPDataset
    from maple.models import (
-       NodeModel, NodeModelConfig,
-       GMVI_model, GMVIConfig,
+       VariationalEstimator, VariationalEstimatorConfig,
+       GaussianMixtureVI, GaussianMixtureVIConfig,
        PriorType, GuideType
    )
    from maple.graph_analysis import compute_simple_statistics
    import pandas as pd
-   
+
    # Define datasets and configurations
    benchmark_datasets = [
        ("cdk8", "5ns"),
        ("cmet", "5ns"),
        ("eg5", "5ns")
    ]
-   
-   map_config = NodeModelConfig(
+
+   map_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,
        num_steps=5000
    )
-   
-   gmvi_config = GMVIConfig(
+
+   gmvi_config = GaussianMixtureVIConfig(
        prior_std=5.0,
        outlier_prob=0.2,
        n_epochs=2000
@@ -572,13 +572,13 @@ This tutorial shows how to analyze multiple datasets systematically.
        
        # Train MAP
        print("  Training MAP...")
-       map_model = NodeModel(config=map_config, dataset=dataset)
-       map_model.train()
+       map_model = VariationalEstimator(config=map_config, dataset=dataset)
+       map_model.fit()
        map_model.add_predictions_to_dataset()
-       
+
        # Train GMVI
        print("  Training GMVI...")
-       gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+       gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
        gmvi_model.fit()
        gmvi_model.get_posterior_estimates()
        gmvi_model.add_predictions_to_dataset()
@@ -636,7 +636,7 @@ Summary: Key Patterns to Remember
    
    2. CREATE & TRAIN MODELS
       model = ModelClass(config=config, dataset=dataset)
-      model.train()  # or .fit()
+      model.fit()
    
    3. ADD PREDICTIONS TO DATASET
       model.add_predictions_to_dataset()

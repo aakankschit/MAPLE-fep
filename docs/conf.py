@@ -82,6 +82,8 @@ typehints_document_rtype = True
 
 # MyST parser settings
 myst_enable_extensions = [
+    "amsmath",
+    "dollarmath",
     "deflist",
     "tasklist",
     "colon_fence",
@@ -98,10 +100,12 @@ exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]
 html_theme = "sphinx_rtd_theme"
 html_static_path = ["_static"]
 
+# Logo
+html_logo = "MAPLE_logo.png"
+
 # Theme options
 html_theme_options = {
-    "logo_only": False,
-    "display_version": True,
+    "logo_only": True,
     "prev_next_buttons_location": "bottom",
     "style_external_links": True,
     "collapse_navigation": False,

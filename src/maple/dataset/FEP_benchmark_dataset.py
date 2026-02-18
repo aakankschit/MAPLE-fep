@@ -55,7 +55,7 @@ class FEPBenchmarkDataset(BaseDataset):
         """
         Lazily load and return edge and node data for a given dataset and sampling time.
 
-        Node identifiers are automatically converted to numeric indices for NodeModel compatibility.
+        Node identifiers are automatically converted to numeric indices for VariationalEstimator compatibility.
         Original node names are preserved and can be retrieved using get_node_mapping().
 
         Parameters
@@ -201,7 +201,7 @@ class FEPBenchmarkDataset(BaseDataset):
 
     def get_graph_data(self) -> Dict[str, Any]:
         """
-        Get the graph data in the format required by NodeModel.
+        Get the graph data in the format required by VariationalEstimator.
 
         This method loads a default dataset (cdk8, 5ns) and converts it to graph format.
 
@@ -354,7 +354,7 @@ class FEPBenchmarkDataset(BaseDataset):
         Apply node-to-index mapping to convert string node identifiers to indices.
 
         This method creates a mapping from node names (like ChEMBL IDs) to indices
-        and applies it to both edge and node DataFrames for NodeModel compatibility.
+        and applies it to both edge and node DataFrames for VariationalEstimator compatibility.
 
         Parameters
         ----------

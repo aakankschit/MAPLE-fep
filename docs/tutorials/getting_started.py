@@ -27,7 +27,7 @@ def _(mo):
 
         1. Loading a benchmark FEP dataset
         2. Understanding the data structure
-        3. Training a Bayesian inference model (NodeModel)
+        3. Training a Bayesian inference model (VariationalEstimator)
         4. Analyzing the results and comparing to experimental values
         5. Visualizing model performance
 
@@ -69,7 +69,7 @@ def _():
 
     # MAPLE imports
     from maple.dataset import FEPDataset, FEPBenchmarkDataset
-    from maple.models import NodeModel, NodeModelConfig
+    from maple.models import VariationalEstimator, VariationalEstimatorConfig
     from maple.models import PriorType, GuideType
     from maple.graph_analysis import calculate_rmse, calculate_mae
     from maple.graph_analysis import plot_dataset_DGs, plot_dataset_DDGs
@@ -82,8 +82,8 @@ def _():
         FEPBenchmarkDataset,
         FEPDataset,
         GuideType,
-        NodeModel,
-        NodeModelConfig,
+        VariationalEstimator,
+        VariationalEstimatorConfig,
         PriorType,
         calculate_mae,
         calculate_rmse,
@@ -227,9 +227,9 @@ def _(dataset, mo):
 def _(mo):
     mo.md(
         r"""
-        ## 5. Training a NodeModel
+        ## 5. Training a VariationalEstimator
 
-        The **NodeModel** is MAPLE's primary inference engine. It uses Bayesian inference to estimate absolute binding free energies (ΔG) from relative measurements (ΔΔG).
+        The **VariationalEstimator** is MAPLE's primary inference engine. It uses Bayesian inference to estimate absolute binding free energies (ΔG) from relative measurements (ΔΔG).
 
         We'll configure the model with:
         - **MAP inference** (Maximum A Posteriori) using `GuideType.AUTO_DELTA`
@@ -241,12 +241,12 @@ def _(mo):
 
 
 @app.cell
-def _(GuideType, NodeModel, NodeModelConfig, PriorType, dataset, pyro):
+def _(GuideType, VariationalEstimator, VariationalEstimatorConfig, PriorType, dataset, pyro):
     # Clear previous Pyro state
     pyro.clear_param_store()
 
     # Configure the model
-    config = NodeModelConfig(
+    config = VariationalEstimatorConfig(
         learning_rate=0.01,
         num_steps=2000,
         prior_type=PriorType.NORMAL,
@@ -256,9 +256,9 @@ def _(GuideType, NodeModel, NodeModelConfig, PriorType, dataset, pyro):
     )
 
     # Create and train the model
-    model = NodeModel(config=config, dataset=dataset)
-    print("Training NodeModel...")
-    model.train()
+    model = VariationalEstimator(config=config, dataset=dataset)
+    print("Training VariationalEstimator...")
+    model.fit()
     print("Training complete!")
     return config, model
 
@@ -490,14 +490,14 @@ def _(mo):
 
         ```python
         # Variational Inference (full uncertainty)
-        vi_config = NodeModelConfig(
+        vi_config = VariationalEstimatorConfig(
             guide_type=GuideType.AUTO_NORMAL,
             num_steps=3000,
         )
 
         # Gaussian Mixture VI (outlier detection)
-        from maple.models import GMVI_model, GMVIConfig
-        gmvi_config = GMVIConfig(prior_std=5.0, outlier_prob=0.2)
+        from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
+        gmvi_config = GaussianMixtureVIConfig(prior_std=5.0, outlier_prob=0.2)
         ```
 
         ### Try Different Datasets

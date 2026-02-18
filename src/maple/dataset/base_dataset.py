@@ -9,14 +9,14 @@ class BaseDataset(ABC):
     Abstract base class for all FEP dataset classes.
 
     This class defines the interface that all dataset classes must implement.
-    It ensures that NodeModel can work with any dataset type without needing
+    It ensures that VariationalEstimator can work with any dataset type without needing
     to know the specific implementation details.
     """
 
     @abstractmethod
     def get_graph_data(self) -> Dict[str, Any]:
         """
-        Get the graph data in the format required by NodeModel.
+        Get the graph data in the format required by VariationalEstimator.
 
         Returns
         -------

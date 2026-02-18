@@ -581,7 +581,7 @@ class FEPDataset(BaseDataset):
 
     def get_graph_data(self) -> Dict[str, Any]:
         """
-        Get the graph data in the format required by NodeModel.
+        Get the graph data in the format required by VariationalEstimator.
 
         Returns
         -------

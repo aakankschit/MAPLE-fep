@@ -1,14 +1,24 @@
-# MAPLE-fep
+<p align="center">
+  <img src="docs/MAPLE_logo.png" alt="MAPLE Logo" width="400"/>
+</p>
 
-**Maximum A Posteriori Learning of Energies**
+<h1 align="center">MAPLE-fep</h1>
 
-[![PyPI version](https://img.shields.io/pypi/v/maple-fep.svg)](https://pypi.org/project/maple-fep/)
-[![CI/CD Pipeline](https://github.com/aakankschit/MAPLE-fep/actions/workflows/ci.yml/badge.svg)](https://github.com/aakankschit/MAPLE-fep/actions/workflows/ci.yml)
-[![Documentation Status](https://readthedocs.org/projects/maple-fep/badge/?version=latest)](https://maple-fep.readthedocs.io/en/latest/?badge=latest)
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+<p align="center">
+  <strong>Maximum A Posteriori Learning of Energies</strong>
+</p>
 
-A Python package for Bayesian analysis of Free Energy Perturbation (FEP) calculations in computational drug discovery. MAPLE provides probabilistic inference methods to correct thermodynamic inconsistencies and detect outliers in FEP perturbation graphs.
+<p align="center">
+  <a href="https://pypi.org/project/maple-fep/"><img src="https://img.shields.io/pypi/v/maple-fep.svg" alt="PyPI version"></a>
+  <a href="https://github.com/aakankschit/MAPLE-fep/actions/workflows/ci.yml"><img src="https://github.com/aakankschit/MAPLE-fep/actions/workflows/ci.yml/badge.svg" alt="CI/CD Pipeline"></a>
+  <a href="https://maple-fep.readthedocs.io/en/latest/?badge=latest"><img src="https://readthedocs.org/projects/maple-fep/badge/?version=latest" alt="Documentation Status"></a>
+  <a href="https://www.python.org/downloads/"><img src="https://img.shields.io/badge/python-3.10+-blue.svg" alt="Python 3.10+"></a>
+  <a href="https://opensource.org/licenses/MIT"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT"></a>
+</p>
+
+---
+
+A Python package for Bayesian analysis of Free Energy Perturbation (FEP) calculations in computational drug discovery. MAPLE provides probabilistic and deterministic inference methods to correct thermodynamic inconsistencies and detect outliers in FEP perturbation graphs.
 
 ## Installation
 
@@ -25,14 +35,14 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```python
-from maple.models import GMVI_model, GMVIConfig
+from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
 from maple.dataset import FEPDataset
 
 # Load your FEP data
 dataset = FEPDataset("fep_edges.csv")
 
 # Configure the GMVI model (Gaussian Mixture Variational Inference)
-config = GMVIConfig(
+config = GaussianMixtureVIConfig(
     prior_std=5.0,       # Prior uncertainty on node values
     normal_std=1.0,      # Expected error for normal edges
     outlier_std=3.0,     # Expected error for outlier edges
@@ -42,11 +52,12 @@ config = GMVIConfig(
 )
 
 # Train and get results
-model = GMVI_model(dataset, config=config)
+model = GaussianMixtureVI(config=config, dataset=dataset)
 model.fit()
 
 # Get node estimates (absolute free energies)
-node_estimates = model.get_posterior_estimates()
+results = model.get_results()
+node_estimates = results["node_estimates"]
 
 # Identify problematic edges
 outlier_probs = model.compute_edge_outlier_probabilities()
@@ -54,14 +65,15 @@ outlier_probs = model.compute_edge_outlier_probabilities()
 
 ## Key Features
 
-- **Bayesian Inference Methods**
-  - **MAP**: Maximum A Posteriori estimation for quick point estimates
-  - **VI**: Variational Inference with uncertainty quantification
+- **Probabilistic Inference Methods**
+  - **MAP**: Maximum A Posteriori estimation for regularized point estimates
+  - **MLE**: Maximum Likelihood Estimation (unregularized)
+  - **VI**: Variational Inference with full uncertainty quantification
   - **GMVI**: Gaussian Mixture VI for automatic outlier detection
 
-- **Cycle Closure Correction**
-  - Implementation of CCC and weighted cycle closure (WCC) methods
-  - Thermodynamic consistency enforcement
+- **Deterministic Graph Methods**
+  - **WCC**: Weighted Cycle Closure for thermodynamic consistency enforcement
+  - **WSFC/SFC**: Weighted Spectral Free-energy Correction via graph Laplacian pseudoinverse
 
 - **Outlier Detection**
   - Probabilistic identification of problematic FEP edges
@@ -70,20 +82,36 @@ outlier_probs = model.compute_edge_outlier_probabilities()
 - **Uncertainty Quantification**
   - Full posterior distributions with confidence intervals
   - Bootstrap statistics for performance metrics
+  - Laplacian-based uncertainties for spectral methods
+
+## Methods at a Glance
+
+| Method | Class | Type | Key Idea | Outputs |
+|--------|-------|------|----------|---------|
+| MAP | `VariationalEstimator` | Probabilistic | Regularized least squares via Bayesian prior | Point estimates |
+| MLE | `VariationalEstimator` | Probabilistic | Ordinary least squares (uniform prior) | Point estimates |
+| VI | `VariationalEstimator` | Probabilistic | Variational posterior approximation | Estimates + uncertainties |
+| GMVI | `GaussianMixtureVI` | Probabilistic | Mixture likelihood for outlier robustness | Estimates + uncertainties + outlier scores |
+| WCC | `CycleClosureCorrection` | Deterministic | Iterative cycle closure error correction | Corrected estimates + uncertainties |
+| WSFC | `SpectralCorrection` | Deterministic | Graph Laplacian pseudoinverse: $z^* = L_W^+ B^T W x$ | Estimates + uncertainties |
+| SFC | `SpectralCorrection` | Deterministic | Unweighted spectral correction (equivalent to MLE) | Estimates + uncertainties |
 
 ## Core Modules
 
 | Module | Description |
 |--------|-------------|
-| `maple.models` | Probabilistic inference models (NodeModel, GMVI_model, WCC) |
-| `maple.dataset` | Dataset loading and FEP benchmark data |
-| `maple.graph_analysis` | Graph analysis, statistics, and visualization |
-| `maple.utils` | Parameter optimization and performance tracking |
+| `maple.models.probabilistic` | Bayesian estimators: `VariationalEstimator` (MAP/VI/MLE), `GaussianMixtureVI` |
+| `maple.models.deterministic` | Graph-based methods: `CycleClosureCorrection` (WCC), `SpectralCorrection` (WSFC/SFC) |
+| `maple.models.config` | Pydantic configuration classes for all models |
+| `maple.dataset` | Dataset loading (`FEPDataset`), benchmarks (`FEPBenchmarkDataset`), synthetic data |
+| `maple.graph_analysis` | Performance statistics, visualization, graph construction, cycle analysis |
+| `maple.utils` | Parameter optimization (`ParameterSweep`), performance tracking |
 
 ## Documentation
 
 - **[User Guide](https://maple-fep.readthedocs.io/)**: Installation, tutorials, examples
 - **[API Reference](https://maple-fep.readthedocs.io/api/)**: Detailed module documentation
+- **[Mathematical Foundations](docs/MATHEMATICAL_FOUNDATIONS.md)**: Derivations and code-to-equation mappings
 - **[Examples](examples/)**: Jupyter notebooks and scripts
 
 Build documentation locally:
@@ -125,7 +153,3 @@ If you use MAPLE in your research, please cite:
 ## License
 
 MIT License - see [LICENSE](LICENSE) for details.
-
----
-
-**MAPLE** - Advancing computational drug discovery through principled statistical methods 🍁

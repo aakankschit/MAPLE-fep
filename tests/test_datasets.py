@@ -3,7 +3,7 @@ Unit tests for the dataset modules.
 
 This module tests all dataset classes in the MAPLE package, including
 BaseDataset interface compliance, data loading functionality, and
-proper graph data generation for NodeModel compatibility.
+proper graph data generation for VariationalEstimator compatibility.
 """
 
 import os
@@ -130,7 +130,7 @@ mol_D,2.5"""
         assert "molecule" in node_data.columns
 
     def test_get_graph_data(self, temp_csv_files):
-        """Test graph data generation for NodeModel compatibility."""
+        """Test graph data generation for VariationalEstimator compatibility."""
         edge_file, node_file = temp_csv_files
 
         dataset = FEPDataset(nodes_csv_path=node_file, edges_csv_path=edge_file)
@@ -649,7 +649,7 @@ class TestDatasetIntegration:
     Integration tests for dataset classes.
 
     These tests verify that all dataset classes work together
-    and provide consistent interfaces for use with NodeModel.
+    and provide consistent interfaces for use with VariationalEstimator.
     """
 
     def test_all_datasets_implement_interface(self):
@@ -706,13 +706,13 @@ class TestDatasetIntegration:
         ), f"Graph uses indices {all_indices} but mapping only covers {mapped_indices}"
 
     def test_dataset_with_node_model_compatibility(self, mock_dataset):
-        """Test that dataset output is compatible with NodeModel requirements."""
+        """Test that dataset output is compatible with VariationalEstimator requirements."""
         graph_data = mock_dataset.get_graph_data()
 
-        # Check all required keys for NodeModel
+        # Check all required keys for VariationalEstimator
         required_keys = {"N", "M", "src", "dst", "FEP", "CCC"}
         missing_keys = required_keys - set(graph_data.keys())
-        assert not missing_keys, f"Missing required keys for NodeModel: {missing_keys}"
+        assert not missing_keys, f"Missing required keys for VariationalEstimator: {missing_keys}"
 
         # Check data types
         assert isinstance(graph_data["N"], int)

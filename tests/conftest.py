@@ -78,7 +78,7 @@ def sample_ccc_data():
 @pytest.fixture
 def sample_graph_data(sample_edge_data, sample_ccc_data):
     """
-    Create sample graph data dictionary for testing NodeModel.
+    Create sample graph data dictionary for testing VariationalEstimator.
 
     Parameters
     ----------
@@ -90,7 +90,7 @@ def sample_graph_data(sample_edge_data, sample_ccc_data):
     Returns
     -------
     Dict[str, Any]
-        Graph data dictionary in NodeModel format
+        Graph data dictionary in VariationalEstimator format
     """
     # Create node mappings
     molecules = set(sample_edge_data["Source"]) | set(sample_edge_data["Destination"])
@@ -199,9 +199,12 @@ class MockDataset:
         self.node_data = node_data
         self.ccc_data = ccc_data if ccc_data is not None else pd.DataFrame()
 
-        # NodeModel expects these specific attribute names
+        # VariationalEstimator expects these specific attribute names
         self.dataset_edges = edge_data
         self.dataset_nodes = node_data
+
+        # Estimator tracking
+        self.estimators: list = []
 
         # Create node mappings
         molecules = set(edge_data["Source"]) | set(edge_data["Destination"])
@@ -209,7 +212,7 @@ class MockDataset:
         self.idx2node = {i: mol for mol, i in self.node2idx.items()}
 
     def get_graph_data(self) -> Dict[str, Any]:
-        """Get graph data in NodeModel format."""
+        """Get graph data in VariationalEstimator format."""
         src_indices = [self.node2idx[mol] for mol in self.edge_data["Source"]]
         dst_indices = [self.node2idx[mol] for mol in self.edge_data["Destination"]]
 
@@ -261,6 +264,39 @@ def mock_dataset(sample_edge_data, sample_node_data, sample_ccc_data):
         Mock dataset instance
     """
     return MockDataset(sample_edge_data, sample_node_data, sample_ccc_data)
+
+
+@pytest.fixture
+def sample_edge_data_with_errors():
+    """
+    Create sample edge data with DeltaDeltaG Error column for testing.
+
+    Returns
+    -------
+    pd.DataFrame
+        Sample edge DataFrame with error column
+    """
+    return pd.DataFrame(
+        {
+            "Source": ["mol_A", "mol_B", "mol_C", "mol_A"],
+            "Destination": ["mol_B", "mol_C", "mol_D", "mol_C"],
+            "DeltaDeltaG": [1.2, -0.8, 2.1, 0.5],
+            "DeltaDeltaG Error": [0.3, 0.5, 0.2, 0.4],
+        }
+    )
+
+
+@pytest.fixture
+def mock_dataset_with_errors(sample_edge_data_with_errors, sample_node_data, sample_ccc_data):
+    """
+    Create a mock dataset with edge errors for testing weighted models.
+
+    Returns
+    -------
+    MockDataset
+        Mock dataset instance with DeltaDeltaG Error column
+    """
+    return MockDataset(sample_edge_data_with_errors, sample_node_data, sample_ccc_data)
 
 
 @pytest.fixture

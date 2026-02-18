@@ -43,32 +43,32 @@ Quick Example
 .. code-block:: python
 
    from maple.dataset import FEPDataset
-   from maple.models import NodeModel, NodeModelConfig, GMVI_model, GMVIConfig
-   
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, GaussianMixtureVI, GaussianMixtureVIConfig
+
    # Create dataset (multiple options)
    dataset = FEPDataset(dataset_name="cdk8", sampling_time="5ns")
-   
+
    # Initial state
    print(dataset.dataset_nodes.columns.tolist())
    # ['Name', 'Exp. DeltaG', 'Pred. DeltaG']
-   
+
    print(dataset.estimators)
    # []
-   
+
    # Train MAP model and add predictions
-   map_model = NodeModel(config=NodeModelConfig(), dataset=dataset)
-   map_model.train()
+   map_model = VariationalEstimator(config=VariationalEstimatorConfig(), dataset=dataset)
+   map_model.fit()
    map_model.add_predictions_to_dataset()
-   
+
    # After MAP model
    print(dataset.dataset_nodes.columns.tolist())
    # ['Name', 'Exp. DeltaG', 'Pred. DeltaG', 'MAP']
-   
+
    print(dataset.estimators)
    # ['MAP']
-   
+
    # Train GMVI model and add predictions
-   gmvi = GMVI_model(dataset=dataset, config=GMVIConfig())
+   gmvi = GaussianMixtureVI(dataset=dataset, config=GaussianMixtureVIConfig())
    gmvi.fit()
    gmvi.get_posterior_estimates()
    gmvi.add_predictions_to_dataset()
@@ -147,7 +147,7 @@ The following diagram shows how models interact with the dataset:
    
    1. Model receives dataset reference
    -----------------------------------
-       model = NodeModel(config=config, dataset=dataset)
+       model = VariationalEstimator(config=config, dataset=dataset)
                                            ^
                                            |
                                    Stored as self.dataset
@@ -162,7 +162,7 @@ The following diagram shows how models interact with the dataset:
    
    3. Model trains on extracted data
    ---------------------------------
-       model.train()  # Internal optimization
+       model.fit()  # Internal optimization
        # Produces: model.node_estimates, model.edge_estimates
    
    4. Model writes predictions back
@@ -203,17 +203,25 @@ Column Naming Convention
 
 Models add columns with these names:
 
-.. code-block:: text
+.. list-table::
+   :header-rows: 1
 
-   +------------------+------------------------------------------+
-   | Model Type       | Columns Added to dataset_nodes/edges     |
-   +------------------+------------------------------------------+
-   | NodeModel (MAP)  | 'MAP'                                    |
-   | NodeModel (MLE)  | 'MLE'                                    |
-   | NodeModel (VI)   | 'VI', 'VI_uncertainty'                   |
-   | GMVI_model       | 'GMVI', 'GMVI_uncertainty'               |
-   | WCC_model        | 'WCC', 'WCC_uncertainty'                 |
-   +------------------+------------------------------------------+
+   * - Model Type
+     - Columns Added to dataset_nodes/edges
+   * - VariationalEstimator (MAP)
+     - ``'MAP'``
+   * - VariationalEstimator (MLE)
+     - ``'MLE'``
+   * - VariationalEstimator (VI)
+     - ``'VI'``, ``'VI_uncertainty'``
+   * - GaussianMixtureVI
+     - ``'GMVI'``, ``'GMVI_uncertainty'``
+   * - CycleClosureCorrection
+     - ``'WCC'``, ``'WCC_uncertainty'``
+   * - SpectralCorrection (weighted)
+     - ``'WSFC'``, ``'WSFC_uncertainty'``
+   * - SpectralCorrection (unweighted)
+     - ``'SFC'``, ``'SFC_uncertainty'``
 
 API Reference
 -------------
@@ -329,26 +337,26 @@ Example: Multi-Model Comparison
 .. code-block:: python
 
    from maple.dataset import FEPDataset
-   from maple.models import NodeModel, NodeModelConfig, GMVI_model, GMVIConfig
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, GaussianMixtureVI, GaussianMixtureVIConfig
    from maple.models import PriorType, GuideType
    from maple.graph_analysis import compute_simple_statistics
-   
+
    # Create dataset
    dataset = FEPDataset(dataset_name="cdk8", sampling_time="5ns")
-   
+
    # Train multiple models
    models_to_train = [
-       ("MAP", NodeModelConfig(guide_type=GuideType.AUTO_DELTA)),
-       ("VI", NodeModelConfig(guide_type=GuideType.AUTO_NORMAL)),
+       ("MAP", VariationalEstimatorConfig(guide_type=GuideType.AUTO_DELTA)),
+       ("VI", VariationalEstimatorConfig(guide_type=GuideType.AUTO_NORMAL)),
    ]
-   
+
    for name, config in models_to_train:
-       model = NodeModel(config=config, dataset=dataset)
-       model.train()
+       model = VariationalEstimator(config=config, dataset=dataset)
+       model.fit()
        model.add_predictions_to_dataset()
-   
+
    # Train GMVI
-   gmvi = GMVI_model(dataset=dataset, config=GMVIConfig())
+   gmvi = GaussianMixtureVI(dataset=dataset, config=GaussianMixtureVIConfig())
    gmvi.fit()
    gmvi.get_posterior_estimates()
    gmvi.add_predictions_to_dataset()

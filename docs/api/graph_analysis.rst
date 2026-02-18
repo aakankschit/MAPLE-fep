@@ -107,9 +107,11 @@ These functions compare multiple models side-by-side with consistent colors.
 
 * MAP (blue) - Maximum A Posteriori
 * VI (green) - Variational Inference
-* GMVI (orange) - Graph-Modified Variational Inference
+* GMVI (orange) - Gaussian Mixture Variational Inference
 * MLE (purple) - Maximum Likelihood Estimation
 * WCC (red) - Weighted Cycle Closure
+* WSFC - Weighted Spectral Free-energy Correction
+* SFC - Spectral Free-energy Correction (unweighted)
 
 .. autofunction:: maple.graph_analysis.plot_model_comparison_bars
 

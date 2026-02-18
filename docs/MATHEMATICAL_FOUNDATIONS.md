@@ -7,11 +7,12 @@
 ## Table of Contents
 
 1. [Problem Formulation](#1-problem-formulation)
-2. [NodeModel: MAP and Variational Inference](#2-nodemodel-map-and-variational-inference)
-3. [GMVI Model: Gaussian Mixture Variational Inference](#3-gmvi-model-gaussian-mixture-variational-inference)
+2. [VariationalEstimator: MAP and Variational Inference](#2-variationalestimator-map-and-variational-inference)
+3. [GaussianMixtureVI Model: Gaussian Mixture Variational Inference](#3-gaussianmixturevi-model-gaussian-mixture-variational-inference)
 4. [Weighted Cycle Closure (WCC)](#4-weighted-cycle-closure-wcc)
-5. [Code-to-Equation Mapping](#5-code-to-equation-mapping)
-6. [References](#6-references)
+5. [Spectral Free-energy Correction (WSFC/SFC)](#5-spectral-free-energy-correction-wsfcsfc)
+6. [Code-to-Equation Mapping](#6-code-to-equation-mapping)
+7. [References](#7-references)
 
 ---
 
@@ -42,7 +43,7 @@ class GraphData:
     idx_to_node: Dict[int, str]  # Index → ligand name mapping
 ```
 
-**File**: `src/maple/models/node_model.py` (lines 32-43), `src/maple/models/gaussian_markov_model.py` (lines 13-21)
+**File**: `src/maple/models/probabilistic/variational_estimator.py` (lines 32-43), `src/maple/models/probabilistic/gaussian_mixture_vi.py` (lines 13-21)
 
 ### 1.3 Indexing Conventions
 
@@ -50,11 +51,11 @@ class GraphData:
 
 | Model | Indexing | Storage | Access Pattern |
 |-------|----------|---------|----------------|
-| **NodeModel** | 1-indexed | Stores `idx + 1` | Access via `node_values[idx - 1]` |
-| **GMVI_model** | 0-indexed | Stores `idx` | Access via `node_values[idx]` |
-| **WCC_model** | 0-indexed | Stores `idx` | Access via `node_values[idx]` |
+| **VariationalEstimator** | 1-indexed | Stores `idx + 1` | Access via `node_values[idx - 1]` |
+| **GaussianMixtureVI** | 0-indexed | Stores `idx` | Access via `node_values[idx]` |
+| **CycleClosureCorrection** | 0-indexed | Stores `idx` | Access via `node_values[idx]` |
 
-**NodeModel** (`node_model.py` lines 183-186):
+**VariationalEstimator** (`probabilistic/variational_estimator.py` lines 183-186):
 ```python
 # Stores 1-indexed values
 source_nodes.append(node_to_idx[ligand1] + 1)
@@ -66,7 +67,7 @@ Then subtracts 1 when accessing (line 228):
 predicted_edge = node_values[target_nodes[i] - 1] - node_values[source_nodes[i] - 1]
 ```
 
-**GMVI_model** (`gaussian_markov_model.py` lines 181-184):
+**GaussianMixtureVI** (`probabilistic/gaussian_mixture_vi.py` lines 181-184):
 ```python
 # Stores 0-indexed values directly
 source_nodes.append(node_to_idx[ligand1])
@@ -81,11 +82,11 @@ The node values are only identifiable up to an additive constant. If $\mathbf{z}
 
 ---
 
-## 2. NodeModel: MAP and Variational Inference
+## 2. VariationalEstimator: MAP and Variational Inference
 
 ### 2.1 Probabilistic Model
 
-The `NodeModel` defines a Bayesian model for node inference:
+The `VariationalEstimator` defines a Bayesian model for node inference:
 
 #### Prior Distribution
 
@@ -101,7 +102,7 @@ where $p(z_i)$ depends on the `PriorType`:
 | `UNIFORM` | $\mathcal{U}(a, b)$ | `[lower, upper]` | `dist.Uniform(params[0], params[1])` |
 | `GAMMA` | $\text{Gamma}(\alpha, \beta)$ | `[alpha, beta]` | `dist.Gamma(params[0], params[1])` |
 
-**File**: `src/maple/models/node_model.py`, method `_create_prior()` (lines 95-124)
+**File**: `src/maple/models/probabilistic/variational_estimator.py`, method `_create_prior()` (lines 95-124)
 
 ```python
 def _create_prior(self, num_nodes: int) -> dist.Distribution:
@@ -132,7 +133,7 @@ $$p(\mathbf{y} | \mathbf{z}) = \prod_{(i,j) \in E} \mathcal{N}(\epsilon_{ij} | 0
 
 $$p(y_{ij} | \mathbf{z}) = \mathcal{N}(y_{ij} | z_j - z_i, \sigma_{\text{err}}^2)$$
 
-**File**: `src/maple/models/node_model.py`, method `_node_model()` (lines 198-263)
+**File**: `src/maple/models/probabilistic/variational_estimator.py`, method `_node_model()` (lines 198-263)
 
 ```python
 def _node_model(self, graph_data: GraphData) -> None:
@@ -153,7 +154,7 @@ def _node_model(self, graph_data: GraphData) -> None:
 
 #### Skewed Normal Error Distribution (Optional)
 
-NodeModel also supports a **skewed normal** error distribution via mixture approximation (lines 241-259):
+VariationalEstimator also supports a **skewed normal** error distribution via mixture approximation (lines 241-259):
 
 $$p(\epsilon) \approx 0.8 \cdot \mathcal{N}(\epsilon | 0, \sigma_{\text{err}}^2) + 0.2 \cdot \mathcal{N}(\epsilon | \alpha \cdot \sigma_{\text{err}}, 1.5 \sigma_{\text{err}}^2)$$
 
@@ -183,7 +184,7 @@ Pyro's `AutoDelta` guide represents the posterior as a delta function at the MAP
 
 $$q(\mathbf{z}) = \delta(\mathbf{z} - \mathbf{z}^*)$$
 
-**File**: `src/maple/models/node_model.py`, method `train()` (lines 265-407)
+**File**: `src/maple/models/probabilistic/variational_estimator.py`, method `fit()` (lines 265-407)
 
 ```python
 # Create delta guide (MAP)
@@ -240,10 +241,10 @@ $$\mathcal{L}(\mathbf{z}) = \sum_{(i,j) \in E} (z_j - z_i - y_{ij})^2$$
 MLE is implemented using the same `AutoDelta` guide as MAP, but with `PriorType.UNIFORM`:
 
 ```python
-from maple.models import NodeModelConfig, PriorType, GuideType
+from maple.models import VariationalEstimatorConfig, PriorType, GuideType
 
 # MLE configuration: Uniform prior removes regularization
-mle_config = NodeModelConfig(
+mle_config = VariationalEstimatorConfig(
     prior_type=PriorType.UNIFORM,        # Uniform prior → MLE
     prior_parameters=[-100.0, 100.0],    # Wide bounds (effectively unbounded)
     guide_type=GuideType.AUTO_DELTA,     # Point estimate
@@ -251,12 +252,12 @@ mle_config = NodeModelConfig(
     num_steps=5000
 )
 
-model = NodeModel(config=mle_config, dataset=dataset)
-model.train()
+model = VariationalEstimator(config=mle_config, dataset=dataset)
+model.fit()
 model.add_predictions_to_dataset()  # Adds 'MLE' column
 ```
 
-**File**: `src/maple/models/node_model.py` (lines 498-503)
+**File**: `src/maple/models/probabilistic/variational_estimator.py` (lines 498-503)
 
 ```python
 # Column naming logic
@@ -356,7 +357,7 @@ if patience_counter >= self.config.patience:
     break
 ```
 
-**Criteria**: Training stops if the loss doesn't improve for `patience` consecutive steps (default: 100 for NodeModel, 50 for GMVI).
+**Criteria**: Training stops if the loss doesn't improve for `patience` consecutive steps (default: 100 for VariationalEstimator, 50 for GaussianMixtureVI).
 
 ### 2.7 Uncertainty Propagation
 
@@ -364,7 +365,7 @@ Edge uncertainties are computed from node uncertainties using error propagation:
 
 $$\sigma_{\text{edge}(i,j)} = \sqrt{\sigma_i^2 + \sigma_j^2}$$
 
-**File**: `src/maple/models/node_model.py` (lines 446-449)
+**File**: `src/maple/models/probabilistic/variational_estimator.py` (lines 446-449)
 
 ```python
 # Propagate uncertainty: sqrt(sum of squares)
@@ -644,11 +645,11 @@ After many iterations, z* converges to values that minimize the loss (maximize E
 
 ---
 
-## 3. GMVI Model: Gaussian Mixture Variational Inference
+## 3. GaussianMixtureVI Model: Gaussian Mixture Variational Inference
 
 ### 3.1 Model Overview
 
-The GMVI model extends the basic model with:
+The GaussianMixtureVI model extends the basic model with:
 1. **Full-rank covariance** for the variational posterior
 2. **Mixture likelihood** for robust outlier detection
 
@@ -665,7 +666,7 @@ The GMVI model extends the basic model with:
 
 $$p(\mathbf{z}) = \mathcal{N}(\mathbf{z} | \mathbf{0}, \sigma_0^2 \mathbf{I}_N)$$
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `compute_kl_divergence()` (lines 306-322)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `compute_kl_divergence()` (lines 306-322)
 
 ```python
 def compute_kl_divergence(self):
@@ -684,7 +685,7 @@ $$p(y_{ij} | \mathbf{z}) = \pi \cdot \mathcal{N}(y_{ij} | z_j - z_i, \sigma_2^2)
 - Component 1 (weight $\pi$): **Outlier** edges with large variance $\sigma_2^2$ (`outlier_std`)
 - Component 2 (weight $1-\pi$): **Normal** edges with small variance $\sigma_1^2$ (`normal_std`)
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `compute_likelihood()` (lines 264-304)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `compute_likelihood()` (lines 264-304)
 
 ```python
 def compute_likelihood(self, node_samples):
@@ -733,7 +734,7 @@ $$\boldsymbol{\Sigma} = \mathbf{L} \mathbf{L}^\top$$
 
 where $\mathbf{L}$ is a lower-triangular matrix with positive diagonal elements.
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `initialize_parameters()` (lines 198-224)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `initialize_parameters()` (lines 198-224)
 
 ```python
 def initialize_parameters(self):
@@ -755,7 +756,7 @@ def initialize_parameters(self):
 
 $$\boldsymbol{\Sigma} = \mathbf{L} \mathbf{L}^\top$$
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `get_covariance_matrix()` (lines 226-228)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `get_covariance_matrix()` (lines 226-228)
 
 ```python
 def get_covariance_matrix(self):
@@ -768,7 +769,7 @@ To sample $\mathbf{z} \sim q(\mathbf{z})$, we use the **reparameterization trick
 
 $$\mathbf{z} = \boldsymbol{\mu} + \mathbf{L} \boldsymbol{\epsilon}, \quad \boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, \mathbf{I}_N)$$
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `sample_nodes()` (lines 230-241)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `sample_nodes()` (lines 230-241)
 
 ```python
 def sample_nodes(self, n_samples=None):
@@ -783,7 +784,7 @@ def sample_nodes(self, n_samples=None):
 
 > **Implementation Note**: The code computes `μ + ε @ L` where samples are stored as rows. This produces samples with covariance $\mathbf{L}^\top \mathbf{L}$. Combined with `get_covariance_matrix()` returning $\mathbf{L} \mathbf{L}^\top$, the implementation is mathematically consistent when $\mathbf{L}$ is treated as the Cholesky factor being learned. The covariance of the samples is $\text{Cov}(\boldsymbol{\epsilon} \mathbf{L}) = \mathbf{L}^\top \mathbf{L}$, and the model learns $\mathbf{L}$ such that $\mathbf{L} \mathbf{L}^\top$ approximates the true posterior covariance.
 
-### 3.6 ELBO for GMVI
+### 3.6 ELBO for GaussianMixtureVI
 
 The ELBO objective is:
 
@@ -798,7 +799,7 @@ $$D_{\text{KL}}[\mathcal{N}(\boldsymbol{\mu}, \boldsymbol{\Sigma}) \| \mathcal{N
 
 $$= \frac{1}{2} \left[ \text{tr}(\sigma_0^{-2} \boldsymbol{\Sigma}) + \sigma_0^{-2} \boldsymbol{\mu}^\top \boldsymbol{\mu} - N + N \log \sigma_0^2 - \log|\boldsymbol{\Sigma}| \right]$$
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `compute_kl_divergence()` (lines 306-322)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `compute_kl_divergence()` (lines 306-322)
 
 ```python
 def compute_kl_divergence(self):
@@ -823,7 +824,7 @@ $$\mathbb{E}_q[\log p(\mathbf{y} | \mathbf{z})] \approx \frac{1}{S} \sum_{s=1}^{
 
 where $\mathbf{z}^{(s)} \sim q(\mathbf{z})$ are Monte Carlo samples.
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `compute_elbo()` (lines 324-339)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `compute_elbo()` (lines 324-339)
 
 ```python
 def compute_elbo(self):
@@ -851,7 +852,7 @@ For each edge $(i, j)$, the predicted value is:
 
 $$\hat{y}_{ij} = z_j - z_i$$
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `compute_edge_predictions()` (lines 243-262)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `compute_edge_predictions()` (lines 243-262)
 
 ```python
 def compute_edge_predictions(self, node_samples):
@@ -877,7 +878,7 @@ We average over posterior samples:
 
 $$P(\text{outlier} | y_{ij}) \approx \frac{1}{S} \sum_{s=1}^{S} P(\text{outlier} | y_{ij}, \mathbf{z}^{(s)})$$
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `compute_edge_outlier_probabilities()` (lines 469-506)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `compute_edge_outlier_probabilities()` (lines 469-506)
 
 ```python
 def compute_edge_outlier_probabilities(self):
@@ -908,7 +909,7 @@ def compute_edge_outlier_probabilities(self):
 
 ### 3.9 Training Loop
 
-**File**: `src/maple/models/gaussian_markov_model.py`, method `fit()` (lines 341-392)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py`, method `fit()` (lines 341-392)
 
 ```python
 def fit(self):
@@ -942,13 +943,13 @@ def fit(self):
             break
 ```
 
-### 3.10 Uncertainty Propagation (GMVI)
+### 3.10 Uncertainty Propagation (GaussianMixtureVI)
 
 Edge uncertainties are computed from node uncertainties:
 
 $$\sigma_{\text{edge}(i,j)} = \sqrt{\sigma_i^2 + \sigma_j^2}$$
 
-**File**: `src/maple/models/gaussian_markov_model.py` (lines 463-464)
+**File**: `src/maple/models/probabilistic/gaussian_mixture_vi.py` (lines 463-464)
 
 ```python
 self.edge_uncertainties[edge_key] = np.sqrt(
@@ -984,7 +985,7 @@ $$\epsilon_C = \sum_{t=1}^{k} y_{v_t, v_{t+1}}$$
 
 where $v_{k+1} = v_1$.
 
-**File**: `src/maple/models/wcc_model.py`, method `_calculate_cycle_closure_error()` (lines 499-512)
+**File**: `src/maple/models/deterministic/cycle_closure.py`, method `_calculate_cycle_closure_error()` (lines 499-512)
 
 ```python
 def _calculate_cycle_closure_error(self, cycle: List[int]) -> float:
@@ -1006,7 +1007,7 @@ where $w_{ij} = 1/\sigma_{ij}^2$ is the precision (inverse variance).
 
 **Intuition**: Edges with smaller uncertainty (higher precision) receive smaller corrections, as they are more reliable.
 
-**File**: `src/maple/models/wcc_model.py`, method `_correct_cycle()` (lines 514-549)
+**File**: `src/maple/models/deterministic/cycle_closure.py`, method `_correct_cycle()` (lines 514-549)
 
 ```python
 def _correct_cycle(self, cycle: List[int]):
@@ -1041,7 +1042,7 @@ $$z_{\text{neighbor}} = z_{\text{current}} + y_{\text{current}, \text{neighbor}}
 
 The reference node is set to $z_{\text{ref}} = 0$ to fix the gauge.
 
-**File**: `src/maple/models/wcc_model.py`, method `_calculate_node_values()` (lines 644-700)
+**File**: `src/maple/models/deterministic/cycle_closure.py`, method `_calculate_node_values()` (lines 644-700)
 
 ```python
 def _calculate_node_values(self, reference_node=None):
@@ -1079,49 +1080,258 @@ The iterative cycle correction converges to the same solution as direct weighted
 
 ---
 
-## 5. Code-to-Equation Mapping
+## 5. Spectral Free-energy Correction (WSFC/SFC)
 
-### 5.1 NodeModel Mappings
+### 5.1 Overview
 
-| Mathematical Concept | Equation | Code Location | Code Snippet |
-|---------------------|----------|---------------|--------------|
-| Prior distribution | $p(z_i) = \mathcal{N}(\mu, \sigma^2)$ | `node_model.py:95-124` | `dist.Normal(params[0], params[1])` |
-| Uniform prior (MLE) | $p(z_i) = \text{const}$ | `node_model.py:115-116` | `dist.Uniform(params[0], params[1])` |
-| Predicted edge | $\hat{y}_{ij} = z_j - z_i$ | `node_model.py:227-228` | `node_values[target-1] - node_values[source-1]` |
-| Residual | $\epsilon_{ij} = \hat{y}_{ij} - y_{ij}$ | `node_model.py:230` | `predicted_edge - edge_values[i]` |
-| Likelihood | $p(\epsilon \| 0, \sigma_{\text{err}})$ | `node_model.py:236-240` | `dist.Normal(0.0, error_std), obs=cycle_errors` |
-| MAP guide | $q(\mathbf{z}) = \delta(\mathbf{z} - \mathbf{z}^*)$ | `node_model.py:286` | `AutoDelta(self._node_model)` |
-| MLE detection | Uniform prior + AutoDelta | `node_model.py:500-501` | `if prior_type == UNIFORM: suffix = "MLE"` |
-| VI guide | $q(\mathbf{z}) = \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$ | `node_model.py:288` | `AutoNormal(self._node_model)` |
-| ELBO loss | $-\mathcal{L}(\boldsymbol{\phi})$ | `node_model.py:300` | `Trace_ELBO()` |
-| LR decay | $\text{lr}(t) = \text{lr}_0 \cdot \gamma^{t/T}$ | `node_model.py:293-294` | `lrd = gamma ** (1/num_steps)` |
-| Error propagation | $\sigma_e = \sqrt{\sigma_i^2 + \sigma_j^2}$ | `node_model.py:446-449` | `np.sqrt(src**2 + tgt**2)` |
+The `SpectralCorrection` model solves for optimal node free energies using a **graph Laplacian approach**. Instead of iterative cycle correction (WCC) or probabilistic optimization (MAP/VI), it provides a **direct, closed-form solution** via the pseudoinverse of the weighted graph Laplacian.
 
-### 5.2 GMVI Model Mappings
+The two variants are:
+- **WSFC** (Weighted Spectral Free-energy Correction): Uses edge uncertainties as precision weights
+- **SFC** (Spectral Free-energy Correction): Unweighted version, equivalent to MLE
 
-| Mathematical Concept | Equation | Code Location | Code Snippet |
-|---------------------|----------|---------------|--------------|
-| Prior covariance | $\boldsymbol{\Sigma}_0 = \sigma_0^2 \mathbf{I}$ | `gaussian_markov_model.py:312` | `torch.eye(N) * (prior_std ** 2)` |
-| Cholesky decomposition | $\boldsymbol{\Sigma} = \mathbf{L}\mathbf{L}^\top$ | `gaussian_markov_model.py:227-228` | `torch.mm(L, L.t())` |
-| Reparameterization | $\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\epsilon}\mathbf{L}$ | `gaussian_markov_model.py:239` | `node_means + torch.mm(eps, L)` |
-| Mixture likelihood | $\pi \mathcal{N}_{\sigma_2} + (1-\pi)\mathcal{N}_{\sigma_1}$ | `gaussian_markov_model.py:287-300` | `torch.logsumexp(...)` |
-| KL divergence | $D_{\text{KL}}[q \| p]$ | `gaussian_markov_model.py:316-320` | `0.5*(trace + mean - N + det)` |
-| ELBO | $\mathbb{E}_q[\log p(y\|z)] - \beta D_{\text{KL}}$ | `gaussian_markov_model.py:337` | `expected_ll - kl_weight * kl` |
-| Outlier probability | $P(\text{outlier}\|y,z)$ | `gaussian_markov_model.py:498-503` | `numerator / denominator` |
-| Error propagation | $\sigma_e = \sqrt{\sigma_i^2 + \sigma_j^2}$ | `gaussian_markov_model.py:463-464` | `np.sqrt(unc1**2 + unc2**2)` |
+### 5.2 Mathematical Formulation
 
-### 5.3 WCC Model Mappings
+#### The Optimization Problem
 
-| Mathematical Concept | Equation | Code Location | Code Snippet |
-|---------------------|----------|---------------|--------------|
-| Cycle closure error | $\epsilon_C = \sum_{e \in C} y_e$ | `wcc_model.py:499-512` | `error += get_edge_value(...)` |
-| Weighted correction | $y_e^{\text{new}} = y_e - \epsilon_C \cdot w_e / W_C$ | `wcc_model.py:514-549` | `correction = -error * w / total_w` |
-| Node from edges (BFS) | $z_j = z_i + y_{ij}$ | `wcc_model.py:681-682` | `node_values[neighbor] = node_values[current] + edge_value` |
-| Uncertainty propagation | $\sigma_j = \sqrt{\sigma_i^2 + \sigma_{ij}^2}$ | `wcc_model.py:774-776` | `np.sqrt(current_unc**2 + edge_unc**2)` |
+Given edge observations $\mathbf{x} = (x_1, \ldots, x_M)^\top$ where $x_k = y_{i_k, j_k}$ is the observed relative free energy for edge $k$ from node $i_k$ to node $j_k$, we seek node values $\mathbf{z} = (z_1, \ldots, z_N)^\top$ that minimize the weighted sum of squared residuals:
+
+$$\mathbf{z}^* = \arg\min_{\mathbf{z}} \sum_{k=1}^{M} w_k \left( (z_{j_k} - z_{i_k}) - x_k \right)^2$$
+
+where $w_k = 1/\sigma_k^2$ are the precision weights.
+
+In matrix form, this is:
+
+$$\mathbf{z}^* = \arg\min_{\mathbf{z}} \| W^{1/2}(B\mathbf{z} - \mathbf{x}) \|_2^2$$
+
+#### Incidence Matrix
+
+The **signed incidence matrix** $B \in \mathbb{R}^{M \times N}$ encodes the graph topology:
+
+$$B_{k,v} = \begin{cases}
+-1 & \text{if } v = i_k \text{ (source of edge } k\text{)} \\
++1 & \text{if } v = j_k \text{ (target of edge } k\text{)} \\
+0 & \text{otherwise}
+\end{cases}$$
+
+so that the vector of predicted edge values is $B\mathbf{z}$, with $(B\mathbf{z})_k = z_{j_k} - z_{i_k}$.
+
+**File**: `src/maple/models/deterministic/spectral_correction.py`, method `_build_incidence_matrix()`
+
+```python
+def _build_incidence_matrix(self) -> np.ndarray:
+    B = np.zeros((M, N))
+    for k in range(M):
+        i = self.graph_data.source_nodes[k]
+        j = self.graph_data.target_nodes[k]
+        B[k, i] = -1.0
+        B[k, j] = 1.0
+    return B
+```
+
+#### Weight Matrix
+
+The **diagonal weight matrix** $W \in \mathbb{R}^{M \times M}$ contains the edge precision weights:
+
+$$W = \text{diag}(w_1, w_2, \ldots, w_M)$$
+
+- **WSFC** (`use_weights=True`): $w_k = 1/\sigma_k^2$ where $\sigma_k$ is the uncertainty of edge $k$
+- **SFC** (`use_weights=False`): $W = I_M$ (uniform weights)
+
+Edge uncertainties are clamped: $\sigma_k \geq 0.01$ to avoid extreme weights.
+
+#### Weighted Graph Laplacian
+
+The **weighted graph Laplacian** $L_W \in \mathbb{R}^{N \times N}$ is:
+
+$$L_W = B^\top W B$$
+
+This is a symmetric positive semi-definite matrix. Its null space corresponds to the gauge freedom (constant shift of all node values).
+
+Properties of $L_W$:
+- $(L_W)_{ii} = \sum_{k : i \in e_k} w_k$ (sum of weights of edges incident to node $i$)
+- $(L_W)_{ij} = -w_k$ if edge $k$ connects nodes $i$ and $j$ (with sign depending on direction)
+- Row and column sums are zero for connected components: $L_W \mathbf{1} = \mathbf{0}$
+
+### 5.3 Solution via Pseudoinverse
+
+The normal equations for the weighted least squares problem are:
+
+$$L_W \mathbf{z} = B^\top W \mathbf{x}$$
+
+Since $L_W$ is singular (due to the constant null vector), we use the **Moore-Penrose pseudoinverse**:
+
+$$\mathbf{z}^* = L_W^+ B^\top W \mathbf{x}$$
+
+The pseudoinverse provides the **minimum-norm solution**, which is equivalent to mean-centering the node values (removing the gauge freedom).
+
+**File**: `src/maple/models/deterministic/spectral_correction.py`, method `_solve()`
+
+```python
+def _solve(self) -> None:
+    B = self._B
+    x = np.array(self.graph_data.edge_values)
+
+    # Weight vector
+    if self.use_weights and self.graph_data.edge_weights is not None:
+        w = np.array(self.graph_data.edge_weights)
+    else:
+        w = np.ones(M)
+
+    # Weighted Laplacian: L_W = B^T W B
+    W_diag = np.diag(w)
+    L_W = B.T @ W_diag @ B  # (N x N)
+
+    # Right-hand side: B^T W x
+    rhs = B.T @ (w * x)  # (N,)
+
+    # Solve via least squares (handles rank-deficiency)
+    self._z, _, _, _ = np.linalg.lstsq(L_W, rhs, rcond=None)
+
+    # Store pseudoinverse for uncertainty estimation
+    self._L_W_pinv = np.linalg.pinv(L_W)
+```
+
+### 5.4 Uncertainty Estimation
+
+Node uncertainties are derived from the diagonal of the Laplacian pseudoinverse:
+
+$$\sigma_{z_i} = \sqrt{(L_W^+)_{ii}}$$
+
+**Derivation**: Under the model $\mathbf{x} = B\mathbf{z}_{\text{true}} + \boldsymbol{\epsilon}$ with $\boldsymbol{\epsilon} \sim \mathcal{N}(\mathbf{0}, W^{-1})$, the covariance of the estimator $\hat{\mathbf{z}} = L_W^+ B^\top W \mathbf{x}$ is:
+
+$$\text{Cov}(\hat{\mathbf{z}}) = L_W^+ B^\top W \cdot W^{-1} \cdot W B (L_W^+)^\top = L_W^+ L_W (L_W^+)^\top$$
+
+For the pseudoinverse, $L_W^+ L_W = P_{\text{col}}$ (projection onto column space), so:
+
+$$\text{Cov}(\hat{\mathbf{z}}) \approx L_W^+$$
+
+The marginal uncertainty for node $i$ is $\sigma_{z_i} = \sqrt{(L_W^+)_{ii}}$.
+
+Edge uncertainties are propagated:
+
+$$\sigma_{\hat{y}_{ij}} = \sqrt{\sigma_{z_i}^2 + \sigma_{z_j}^2}$$
+
+**File**: `src/maple/models/deterministic/spectral_correction.py`, method `fit()`
+
+```python
+# Node uncertainties from diagonal of L_W pseudoinverse
+diag_pinv = np.diag(self._L_W_pinv)
+for i in range(self.graph_data.num_nodes):
+    name = self.graph_data.idx_to_node[i]
+    self.node_uncertainties[name] = float(np.sqrt(max(diag_pinv[i], 0.0)))
+
+# Edge uncertainties via error propagation
+for k in range(self.graph_data.num_edges):
+    src_unc = self.node_uncertainties[src_name]
+    dst_unc = self.node_uncertainties[dst_name]
+    self.edge_uncertainties[(src_name, dst_name)] = float(
+        np.sqrt(src_unc ** 2 + dst_unc ** 2)
+    )
+```
+
+### 5.5 Relationship to Other Methods
+
+#### WSFC vs MLE (Unweighted)
+
+When `use_weights=False` (SFC), $W = I$ and:
+
+$$L = B^\top B, \quad \mathbf{z}^* = L^+ B^\top \mathbf{x}$$
+
+This is the **ordinary least squares** solution, equivalent to the MLE estimator from `VariationalEstimator` with a uniform prior. The spectral method provides the same point estimates but additionally yields analytic uncertainties from $L^+$.
+
+#### WSFC vs WCC
+
+Both WSFC and WCC solve the same underlying weighted least squares problem:
+
+$$\min_{\mathbf{z}} \sum_{(i,j) \in E} w_{ij} (z_j - z_i - y_{ij})^2$$
+
+- **WSFC** provides a direct, closed-form solution via matrix algebra ($O(N^3)$ complexity from pseudoinverse)
+- **WCC** uses iterative cycle corrections, which can be more efficient for sparse graphs with many cycles
+
+For connected graphs, both methods converge to the same solution.
+
+#### WSFC vs MAP
+
+The MAP estimator with Normal prior adds a regularization term:
+
+$$\min_{\mathbf{z}} \sum_{(i,j) \in E} w_{ij} (z_j - z_i - y_{ij})^2 + \lambda \sum_{i=1}^{N} z_i^2$$
+
+WSFC has no such regularization ($\lambda = 0$), making it equivalent to weighted MLE. The prior in MAP adds bias but reduces variance, which is beneficial for small or noisy datasets.
+
+### 5.6 Column Naming Convention
+
+The `SpectralCorrection` model determines its column name based on whether weights are used:
+
+```python
+suffix = "WSFC" if self.use_weights and self.graph_data.edge_weights is not None else "SFC"
+```
+
+| Configuration | Condition | Column Name |
+|--------------|-----------|-------------|
+| `use_weights=True` + errors available | Weighted solve | `'WSFC'` |
+| `use_weights=True` + no errors | Falls back to uniform weights with warning | `'SFC'` |
+| `use_weights=False` | Uniform weights | `'SFC'` |
 
 ---
 
-## 6. References
+## 6. Code-to-Equation Mapping
+
+### 6.1 VariationalEstimator Mappings
+
+| Mathematical Concept | Equation | Code Location | Code Snippet |
+|---------------------|----------|---------------|--------------|
+| Prior distribution | $p(z_i) = \mathcal{N}(\mu, \sigma^2)$ | `probabilistic/variational_estimator.py:95-124` | `dist.Normal(params[0], params[1])` |
+| Uniform prior (MLE) | $p(z_i) = \text{const}$ | `probabilistic/variational_estimator.py:115-116` | `dist.Uniform(params[0], params[1])` |
+| Predicted edge | $\hat{y}_{ij} = z_j - z_i$ | `probabilistic/variational_estimator.py:227-228` | `node_values[target-1] - node_values[source-1]` |
+| Residual | $\epsilon_{ij} = \hat{y}_{ij} - y_{ij}$ | `probabilistic/variational_estimator.py:230` | `predicted_edge - edge_values[i]` |
+| Likelihood | $p(\epsilon \| 0, \sigma_{\text{err}})$ | `probabilistic/variational_estimator.py:236-240` | `dist.Normal(0.0, error_std), obs=cycle_errors` |
+| MAP guide | $q(\mathbf{z}) = \delta(\mathbf{z} - \mathbf{z}^*)$ | `probabilistic/variational_estimator.py:286` | `AutoDelta(self._node_model)` |
+| MLE detection | Uniform prior + AutoDelta | `probabilistic/variational_estimator.py:500-501` | `if prior_type == UNIFORM: suffix = "MLE"` |
+| VI guide | $q(\mathbf{z}) = \mathcal{N}(\boldsymbol{\mu}, \text{diag}(\boldsymbol{\sigma}^2))$ | `probabilistic/variational_estimator.py:288` | `AutoNormal(self._node_model)` |
+| ELBO loss | $-\mathcal{L}(\boldsymbol{\phi})$ | `probabilistic/variational_estimator.py:300` | `Trace_ELBO()` |
+| LR decay | $\text{lr}(t) = \text{lr}_0 \cdot \gamma^{t/T}$ | `probabilistic/variational_estimator.py:293-294` | `lrd = gamma ** (1/num_steps)` |
+| Error propagation | $\sigma_e = \sqrt{\sigma_i^2 + \sigma_j^2}$ | `probabilistic/variational_estimator.py:446-449` | `np.sqrt(src**2 + tgt**2)` |
+
+### 6.2 GaussianMixtureVI Model Mappings
+
+| Mathematical Concept | Equation | Code Location | Code Snippet |
+|---------------------|----------|---------------|--------------|
+| Prior covariance | $\boldsymbol{\Sigma}_0 = \sigma_0^2 \mathbf{I}$ | `probabilistic/gaussian_mixture_vi.py:312` | `torch.eye(N) * (prior_std ** 2)` |
+| Cholesky decomposition | $\boldsymbol{\Sigma} = \mathbf{L}\mathbf{L}^\top$ | `probabilistic/gaussian_mixture_vi.py:227-228` | `torch.mm(L, L.t())` |
+| Reparameterization | $\mathbf{z} = \boldsymbol{\mu} + \boldsymbol{\epsilon}\mathbf{L}$ | `probabilistic/gaussian_mixture_vi.py:239` | `node_means + torch.mm(eps, L)` |
+| Mixture likelihood | $\pi \mathcal{N}_{\sigma_2} + (1-\pi)\mathcal{N}_{\sigma_1}$ | `probabilistic/gaussian_mixture_vi.py:287-300` | `torch.logsumexp(...)` |
+| KL divergence | $D_{\text{KL}}[q \| p]$ | `probabilistic/gaussian_mixture_vi.py:316-320` | `0.5*(trace + mean - N + det)` |
+| ELBO | $\mathbb{E}_q[\log p(y\|z)] - \beta D_{\text{KL}}$ | `probabilistic/gaussian_mixture_vi.py:337` | `expected_ll - kl_weight * kl` |
+| Outlier probability | $P(\text{outlier}\|y,z)$ | `probabilistic/gaussian_mixture_vi.py:498-503` | `numerator / denominator` |
+| Error propagation | $\sigma_e = \sqrt{\sigma_i^2 + \sigma_j^2}$ | `probabilistic/gaussian_mixture_vi.py:463-464` | `np.sqrt(unc1**2 + unc2**2)` |
+
+### 6.3 CycleClosureCorrection Model Mappings
+
+| Mathematical Concept | Equation | Code Location | Code Snippet |
+|---------------------|----------|---------------|--------------|
+| Cycle closure error | $\epsilon_C = \sum_{e \in C} y_e$ | `deterministic/cycle_closure.py:499-512` | `error += get_edge_value(...)` |
+| Weighted correction | $y_e^{\text{new}} = y_e - \epsilon_C \cdot w_e / W_C$ | `deterministic/cycle_closure.py:514-549` | `correction = -error * w / total_w` |
+| Node from edges (BFS) | $z_j = z_i + y_{ij}$ | `deterministic/cycle_closure.py:681-682` | `node_values[neighbor] = node_values[current] + edge_value` |
+| Uncertainty propagation | $\sigma_j = \sqrt{\sigma_i^2 + \sigma_{ij}^2}$ | `deterministic/cycle_closure.py:774-776` | `np.sqrt(current_unc**2 + edge_unc**2)` |
+
+### 6.4 SpectralCorrection Model Mappings
+
+| Mathematical Concept | Equation | Code Location | Code Snippet |
+|---------------------|----------|---------------|--------------|
+| Incidence matrix | $B_{k,i} = -1,\; B_{k,j} = +1$ | `deterministic/spectral_correction.py:158-175` | `B[k, i] = -1.0; B[k, j] = 1.0` |
+| Weight vector | $w_k = 1/\sigma_k^2$ | `deterministic/spectral_correction.py:141` | `1.0 / (s ** 2) for s in clamped` |
+| Weighted Laplacian | $L_W = B^\top W B$ | `deterministic/spectral_correction.py:202` | `B.T @ W_diag @ B` |
+| Right-hand side | $\mathbf{r} = B^\top W \mathbf{x}$ | `deterministic/spectral_correction.py:205` | `B.T @ (w * x)` |
+| Solution | $\mathbf{z}^* = L_W^+ \mathbf{r}$ | `deterministic/spectral_correction.py:208` | `np.linalg.lstsq(L_W, rhs)` |
+| Pseudoinverse | $L_W^+$ | `deterministic/spectral_correction.py:211` | `np.linalg.pinv(L_W)` |
+| Node uncertainty | $\sigma_{z_i} = \sqrt{(L_W^+)_{ii}}$ | `deterministic/spectral_correction.py:239-242` | `np.sqrt(max(diag_pinv[i], 0.0))` |
+| Edge uncertainty | $\sigma_e = \sqrt{\sigma_i^2 + \sigma_j^2}$ | `deterministic/spectral_correction.py:246-252` | `np.sqrt(src_unc**2 + dst_unc**2)` |
+| Column name | WSFC if weighted, SFC otherwise | `deterministic/spectral_correction.py:260` | `"WSFC" if use_weights ... else "SFC"` |
+
+---
+
+## 7. References
 
 ### Scientific Papers
 
@@ -1133,25 +1343,31 @@ The iterative cycle correction converges to the same solution as direct weighted
 
 4. **Blei, D. M., Kucukelbir, A., & McAuliffe, J. D. (2017)**. "Variational Inference: A Review for Statisticians." *Journal of the American Statistical Association*, 112(518), 859-877.
 
+5. **Liu, S. et al. (2020)**. "Lead Optimization Mapper: Automating Free Energy Calculations for Lead Optimization." *Journal of Chemical Information and Modeling*, 60(12), 5845-5858. *(Graph Laplacian framework for spectral FEP correction)*
+
+6. **Xu, H. (2019)**. "Optimal Measurement Network of Pairwise Differences." *Journal of Chemical Information and Modeling*, 59(11), 4720-4728. *(Graph-theoretic treatment of FEP networks)*
+
 ### Software Documentation
 
 - [Pyro Documentation](https://pyro.ai/)
 - [PyTorch Distributions](https://pytorch.org/docs/stable/distributions.html)
+- [NumPy Linear Algebra](https://numpy.org/doc/stable/reference/routines.linalg.html) (pseudoinverse, least squares)
 
 ---
 
 ## Summary
 
-This document has established the mathematical foundations for MAPLE's three main models:
+This document has established the mathematical foundations for MAPLE's four main models:
 
-1. **NodeModel**: A Bayesian model using Pyro for MAP, MLE, and VI inference on node values from edge observations
-   - **MAP**: Regularized least squares with informative prior
+1. **VariationalEstimator**: A Bayesian model using Pyro for MAP, MLE, and VI inference on node values from edge observations
+   - **MAP**: Regularized least squares with informative prior ($\lambda = \sigma_\text{err}^2 / \sigma_0^2$)
    - **MLE**: Ordinary least squares with uniform prior (no regularization)
-   - **VI**: Full posterior approximation with uncertainty quantification
-2. **GMVI Model**: An advanced variational model with full-rank covariance and outlier-robust mixture likelihood
-3. **WCC Model**: An iterative cycle closure algorithm for thermodynamic consistency correction
+   - **VI**: Full posterior approximation with uncertainty quantification via ELBO maximization
+2. **GaussianMixtureVI**: An advanced variational model with full-rank covariance ($\Sigma = LL^\top$) and outlier-robust mixture likelihood ($\pi \mathcal{N}_{\sigma_2} + (1-\pi)\mathcal{N}_{\sigma_1}$)
+3. **CycleClosureCorrection**: An iterative cycle closure algorithm for thermodynamic consistency correction via weighted error redistribution
+4. **SpectralCorrection**: A direct, closed-form solver using the weighted graph Laplacian pseudoinverse ($\mathbf{z}^* = L_W^+ B^\top W \mathbf{x}$), with analytic uncertainties from $(L_W^+)_{ii}$
 
-Each mathematical equation has been mapped to its corresponding PyTorch/Pyro implementation, providing a complete bridge between theory and code.
+Each mathematical equation has been mapped to its corresponding implementation, providing a complete bridge between theory and code.
 
 ---
 

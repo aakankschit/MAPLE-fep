@@ -9,7 +9,7 @@ Overview
 MAPLE uses a **dataset-centric architecture** where the ``FEPDataset`` object serves as the central hub for all data and predictions. The main workflow involves:
 
 1. **Creating a dataset** - Load your FEP data into an ``FEPDataset`` object
-2. **Training models** - Configure and train one or more inference models
+2. **Fitting models** - Configure and fit one or more inference models
 3. **Adding predictions** - Call ``add_predictions_to_dataset()`` to store results
 4. **Analyzing results** - Access all predictions from the dataset
 
@@ -36,7 +36,7 @@ MAPLE uses a **dataset-centric architecture** where the ``FEPDataset`` object se
        }
        
        subgraph cluster_train {
-           label="2. Train Models";
+           label="2. Fit Models";
            style="rounded,filled";
            fillcolor="#E8F5E9";
            fontname="Helvetica-Bold";
@@ -45,9 +45,9 @@ MAPLE uses a **dataset-centric architecture** where the ``FEPDataset`` object se
            subgraph cluster_train_inner {
                style=invis;
                rank=same;
-               train1 [label="NodeModel", fillcolor="#C8E6C9"];
-               train2 [label="GMVI_model", fillcolor="#C8E6C9"];
-               train3 [label="WCC_model", fillcolor="#C8E6C9"];
+               train1 [label="VariationalEstimator", fillcolor="#C8E6C9"];
+               train2 [label="GaussianMixtureVI", fillcolor="#C8E6C9"];
+               train3 [label="CycleClosureCorrection", fillcolor="#C8E6C9"];
            }
        }
        
@@ -89,8 +89,8 @@ Here's a complete example of the MAPLE workflow:
 .. code-block:: python
 
    from maple.dataset import FEPDataset
-   from maple.models import NodeModel, NodeModelConfig, PriorType, GuideType
-   from maple.models import GMVI_model, GMVIConfig
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, PriorType, GuideType
+   from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
    
    # =====================================================
    # STEP 1: Create the dataset (your central data hub)
@@ -108,18 +108,18 @@ Here's a complete example of the MAPLE workflow:
    print(f"Loaded {len(dataset.dataset_nodes)} nodes and {len(dataset.dataset_edges)} edges")
    
    # =====================================================
-   # STEP 2: Configure and train the MAP model
+   # STEP 2: Configure and fit the MAP model
    # =====================================================
-   
-   map_config = NodeModelConfig(
+
+   map_config = VariationalEstimatorConfig(
        learning_rate=0.01,
        num_steps=5000,
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA  # MAP inference
    )
-   
-   map_model = NodeModel(config=map_config, dataset=dataset)
-   map_model.train()
+
+   map_model = VariationalEstimator(config=map_config, dataset=dataset)
+   map_model.fit()
    
    # =====================================================
    # STEP 3: Add predictions to the dataset
@@ -131,12 +131,12 @@ Here's a complete example of the MAPLE workflow:
    print(dataset.dataset_nodes[['Name', 'Exp. DeltaG', 'MAP']].head())
    
    # =====================================================
-   # STEP 4: Train additional models (optional)
+   # STEP 4: Fit additional models (optional)
    # =====================================================
    
    # GMVI model with outlier detection
-   gmvi_config = GMVIConfig(prior_std=5.0, outlier_prob=0.2)
-   gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+   gmvi_config = GaussianMixtureVIConfig(prior_std=5.0, outlier_prob=0.2)
+   gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
    gmvi_model.fit()
    gmvi_model.get_posterior_estimates()
    gmvi_model.add_predictions_to_dataset()
@@ -262,61 +262,82 @@ If you only have edge data, MAPLE can derive node values:
 Available Models
 ----------------
 
-NodeModel (MAP/VI/MLE)
-~~~~~~~~~~~~~~~~~~~~~~
+VariationalEstimator (MAP/VI/MLE)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``NodeModel`` provides Maximum A Posteriori (MAP), Variational Inference (VI), or Maximum Likelihood (MLE) estimation:
+The ``VariationalEstimator`` provides Maximum A Posteriori (MAP), Variational Inference (VI), or Maximum Likelihood (MLE) estimation:
 
 .. code-block:: python
 
-   from maple.models import NodeModel, NodeModelConfig, PriorType, GuideType
-   
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, PriorType, GuideType
+
    # MAP inference (point estimates)
-   map_config = NodeModelConfig(
+   map_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,
        learning_rate=0.01,
        num_steps=5000
    )
-   map_model = NodeModel(config=map_config, dataset=dataset)
-   map_model.train()
+   map_model = VariationalEstimator(config=map_config, dataset=dataset)
+   map_model.fit()
    map_model.add_predictions_to_dataset()  # Adds "MAP" column
-   
+
    # VI inference (with uncertainties)
-   vi_config = NodeModelConfig(
+   vi_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_NORMAL,  # VI instead of MAP
        learning_rate=0.01,
        num_steps=5000
    )
-   vi_model = NodeModel(config=vi_config, dataset=dataset)
-   vi_model.train()
+   vi_model = VariationalEstimator(config=vi_config, dataset=dataset)
+   vi_model.fit()
    vi_model.add_predictions_to_dataset()  # Adds "VI" and "VI_uncertainty" columns
 
-GMVI Model (Outlier-Robust)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+GaussianMixtureVI (Outlier-Robust)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The ``GMVI_model`` uses a Gaussian mixture likelihood for outlier detection:
+The ``GaussianMixtureVI`` uses a Gaussian mixture likelihood for outlier detection:
 
 .. code-block:: python
 
-   from maple.models import GMVI_model, GMVIConfig
-   
-   gmvi_config = GMVIConfig(
+   from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
+
+   gmvi_config = GaussianMixtureVIConfig(
        prior_std=5.0,        # Prior std for node values
        normal_std=1.0,       # Std for normal edges
        outlier_std=3.0,      # Std for outlier edges
        outlier_prob=0.2,     # Probability of outlier
        n_epochs=2000
    )
-   
-   gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+
+   gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
    gmvi_model.fit()
-   gmvi_model.get_posterior_estimates()  # Required before add_predictions
+   gmvi_model.get_results()  # Required before add_predictions
    gmvi_model.add_predictions_to_dataset()  # Adds "GMVI" and "GMVI_uncertainty"
-   
+
    # Get outlier probabilities for each edge
    outlier_probs = gmvi_model.compute_edge_outlier_probabilities()
+
+SpectralCorrection (WSFC/SFC)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``SpectralCorrection`` uses the graph Laplacian pseudoinverse for a direct, closed-form solution:
+
+.. code-block:: python
+
+   from maple.models import SpectralCorrection, SpectralCorrectionConfig
+
+   # WSFC: Weighted by edge uncertainties (precision = 1/sigma^2)
+   wsfc_config = SpectralCorrectionConfig(use_weights=True)
+   wsfc_model = SpectralCorrection(config=wsfc_config, dataset=dataset)
+   wsfc_model.fit()  # Instant -- no iterative optimization
+   wsfc_model.add_predictions_to_dataset()  # Adds "WSFC" and "WSFC_uncertainty"
+
+   # SFC: Unweighted (equivalent to MLE)
+   sfc_config = SpectralCorrectionConfig(use_weights=False)
+   sfc_model = SpectralCorrection(config=sfc_config, dataset=dataset)
+   sfc_model.fit()
+   sfc_model.add_predictions_to_dataset()  # Adds "SFC" and "SFC_uncertainty"
 
 Key Concepts
 ------------
@@ -373,7 +394,7 @@ Every model has an ``add_predictions_to_dataset()`` method that:
 .. code-block:: python
 
    # This pattern is the same for all models:
-   model.train()  # or model.fit() for GMVI/WCC
+   model.fit()
    model.add_predictions_to_dataset()  # Writes results to dataset
    
    # Now access results from the dataset:
@@ -383,7 +404,7 @@ Every model has an ``add_predictions_to_dataset()`` method that:
 Performance Analysis
 --------------------
 
-After training models, analyze performance using the dataset:
+After fitting models, analyze performance using the dataset:
 
 .. code-block:: python
 

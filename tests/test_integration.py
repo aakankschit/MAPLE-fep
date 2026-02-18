@@ -13,8 +13,8 @@ import pytest
 import torch
 
 from maple.graph_analysis.performance_stats import compute_simple_statistics
-from maple.models.node_model import NodeModel
-from maple.models.model_config import NodeModelConfig as ModelConfig
+from maple.models.probabilistic.variational_estimator import VariationalEstimator
+from maple.models.config import VariationalEstimatorConfig as ModelConfig
 
 
 class TestPackageIntegration:
@@ -27,10 +27,10 @@ class TestPackageIntegration:
 
     def test_dataset_to_model_pipeline(self, mock_dataset):
         """Test the complete pipeline from dataset to model training."""
-        # Test that dataset provides data in correct format for NodeModel
+        # Test that dataset provides data in correct format for VariationalEstimator
         graph_data = mock_dataset.get_graph_data()
 
-        # Verify required keys for NodeModel
+        # Verify required keys for VariationalEstimator
         required_keys = {"N", "M", "src", "dst", "FEP", "CCC"}
         assert all(key in graph_data for key in required_keys)
 
@@ -41,9 +41,9 @@ class TestPackageIntegration:
         assert isinstance(graph_data["dst"], torch.Tensor)
         assert isinstance(graph_data["FEP"], torch.Tensor)
 
-        # Test that NodeModel can be initialized with this dataset
+        # Test that VariationalEstimator can be initialized with this dataset
         config = ModelConfig(num_steps=10)  # Short training for testing
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         assert model.dataset == mock_dataset
         assert model.config == config
@@ -71,8 +71,8 @@ class TestPackageIntegration:
 
         # Train model
         config = ModelConfig(num_steps=10)
-        model = NodeModel(config, mock_dataset)
-        model.train()
+        model = VariationalEstimator(config, mock_dataset)
+        model.fit()
 
         # Get predictions
         results = model.get_results()
@@ -152,7 +152,7 @@ class TestPackageIntegration:
         config = ModelConfig(
             learning_rate=0.01, num_steps=10, error_std=1e-4  # Short for testing
         )
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Step 4: Basic validation that model is set up correctly
         assert model.node_estimates is None  # Model not yet trained
@@ -200,7 +200,7 @@ class TestPackageIntegration:
         # Should detect the error when initializing model
         try:
             config = ModelConfig(num_steps=10)
-            _ = NodeModel(config, mock_dataset)
+            _ = VariationalEstimator(config, mock_dataset)
             # Some validation might happen during training instead
         except (ValueError, RuntimeError, IndexError):
             pass  # Expected for corrupted data
@@ -212,7 +212,7 @@ class TestPackageIntegration:
         # Create and destroy multiple models
         for _ in range(3):
             config = ModelConfig(num_steps=10)
-            model = NodeModel(config, mock_dataset)
+            model = VariationalEstimator(config, mock_dataset)
 
             # Get some data to ensure tensors are created
             graph_data = model.dataset.get_graph_data()
@@ -233,8 +233,8 @@ class TestPackageIntegration:
         config1 = ModelConfig(random_seed=42, num_steps=10)
         config2 = ModelConfig(random_seed=42, num_steps=10)
 
-        model1 = NodeModel(config1, mock_dataset)
-        model2 = NodeModel(config2, mock_dataset)
+        model1 = VariationalEstimator(config1, mock_dataset)
+        model2 = VariationalEstimator(config2, mock_dataset)
 
         # Both should have identical configurations
         assert model1.config.__dict__ == model2.config.__dict__
@@ -262,11 +262,11 @@ class TestPackageImports:
 
     def test_models_import(self):
         """Test importing models subpackage."""
-        from maple.models import NodeModel, NodeModelConfig
+        from maple.models import VariationalEstimator, VariationalEstimatorConfig
 
         # Should be able to access classes
-        assert NodeModel is not None
-        assert NodeModelConfig is not None
+        assert VariationalEstimator is not None
+        assert VariationalEstimatorConfig is not None
 
     def test_dataset_import(self):
         """Test importing dataset subpackage."""

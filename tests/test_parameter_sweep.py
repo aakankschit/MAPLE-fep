@@ -16,7 +16,7 @@ import pandas as pd
 import pytest
 import torch
 
-from maple.models.model_config import NodeModelConfig as ModelConfig, PriorType
+from maple.models.config import VariationalEstimatorConfig as ModelConfig, PriorType
 from maple.utils import PerformanceTracker
 from maple.utils.parameter_sweep import (ParameterSweep,
                                          create_comprehensive_parameter_study,
@@ -553,7 +553,7 @@ class TestParameterSweepIntegrationScenarios:
         # Create a sweep instance to test optimization
         from unittest.mock import Mock
 
-        from maple.models.model_config import NodeModelConfig as ModelConfig
+        from maple.models.config import VariationalEstimatorConfig as ModelConfig
         from maple.utils.parameter_sweep import ParameterSweep
 
         tracker = Mock()

@@ -1,15 +1,16 @@
 """
-Node Model for FEP Analysis
+Variational Estimator for FEP Analysis
 
-This module provides a clean, type-safe implementation of the node model for
-Free Energy Perturbation (FEP) analysis using Pyro for probabilistic inference.
+This module provides a clean, type-safe implementation of the variational
+estimator for Free Energy Perturbation (FEP) analysis using Pyro for
+probabilistic inference.
 
 The model uses Pydantic for configuration validation and provides a simple
-interface for running MAP (Maximum A Posteriori) inference on graph-structured
-FEP data.
+interface for running MAP (Maximum A Posteriori) or VI (Variational Inference)
+estimation on graph-structured FEP data.
 """
 
-from dataclasses import dataclass
+import warnings
 from typing import Any, Dict, List, Optional, Tuple
 
 import numpy as np
@@ -20,57 +21,44 @@ from pyro.infer import SVI, Trace_ELBO
 from pyro.infer.autoguide import AutoDelta, AutoNormal
 
 # Import dataset classes
-from ..dataset import BaseDataset
+from ...dataset import BaseDataset
 # Import configuration classes
-from .model_config import NodeModelConfig, PriorType, GuideType, ErrorDistributionType
+from ..config import VariationalEstimatorConfig, PriorType, GuideType, ErrorDistributionType
+# Import shared GraphData
+from ..graph_data import GraphData
+# Import base class
+from ..base import BaseEstimator
 
 
-# Configuration classes have been moved to model_config.py
-# Import them from there instead
-
-
-@dataclass
-class GraphData:
-    """Container for graph-structured FEP data"""
-
-    source_nodes: List[int]
-    target_nodes: List[int]
-    edge_values: List[float]
-    num_nodes: int
-    num_edges: int
-    node_to_idx: Dict[str, int]
-    idx_to_node: Dict[int, str]
-
-
-class NodeModel:
+class VariationalEstimator(BaseEstimator):
     """
-    Node Model for FEP Analysis
+    Variational Estimator for FEP Analysis
 
-    This class implements a clean, type-safe node model for FEP analysis
-    using Pyro for probabilistic inference. It provides MAP estimation
-    of node values from edge-based FEP measurements.
+    This class implements a clean, type-safe variational estimator for FEP
+    analysis using Pyro for probabilistic inference. It provides MAP estimation
+    or full VI of node values from edge-based FEP measurements.
 
     Attributes
     ----------
-    config : NodeModelConfig
+    config : VariationalEstimatorConfig
         Configuration object containing all model parameters
     dataset : BaseDataset
         Dataset containing the FEP data
     graph_data : Optional[GraphData]
         Processed graph data for inference
     node_estimates : Optional[Dict[str, float]]
-        Estimated node values after training
+        Estimated node values after fitting
     edge_estimates : Optional[Dict[Tuple[str, str], float]]
         Estimated edge values derived from node estimates
     """
 
-    def __init__(self, config: NodeModelConfig, dataset: BaseDataset):
+    def __init__(self, config: VariationalEstimatorConfig, dataset: BaseDataset):
         """
-        Initialize the node model with configuration and dataset.
+        Initialize the variational estimator with configuration and dataset.
 
         Parameters
         ----------
-        config : NodeModelConfig
+        config : VariationalEstimatorConfig
             Configuration object with all model parameters
         dataset : BaseDataset
             Dataset containing FEP data
@@ -86,11 +74,6 @@ class NodeModel:
         # Training history
         self.loss_history: List[float] = []
         self.elbo_history: List[float] = []
-
-        # Optionally calculate CCC values using CCC_model
-        # Note: CCC calculation removed from automatic initialization
-        # Use CCC_model directly if CCC values are needed as benchmark
-
 
     def _create_prior(self, num_nodes: int) -> dist.Distribution:
         """
@@ -141,9 +124,12 @@ class NodeModel:
         source_nodes = []
         target_nodes = []
         edge_values = []
+        edge_errors: List[float] = []
         node_to_idx = {}
         idx_to_node = {}
         idx = 0
+
+        has_error_col = "DeltaDeltaG Error" in edges_df.columns
 
         # Process each edge
         for _, row in edges_df.iterrows():
@@ -169,6 +155,10 @@ class NodeModel:
                     "Edge data must have either 'DeltaDeltaG', 'DeltaG', or 'FEP' column"
                 )
 
+            # Edge error
+            if has_error_col:
+                edge_errors.append(float(row["DeltaDeltaG Error"]))
+
             # Add nodes to mapping if not seen before
             if ligand1 not in node_to_idx:
                 node_to_idx[ligand1] = idx
@@ -185,6 +175,11 @@ class NodeModel:
             target_nodes.append(node_to_idx[ligand2] + 1)
             edge_values.append(fep_value)
 
+        # Validate edge errors (all-or-nothing)
+        final_edge_errors: Optional[List[float]] = None
+        if edge_errors and not any(np.isnan(e) for e in edge_errors):
+            final_edge_errors = [max(e, 0.01) for e in edge_errors]
+
         return GraphData(
             source_nodes=source_nodes,
             target_nodes=target_nodes,
@@ -193,6 +188,7 @@ class NodeModel:
             num_edges=len(edge_values),
             node_to_idx=node_to_idx,
             idx_to_node=idx_to_node,
+            edge_errors=final_edge_errors,
         )
 
     def _node_model(self, graph_data: GraphData) -> None:
@@ -231,7 +227,22 @@ class NodeModel:
 
         # Observe cycle errors with error distribution
         with pyro.plate("edges", len(edge_values)):
-            if self.config.error_distribution == ErrorDistributionType.NORMAL:
+            if (
+                self.config.use_edge_weights
+                and self.graph_data is not None
+                and self.graph_data.edge_errors is not None
+            ):
+                # Heteroscedastic likelihood: per-edge sigma_ij
+                per_edge_std = torch.tensor(
+                    [max(s, 0.01) for s in self.graph_data.edge_errors],
+                    dtype=torch.float32,
+                )
+                pyro.sample(
+                    "cycle_errors",
+                    dist.Normal(0.0, per_edge_std),
+                    obs=cycle_errors,
+                )
+            elif self.config.error_distribution == ErrorDistributionType.NORMAL:
                 # Standard normal distribution for cycle errors
                 pyro.sample(
                     "cycle_errors",
@@ -240,13 +251,11 @@ class NodeModel:
                 )
             elif self.config.error_distribution == ErrorDistributionType.SKEWED_NORMAL:
                 # Skewed normal distribution for cycle errors using mixture approximation
-                # This creates a right-skewed distribution for cycle errors
                 loc = 0.0
                 scale = self.config.error_std
                 skew = self.config.error_skew
 
                 # Create mixture of two normal distributions for skewed normal approximation
-                # Main component (80% weight) and tail component (20% weight)
                 mixture_weights = torch.tensor([0.8, 0.2])
                 mixture_locs = torch.tensor([loc, loc + skew * scale])
                 mixture_scales = torch.tensor([scale, scale * 1.5])
@@ -262,24 +271,38 @@ class NodeModel:
                     f"Unsupported error distribution type: {self.config.error_distribution}"
                 )
 
-    def train(self) -> Dict[str, Any]:
+    def fit(self) -> None:
         """
-        Train the model using variational inference.
+        Fit the model using variational inference.
 
         This method performs variational inference to estimate node values
         from the edge-based FEP measurements. The guide type determines
-        whether to use MAP estimation (AutoDelta) or uncertainty quantification (AutoNormal).
+        whether to use MAP estimation (AutoDelta) or uncertainty
+        quantification (AutoNormal).
 
-        Returns
-        -------
-        Dict[str, Any]
-            Training results including loss history and final estimates
+        Results are accessible via ``node_estimates``, ``edge_estimates``,
+        and ``get_results()`` after calling this method.
         """
         # Extract graph data
         self.graph_data = self._extract_graph_data()
 
+        # Warn if use_edge_weights requested but no errors available
+        if self.config.use_edge_weights and (
+            self.graph_data.edge_errors is None
+        ):
+            warnings.warn(
+                "use_edge_weights=True but no edge errors available in dataset. "
+                "Falling back to homoscedastic likelihood.",
+                UserWarning,
+            )
+
         # Clear Pyro parameter store
         pyro.clear_param_store()
+
+        # Set random seed for reproducibility
+        if self.config.random_seed is not None:
+            pyro.set_rng_seed(self.config.random_seed)
+            torch.manual_seed(self.config.random_seed)
 
         # Create guide based on configuration
         if self.config.guide_type == GuideType.AUTO_DELTA:
@@ -344,10 +367,9 @@ class NodeModel:
 
         elif self.config.guide_type == GuideType.AUTO_NORMAL:
             # Variational estimates with uncertainties
-            # AutoNormal creates separate parameters for mean and scale
             param_names = list(param_store.keys())
 
-            # Find the node parameters (they should be named like "node_values" or similar)
+            # Find the node parameters
             node_param_name = None
             for name in param_names:
                 if "node" in name.lower() or "value" in name.lower():
@@ -362,11 +384,9 @@ class NodeModel:
 
             # Extract means and standard deviations
             if hasattr(node_params, "shape") and len(node_params.shape) == 2:
-                # If parameters are 2D, assume first dimension is mean, second is scale
                 means = node_params[:, 0].detach().numpy()
                 scales = node_params[:, 1].detach().numpy()
             else:
-                # Single parameter case - extract mean and scale from different parameters
                 means = node_params.detach().numpy()
 
                 # Look for scale parameters
@@ -379,7 +399,6 @@ class NodeModel:
                 if scale_param_name:
                     scales = param_store[scale_param_name].detach().numpy()
                 else:
-                    # If no scale parameter found, use a default uncertainty
                     scales = np.ones_like(means) * 0.1
 
             self.node_estimates = {
@@ -397,15 +416,6 @@ class NodeModel:
             self._calculate_edge_estimates_with_uncertainty()
         )
 
-        return {
-            "final_loss": self.loss_history[-1],
-            "node_estimates": self.node_estimates,
-            "edge_estimates": self.edge_estimates,
-            "node_uncertainties": self.node_uncertainties,
-            "edge_uncertainties": self.edge_uncertainties,
-            "guide_type": self.config.guide_type.value,
-        }
-
     def _calculate_edge_estimates_with_uncertainty(
         self,
     ) -> Tuple[Dict[Tuple[str, str], float], Optional[Dict[Tuple[str, str], float]]]:
@@ -419,7 +429,7 @@ class NodeModel:
             and optional dictionary of edge uncertainties
         """
         if self.node_estimates is None or self.graph_data is None:
-            raise ValueError("Model must be trained before calculating edge estimates")
+            raise ValueError("Model must be fitted before calculating edge estimates")
 
         edge_estimates = {}
         edge_uncertainties = {}
@@ -455,15 +465,16 @@ class NodeModel:
 
     def get_results(self) -> Dict[str, Any]:
         """
-        Get the complete results from the trained model.
+        Get the complete results from the fitted model.
 
         Returns
         -------
         Dict[str, Any]
-            Complete results including node estimates, edge estimates, uncertainties, and metadata
+            Complete results including node estimates, edge estimates,
+            uncertainties, and metadata
         """
         if self.node_estimates is None:
-            raise ValueError("Model must be trained before getting results")
+            raise ValueError("Model must be fitted before getting results")
 
         results = {
             "node_estimates": self.node_estimates,
@@ -492,18 +503,25 @@ class NodeModel:
         """
         if self.node_estimates is None:
             raise ValueError(
-                "Model must be trained before adding predictions to dataset"
+                "Model must be fitted before adding predictions to dataset"
             )
 
-        # Determine the column suffix based on guide type
+        # Determine the column suffix based on guide type and weighting
+        has_weights = (
+            self.config.use_edge_weights
+            and self.graph_data is not None
+            and self.graph_data.edge_errors is not None
+        )
         if self.config.guide_type == GuideType.AUTO_DELTA:
             if self.config.prior_type == PriorType.UNIFORM:
                 suffix = "MLE"
+            elif has_weights:
+                suffix = "wMAP"
             else:
                 suffix = "MAP"
         else:
-            suffix = "VI"
-        
+            suffix = "wVI" if has_weights else "VI"
+
 
         # Add node predictions to dataset
         nodes_df = getattr(self.dataset, "dataset_nodes", None)
@@ -603,19 +621,19 @@ class NodeModel:
         Raises
         ------
         RuntimeError
-            If the model hasn't been trained yet (no history available)
+            If the model hasn't been fitted yet (no history available)
 
         Examples
         --------
-        >>> model = NodeModel(config, dataset)
-        >>> model.train()
+        >>> model = VariationalEstimator(config, dataset)
+        >>> model.fit()
         >>> model.plot_training_history(filename="training_history.pdf")
         """
         import matplotlib.pyplot as plt
 
         if not self.loss_history or not self.elbo_history:
             raise RuntimeError(
-                "No training history available. Please train the model first using .train()"
+                "No training history available. Please fit the model first using .fit()"
             )
 
         fig, (ax1, ax2) = plt.subplots(1, 2, figsize=figsize)
@@ -639,7 +657,7 @@ class NodeModel:
         ax2.legend(fontsize=11)
 
         # Overall title
-        plt.suptitle('NodeModel Training History', fontsize=16, fontweight='bold', y=1.02)
+        plt.suptitle('VariationalEstimator Training History', fontsize=16, fontweight='bold', y=1.02)
         plt.tight_layout()
 
         # Save or show
@@ -647,7 +665,7 @@ class NodeModel:
             if not filename.endswith('.pdf'):
                 filename = filename.rsplit('.', 1)[0] + '.pdf'
             plt.savefig(filename, format='pdf', dpi=300, bbox_inches='tight')
-            print(f"✅ Training history plot saved to '{filename}'")
+            print(f"Training history plot saved to '{filename}'")
 
         if show_plot:
             plt.show()
@@ -656,7 +674,7 @@ class NodeModel:
 
     @classmethod
     def calculate_ccc(
-        cls, dataset: BaseDataset, config: Optional[NodeModelConfig] = None
+        cls, dataset: BaseDataset, config: Optional[VariationalEstimatorConfig] = None
     ) -> Dict[str, Any]:
         """
         Class method to calculate CCC values for a dataset.
@@ -668,7 +686,7 @@ class NodeModel:
         ----------
         dataset : BaseDataset
             Dataset to calculate CCC values for
-        config : NodeModelConfig, optional
+        config : VariationalEstimatorConfig, optional
             Configuration for CCC calculation. If None, uses default uniform prior config.
 
         Returns
@@ -677,8 +695,8 @@ class NodeModel:
             Results from CCC calculation including node and edge estimates
         """
         # Import CCC_model here to avoid circular imports
-        from .cycle_closure_correction import CCC_model
-        
+        from ..cycle_closure_correction import CCC_model
+
         # Use CCC_model for CCC calculation
         ccc_model = CCC_model(dataset, config)
         return ccc_model.calculate_and_add_ccc()

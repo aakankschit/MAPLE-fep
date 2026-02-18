@@ -20,7 +20,7 @@ warnings.filterwarnings('ignore')
 
 from maple.dataset import FEPBenchmarkDataset, FEPDataset
 from maple.models import (
-    GMVI_model, GMVIConfig, NodeModel, NodeModelConfig,
+    GaussianMixtureVI, GaussianMixtureVIConfig, VariationalEstimator, VariationalEstimatorConfig,
     GuideType, PriorType, ErrorDistributionType
 )
 from maple.graph_analysis import bootstrap_statistic
@@ -38,7 +38,7 @@ def train_models(dataset, dataset_name):
     
     # 1. MAP Model (AutoDelta guide)
     print("\n1. Training MAP Model...")
-    map_config = NodeModelConfig(
+    map_config = VariationalEstimatorConfig(
         prior_type=PriorType.NORMAL,
         prior_parameters=[0.0, 1.0],
         guide_type=GuideType.AUTO_DELTA,
@@ -46,14 +46,15 @@ def train_models(dataset, dataset_name):
         learning_rate=0.001,
         error_std=1.0
     )
-    map_model = NodeModel(config=map_config, dataset=dataset)
-    map_results = map_model.train()
+    map_model = VariationalEstimator(config=map_config, dataset=dataset)
+    map_model.fit()
+    map_results = map_model.get_results()
     map_model.add_predictions_to_dataset()
     print(f"   MAP final loss: {map_results['final_loss']:.4f}")
     
     # 2. VI Model (AutoNormal guide)
     print("\n2. Training VI Model...")
-    vi_config = NodeModelConfig(
+    vi_config = VariationalEstimatorConfig(
         prior_type=PriorType.NORMAL,
         prior_parameters=[0.0, 1.0],
         guide_type=GuideType.AUTO_NORMAL,
@@ -61,14 +62,15 @@ def train_models(dataset, dataset_name):
         learning_rate=0.001,
         error_std=1.0
     )
-    vi_model = NodeModel(config=vi_config, dataset=dataset)
-    vi_results = vi_model.train()
+    vi_model = VariationalEstimator(config=vi_config, dataset=dataset)
+    vi_model.fit()
+    vi_results = vi_model.get_results()
     vi_model.add_predictions_to_dataset()
     print(f"   VI final loss: {vi_results['final_loss']:.4f}")
     
     # 3. GMVI Model
     print("\n3. Training GMVI Model...")
-    gmvi_config = GMVIConfig(
+    gmvi_config = GaussianMixtureVIConfig(
         prior_std=1.0,          # Prior standard deviation for node values
         normal_std=1.0,         # Standard deviation for normal edges
         outlier_std=3.0,        # Standard deviation for outlier edges
@@ -79,17 +81,15 @@ def train_models(dataset, dataset_name):
         n_samples=1000,          # Monte Carlo samples for ELBO
         patience=500             # Early stopping patience
     )
-    gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
-    gmvi_model.initialize_parameters()
+    gmvi_model = GaussianMixtureVI(config=gmvi_config, dataset=dataset)
     gmvi_model.fit()
-    gmvi_predictions = gmvi_model.get_posterior_estimates()
     # Add GMVI predictions to dataset
     gmvi_model.add_predictions_to_dataset()
     print("   GMVI training complete")
 
     # 4. MLE Model (uses skewed normal error distribution)
     print("\n4. Training MLE Model...")
-    mle_config = NodeModelConfig(
+    mle_config = VariationalEstimatorConfig(
         prior_type=PriorType.UNIFORM,
         prior_parameters=[-10, 10],
         guide_type=GuideType.AUTO_DELTA,
@@ -98,8 +98,9 @@ def train_models(dataset, dataset_name):
         error_std=1.0,
         error_distribution=ErrorDistributionType.SKEWED_NORMAL
     )
-    mle_model = NodeModel(config=mle_config, dataset=dataset)
-    mle_results = mle_model.train()
+    mle_model = VariationalEstimator(config=mle_config, dataset=dataset)
+    mle_model.fit()
+    mle_results = mle_model.get_results()
     mle_model.add_predictions_to_dataset()
     print(f"   MLE final loss: {mle_results['final_loss']:.4f}")
 

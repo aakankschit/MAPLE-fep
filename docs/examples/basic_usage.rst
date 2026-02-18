@@ -118,19 +118,19 @@ If you only have edge data, MAPLE can derive node values via graph traversal:
 Training Models and Adding Predictions
 --------------------------------------
 
-MAP Inference with NodeModel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+MAP Inference with VariationalEstimator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
    from maple.dataset import FEPDataset
-   from maple.models import NodeModel, NodeModelConfig, PriorType, GuideType
-   
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, PriorType, GuideType
+
    # Create dataset
    dataset = FEPDataset(dataset_name="cdk8", sampling_time="5ns")
-   
+
    # Configure MAP inference
-   config = NodeModelConfig(
+   config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,  # MAP
        learning_rate=0.01,
@@ -138,8 +138,8 @@ MAP Inference with NodeModel
    )
    
    # Create and train model
-   model = NodeModel(config=config, dataset=dataset)
-   model.train()
+   model = VariationalEstimator(config=config, dataset=dataset)
+   model.fit()
    
    # Add predictions to dataset
    model.add_predictions_to_dataset()
@@ -152,15 +152,15 @@ MAP Inference with NodeModel
    print(f"\nApplied estimators: {dataset.estimators}")
    # Output: ['MAP']
 
-Variational Inference with NodeModel
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Variational Inference with VariationalEstimator
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. code-block:: python
 
-   from maple.models import NodeModel, NodeModelConfig, PriorType, GuideType
-   
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, PriorType, GuideType
+
    # Configure VI (variational inference)
-   vi_config = NodeModelConfig(
+   vi_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_NORMAL,  # VI instead of MAP
        learning_rate=0.01,
@@ -168,8 +168,8 @@ Variational Inference with NodeModel
    )
    
    # Create and train
-   vi_model = NodeModel(config=vi_config, dataset=dataset)
-   vi_model.train()
+   vi_model = VariationalEstimator(config=vi_config, dataset=dataset)
+   vi_model.fit()
    vi_model.add_predictions_to_dataset()
    
    # VI adds both predictions and uncertainties
@@ -187,10 +187,10 @@ GMVI with Outlier Detection
 
 .. code-block:: python
 
-   from maple.models import GMVI_model, GMVIConfig
+   from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
    
    # Configure GMVI
-   gmvi_config = GMVIConfig(
+   gmvi_config = GaussianMixtureVIConfig(
        prior_std=5.0,        # Prior std for node values
        normal_std=1.0,       # Std for normal edges
        outlier_std=3.0,      # Std for outlier edges
@@ -200,7 +200,7 @@ GMVI with Outlier Detection
    )
    
    # Create and train
-   gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+   gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
    gmvi_model.fit()
    
    # IMPORTANT: Get posterior estimates before adding to dataset
@@ -226,8 +226,8 @@ Complete Multi-Model Workflow
 
    from maple.dataset import FEPDataset
    from maple.models import (
-       NodeModel, NodeModelConfig,
-       GMVI_model, GMVIConfig,
+       VariationalEstimator, VariationalEstimatorConfig,
+       GaussianMixtureVI, GaussianMixtureVIConfig,
        PriorType, GuideType
    )
    from maple.graph_analysis import compute_simple_statistics
@@ -244,13 +244,13 @@ Complete Multi-Model Workflow
    # ============================================================
    # STEP 2: Train MAP model
    # ============================================================
-   map_config = NodeModelConfig(
+   map_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,
        num_steps=5000
    )
-   map_model = NodeModel(config=map_config, dataset=dataset)
-   map_model.train()
+   map_model = VariationalEstimator(config=map_config, dataset=dataset)
+   map_model.fit()
    map_model.add_predictions_to_dataset()
    
    print("\nAfter MAP:")
@@ -259,13 +259,13 @@ Complete Multi-Model Workflow
    # ============================================================
    # STEP 3: Train VI model
    # ============================================================
-   vi_config = NodeModelConfig(
+   vi_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_NORMAL,
        num_steps=5000
    )
-   vi_model = NodeModel(config=vi_config, dataset=dataset)
-   vi_model.train()
+   vi_model = VariationalEstimator(config=vi_config, dataset=dataset)
+   vi_model.fit()
    vi_model.add_predictions_to_dataset()
    
    print("\nAfter VI:")
@@ -274,8 +274,8 @@ Complete Multi-Model Workflow
    # ============================================================
    # STEP 4: Train GMVI model
    # ============================================================
-   gmvi_config = GMVIConfig(prior_std=5.0, outlier_prob=0.2, n_epochs=2000)
-   gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+   gmvi_config = GaussianMixtureVIConfig(prior_std=5.0, outlier_prob=0.2, n_epochs=2000)
+   gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
    gmvi_model.fit()
    gmvi_model.get_posterior_estimates()
    gmvi_model.add_predictions_to_dataset()
@@ -481,7 +481,7 @@ Batch Processing Multiple Datasets
 .. code-block:: python
 
    from maple.dataset import FEPDataset
-   from maple.models import NodeModel, NodeModelConfig, GMVI_model, GMVIConfig
+   from maple.models import VariationalEstimator, VariationalEstimatorConfig, GaussianMixtureVI, GaussianMixtureVIConfig
    from maple.models import PriorType, GuideType
    from maple.graph_analysis import compute_simple_statistics
    
@@ -496,13 +496,13 @@ Batch Processing Multiple Datasets
    all_results = {}
    
    # Shared configuration
-   map_config = NodeModelConfig(
+   map_config = VariationalEstimatorConfig(
        prior_type=PriorType.NORMAL,
        guide_type=GuideType.AUTO_DELTA,
        num_steps=5000
    )
-   
-   gmvi_config = GMVIConfig(prior_std=5.0, outlier_prob=0.2, n_epochs=2000)
+
+   gmvi_config = GaussianMixtureVIConfig(prior_std=5.0, outlier_prob=0.2, n_epochs=2000)
    
    # Process each dataset
    for dataset_name, sampling_time in datasets_to_process:
@@ -512,12 +512,12 @@ Batch Processing Multiple Datasets
        dataset = FEPDataset(dataset_name=dataset_name, sampling_time=sampling_time)
        
        # Train MAP
-       map_model = NodeModel(config=map_config, dataset=dataset)
-       map_model.train()
+       map_model = VariationalEstimator(config=map_config, dataset=dataset)
+       map_model.fit()
        map_model.add_predictions_to_dataset()
        
        # Train GMVI
-       gmvi_model = GMVI_model(dataset=dataset, config=gmvi_config)
+       gmvi_model = GaussianMixtureVI(dataset=dataset, config=gmvi_config)
        gmvi_model.fit()
        gmvi_model.get_posterior_estimates()
        gmvi_model.add_predictions_to_dataset()
@@ -551,7 +551,7 @@ Best Practices Summary
 
 1. **Create dataset first**: Always start with ``FEPDataset``
 
-2. **Train models**: Use ``model.train()`` or ``model.fit()``
+2. **Train models**: Use ``model.fit()``
 
 3. **Add predictions**: Call ``model.add_predictions_to_dataset()``
 
@@ -566,7 +566,7 @@ Best Practices Summary
    # The pattern:
    dataset = FEPDataset(...)              # Step 1: Create dataset
    model = Model(config, dataset)         # Step 2: Create model
-   model.train()                          # Step 3: Train
+   model.fit()                            # Step 3: Train
    model.add_predictions_to_dataset()     # Step 4: Add predictions
    
    # Results:

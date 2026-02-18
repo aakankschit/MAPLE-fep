@@ -21,7 +21,7 @@ This tutorial walks you through the basics of MAPLE:
 
 - Loading benchmark FEP datasets
 - Understanding the data structure (nodes and edges)
-- Training a NodeModel with Bayesian inference
+- Training a VariationalEstimator with Bayesian inference
 - Analyzing model results and performance metrics
 - Visualizing predictions vs experimental values
 
@@ -36,8 +36,8 @@ This tutorial walks you through the basics of MAPLE:
 The tutorial uses the **CDK8 (Cyclin-dependent kinase 8)** benchmark dataset to demonstrate:
 
 1. **Data Loading**: How to use ``FEPDataset`` to load benchmark data
-2. **Model Configuration**: Setting up ``NodeModelConfig`` with appropriate priors
-3. **Training**: Running MAP inference with the ``NodeModel``
+2. **Model Configuration**: Setting up ``VariationalEstimatorConfig`` with appropriate priors
+3. **Training**: Running MAP inference with the ``VariationalEstimator``
 4. **Analysis**: Calculating RMSE, MAE, and correlation metrics
 5. **Visualization**: Creating correlation plots
 

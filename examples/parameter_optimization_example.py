@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 from maple.dataset.synthetic_dataset import SyntheticFEPDataset
-from maple.models.node_model import ModelConfig, PriorType
+from maple.models.config import VariationalEstimatorConfig as ModelConfig, PriorType
 from maple.utils import PerformanceTracker
 from maple.utils.parameter_sweep import (ParameterSweep,
                                          create_prior_sweep_experiment)

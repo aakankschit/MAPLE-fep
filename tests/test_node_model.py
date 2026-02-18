@@ -1,7 +1,7 @@
 """
-Unit tests for the NodeModel class.
+Unit tests for the VariationalEstimator class.
 
-This module tests the NodeModel implementation including configuration validation,
+This module tests the VariationalEstimator implementation including configuration validation,
 model initialization, training, inference, and integration with different datasets.
 """
 
@@ -15,11 +15,11 @@ import torch
 from conftest import MockDataset
 
 from maple.dataset import SyntheticFEPDataset
-from maple.models.node_model import GraphData, NodeModel
-from maple.models.model_config import (
+from maple.models.probabilistic.variational_estimator import GraphData, VariationalEstimator
+from maple.models.config import (
     ErrorDistributionType,
     GuideType,
-    NodeModelConfig as ModelConfig,
+    VariationalEstimatorConfig as ModelConfig,
     PriorType
 )
 
@@ -171,11 +171,11 @@ class TestGraphData:
         assert len(graph_data.edge_values) == graph_data.num_edges
 
 
-class TestNodeModel:
+class TestVariationalEstimator:
     """
-    Test cases for the NodeModel class.
+    Test cases for the VariationalEstimator class.
 
-    The NodeModel class should:
+    The VariationalEstimator class should:
     - Initialize correctly with valid configurations
     - Accept different dataset types
     - Perform training without errors
@@ -186,7 +186,7 @@ class TestNodeModel:
     def test_model_initialization(self, mock_dataset):
         """Test basic model initialization."""
         config = ModelConfig()
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         assert model.config == config
         assert model.dataset == mock_dataset
@@ -197,7 +197,7 @@ class TestNodeModel:
     def test_model_initialization_with_defaults(self, mock_dataset):
         """Test model initialization with default config."""
         config = ModelConfig()  # Need to create config explicitly
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         assert isinstance(model.config, ModelConfig)
         assert model.dataset == mock_dataset
@@ -212,10 +212,11 @@ class TestNodeModel:
 
         # Use a small number of steps for faster testing
         config = ModelConfig(num_steps=50)
-        model = NodeModel(config, dataset)
+        model = VariationalEstimator(config, dataset)
 
         # Train the model
-        result = model.train()
+        model.fit()
+        result = model.get_results()
 
         # Check that training completed successfully
         assert isinstance(result, dict)
@@ -235,12 +236,12 @@ class TestNodeModel:
     def test_model_prediction_before_training(self, mock_dataset):
         """Test that prediction before training raises appropriate error."""
         config = ModelConfig()
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
-        with pytest.raises(ValueError, match="trained"):
+        with pytest.raises(ValueError, match="fitted"):
             model.get_results()
 
-    @patch("maple.models.node_model.SVI")
+    @patch("maple.models.probabilistic.variational_estimator.SVI")
     @patch("pyro.get_param_store")
     def test_model_prediction_after_training(
         self, mock_param_store, mock_svi, mock_dataset
@@ -258,10 +259,10 @@ class TestNodeModel:
         mock_param_store.return_value = mock_store
 
         config = ModelConfig(num_steps=10)
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Train and get results
-        model.train()
+        model.fit()
         results = model.get_results()
 
         # Check that results are available
@@ -280,14 +281,14 @@ class TestNodeModel:
         ]
 
         for config in configs:
-            model = NodeModel(config, mock_dataset)
+            model = VariationalEstimator(config, mock_dataset)
             assert model.config == config
 
     def test_model_device_handling(self, mock_dataset, mock_torch_device):
         """Test that model can be created without device specification."""
         # ModelConfig doesn't have device attribute, so just test basic functionality
         config = ModelConfig()
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Test that model was created successfully
         assert model.config == config
@@ -300,18 +301,18 @@ class TestNodeModel:
         config1 = ModelConfig(learning_rate=0.01, num_steps=100)
         config2 = ModelConfig(learning_rate=0.01, num_steps=100)
 
-        model1 = NodeModel(config1, mock_dataset)
-        model2 = NodeModel(config2, mock_dataset)
+        model1 = VariationalEstimator(config1, mock_dataset)
+        model2 = VariationalEstimator(config2, mock_dataset)
 
         # Both models should have the same configuration
         assert model1.config == model2.config
 
 
-class TestNodeModelIntegration:
+class TestVariationalEstimatorIntegration:
     """
-    Integration tests for NodeModel with different dataset types.
+    Integration tests for VariationalEstimator with different dataset types.
 
-    These tests verify that NodeModel works correctly with
+    These tests verify that VariationalEstimator works correctly with
     various dataset implementations and handles real data scenarios.
     """
 
@@ -319,7 +320,7 @@ class TestNodeModelIntegration:
     def test_model_with_all_prior_types(self, mock_dataset, prior_type):
         """Test model initialization with all prior types."""
         config = ModelConfig(prior_type=prior_type, num_steps=10)
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Should initialize without error
         assert model.config.prior_type == prior_type
@@ -328,7 +329,7 @@ class TestNodeModelIntegration:
     def test_model_with_all_guide_types(self, mock_dataset, guide_type):
         """Test model initialization with all guide types."""
         config = ModelConfig(guide_type=guide_type, num_steps=10)
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Should initialize without error
         assert model.config.guide_type == guide_type
@@ -337,12 +338,12 @@ class TestNodeModelIntegration:
     def test_model_with_all_error_distributions(self, mock_dataset, error_dist):
         """Test model initialization with all error distributions."""
         config = ModelConfig(error_distribution=error_dist, num_steps=10)
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Should initialize without error
         assert model.config.error_distribution == error_dist
 
-    @patch("maple.models.node_model.SVI")
+    @patch("maple.models.probabilistic.variational_estimator.SVI")
     @patch("pyro.get_param_store")
     def test_model_convergence_detection(
         self, mock_param_store, mock_svi, mock_dataset
@@ -360,9 +361,9 @@ class TestNodeModelIntegration:
         mock_param_store.return_value = mock_store
 
         config = ModelConfig(num_steps=10)  # Use num_steps instead of max_iter
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
-        model.train()
+        model.fit()
 
         # Should have run training steps (including CCC calculation steps)
         assert (
@@ -381,7 +382,7 @@ class TestNodeModelIntegration:
         minimal_dataset = MockDataset(minimal_edge_data, minimal_node_data)
 
         config = ModelConfig(num_steps=10)  # Use num_steps instead of max_iter
-        model = NodeModel(
+        model = VariationalEstimator(
             config, minimal_dataset
         )  # Correct argument order: config, dataset
 
@@ -391,14 +392,14 @@ class TestNodeModelIntegration:
     def test_model_memory_cleanup(self, mock_dataset):
         """Test that model properly cleans up memory and Pyro state."""
         config = ModelConfig(num_steps=10)  # Use num_steps instead of max_iter
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Check that Pyro param store is properly managed
         initial_params = len(pyro.get_param_store())
 
         # Training might add parameters
         try:
-            model.train()
+            model.fit()
         except Exception:
             pass  # Training might fail in mock environment
 
@@ -408,11 +409,11 @@ class TestNodeModelIntegration:
         assert initial_params >= 0  # If we get here without memory issues, test passes
 
 
-class TestNodeModelErrorHandling:
+class TestVariationalEstimatorErrorHandling:
     """
-    Test error handling and edge cases for NodeModel.
+    Test error handling and edge cases for VariationalEstimator.
 
-    These tests ensure that NodeModel fails gracefully
+    These tests ensure that VariationalEstimator fails gracefully
     and provides helpful error messages for common issues.
     """
 
@@ -421,14 +422,14 @@ class TestNodeModelErrorHandling:
         config = ModelConfig()
 
         # Test with None dataset - error happens during training
-        model = NodeModel(config, None)
+        model = VariationalEstimator(config, None)
         with pytest.raises((ValueError, AttributeError)):
-            model.train()
+            model.fit()
 
         # Test with object that doesn't implement BaseDataset interface
-        model2 = NodeModel(config, "not_a_dataset")
+        model2 = VariationalEstimator(config, "not_a_dataset")
         with pytest.raises((ValueError, AttributeError)):
-            model2.train()
+            model2.fit()
 
     @patch.object(MockDataset, "get_graph_data")
     def test_model_with_inconsistent_graph_data(
@@ -450,7 +451,7 @@ class TestNodeModelErrorHandling:
         # Model should handle inconsistent data gracefully or raise clear error
         try:
             config = ModelConfig()
-            model = NodeModel(config, mock_dataset)
+            model = VariationalEstimator(config, mock_dataset)
             # If initialization succeeds, that's also acceptable
         except (ValueError, RuntimeError, IndexError) as e:
             # Should provide clear error message
@@ -474,7 +475,7 @@ class TestNodeModelErrorHandling:
         # Model should either handle NaN gracefully or raise clear error
         try:
             config = ModelConfig()
-            model = NodeModel(config, mock_dataset)
+            model = VariationalEstimator(config, mock_dataset)
             # If initialization succeeds, training should handle NaN appropriately
         except (ValueError, RuntimeError) as e:
             # Clear error message expected
@@ -497,7 +498,7 @@ class TestNodeModelErrorHandling:
         # Model should handle empty graphs appropriately
         try:
             config = ModelConfig()
-            model = NodeModel(config, mock_dataset)
+            model = VariationalEstimator(config, mock_dataset)
             # If initialization succeeds, should be able to handle empty graph
         except (ValueError, RuntimeError) as e:
             # Should provide clear error message
@@ -506,7 +507,7 @@ class TestNodeModelErrorHandling:
     def test_model_training_interruption(self, mock_dataset):
         """Test model behavior when training is interrupted."""
         config = ModelConfig(num_steps=1000)  # Long training
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # This test would need actual implementation details
         # to properly test training interruption
@@ -516,7 +517,7 @@ class TestNodeModelErrorHandling:
     def test_model_prediction_edge_cases(self, mock_dataset):
         """Test model prediction edge cases."""
         config = ModelConfig()
-        model = NodeModel(config, mock_dataset)
+        model = VariationalEstimator(config, mock_dataset)
 
         # Test prediction before training
         with pytest.raises(ValueError):
@@ -527,11 +528,11 @@ class TestNodeModelErrorHandling:
         pass
 
 
-class TestNodeModelPerformance:
+class TestVariationalEstimatorPerformance:
     """
-    Performance and scalability tests for NodeModel.
+    Performance and scalability tests for VariationalEstimator.
 
-    These tests ensure that NodeModel can handle
+    These tests ensure that VariationalEstimator can handle
     reasonably sized datasets efficiently.
     """
 
@@ -563,7 +564,7 @@ class TestNodeModelPerformance:
             dataset = MockDataset(edge_data, node_data)
 
             config = ModelConfig(num_steps=10)  # Short training for speed
-            model = NodeModel(config, dataset)
+            model = VariationalEstimator(config, dataset)
 
             # Should initialize efficiently regardless of size
             assert model.dataset == dataset
@@ -576,7 +577,7 @@ class TestNodeModelPerformance:
 
         # Create and destroy multiple models
         for _ in range(5):
-            model = NodeModel(config, mock_dataset)
+            model = VariationalEstimator(config, mock_dataset)
             del model
             gc.collect()
 
@@ -588,8 +589,8 @@ class TestNodeModelPerformance:
         config = ModelConfig(num_steps=10)
 
         # Create two identical models
-        model1 = NodeModel(config, mock_dataset)
-        model2 = NodeModel(config, mock_dataset)
+        model1 = VariationalEstimator(config, mock_dataset)
+        model2 = VariationalEstimator(config, mock_dataset)
 
         # Both should have identical configuration
         assert model1.config.__dict__ == model2.config.__dict__
