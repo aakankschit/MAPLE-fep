@@ -5,7 +5,7 @@ A Python package for analyzing Free Energy Perturbation (FEP) data using
 probabilistic node models and Bayesian inference.
 """
 
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 __author__ = "Aakankschit Nandkeolyar"
 __email__ = "anandkeo@uci.edu"
 __description__ = (

@@ -16,7 +16,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "maple-fep"
-version = "0.1.0"
+version = "0.1.1"
 description = "Maximum A Posteriori Learning of Energies - Bayesian inference tools for Free Energy Perturbation (FEP) calculations in computational drug discovery"
 readme = "README.md"
 license = {text = "MIT"}

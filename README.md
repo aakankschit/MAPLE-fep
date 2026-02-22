@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="docs/MAPLE_logo.png" alt="MAPLE Logo" width="400"/>
+  <img src="https://raw.githubusercontent.com/aakankschit/MAPLE-fep/main/docs/MAPLE_logo.png" alt="MAPLE Logo" width="400"/>
 </p>
 
 <h1 align="center">MAPLE-fep</h1>
