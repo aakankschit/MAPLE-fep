@@ -9,7 +9,7 @@ bootstrap sampling functionality.
 import numpy as np
 import pytest
 
-from maple.graph_analysis.performance_stats import (bootstrap_statistic,
+from maple_fep.graph_analysis.performance_stats import (bootstrap_statistic,
                                                     calculate_correlation,
                                                     calculate_mae,
                                                     calculate_r2,

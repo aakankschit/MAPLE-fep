@@ -35,8 +35,8 @@ pip install -e ".[dev]"
 ## Quick Start
 
 ```python
-from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
-from maple.dataset import FEPDataset
+from maple_fep.models import GaussianMixtureVI, GaussianMixtureVIConfig
+from maple_fep.dataset import FEPDataset
 
 # Load your FEP data
 dataset = FEPDataset("fep_edges.csv")
@@ -100,12 +100,12 @@ outlier_probs = model.compute_edge_outlier_probabilities()
 
 | Module | Description |
 |--------|-------------|
-| `maple.models.probabilistic` | Bayesian estimators: `VariationalEstimator` (MAP/VI/MLE), `GaussianMixtureVI` |
-| `maple.models.deterministic` | Graph-based methods: `CycleClosureCorrection` (WCC), `SpectralCorrection` (WSFC/SFC) |
-| `maple.models.config` | Pydantic configuration classes for all models |
-| `maple.dataset` | Dataset loading (`FEPDataset`), benchmarks (`FEPBenchmarkDataset`), synthetic data |
-| `maple.graph_analysis` | Performance statistics, visualization, graph construction, cycle analysis |
-| `maple.utils` | Parameter optimization (`ParameterSweep`), performance tracking |
+| `maple_fep.models.probabilistic` | Bayesian estimators: `VariationalEstimator` (MAP/VI/MLE), `GaussianMixtureVI` |
+| `maple_fep.models.deterministic` | Graph-based methods: `CycleClosureCorrection` (WCC), `SpectralCorrection` (WSFC/SFC) |
+| `maple_fep.models.config` | Pydantic configuration classes for all models |
+| `maple_fep.dataset` | Dataset loading (`FEPDataset`), benchmarks (`FEPBenchmarkDataset`), synthetic data |
+| `maple_fep.graph_analysis` | Performance statistics, visualization, graph construction, cycle analysis |
+| `maple_fep.utils` | Parameter optimization (`ParameterSweep`), performance tracking |
 
 ## Documentation
 
@@ -129,7 +129,7 @@ pip install -e ".[dev]"
 pytest tests/ -v
 
 # Run tests with coverage
-pytest tests/ --cov=src/maple --cov-report=html
+pytest tests/ --cov=src/maple_fep --cov-report=html
 
 # Format code
 black src/ tests/

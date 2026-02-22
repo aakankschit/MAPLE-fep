@@ -14,9 +14,9 @@ import pytest
 import torch
 from conftest import MockDataset
 
-from maple.dataset import SyntheticFEPDataset
-from maple.models.probabilistic.variational_estimator import GraphData, VariationalEstimator
-from maple.models.config import (
+from maple_fep.dataset import SyntheticFEPDataset
+from maple_fep.models.probabilistic.variational_estimator import GraphData, VariationalEstimator
+from maple_fep.models.config import (
     ErrorDistributionType,
     GuideType,
     VariationalEstimatorConfig as ModelConfig,
@@ -241,7 +241,7 @@ class TestVariationalEstimator:
         with pytest.raises(ValueError, match="fitted"):
             model.get_results()
 
-    @patch("maple.models.probabilistic.variational_estimator.SVI")
+    @patch("maple_fep.models.probabilistic.variational_estimator.SVI")
     @patch("pyro.get_param_store")
     def test_model_prediction_after_training(
         self, mock_param_store, mock_svi, mock_dataset
@@ -343,7 +343,7 @@ class TestVariationalEstimatorIntegration:
         # Should initialize without error
         assert model.config.error_distribution == error_dist
 
-    @patch("maple.models.probabilistic.variational_estimator.SVI")
+    @patch("maple_fep.models.probabilistic.variational_estimator.SVI")
     @patch("pyro.get_param_store")
     def test_model_convergence_detection(
         self, mock_param_store, mock_svi, mock_dataset

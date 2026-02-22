@@ -12,9 +12,9 @@ import pandas as pd
 import pytest
 import torch
 
-from maple.graph_analysis.performance_stats import compute_simple_statistics
-from maple.models.probabilistic.variational_estimator import VariationalEstimator
-from maple.models.config import VariationalEstimatorConfig as ModelConfig
+from maple_fep.graph_analysis.performance_stats import compute_simple_statistics
+from maple_fep.models.probabilistic.variational_estimator import VariationalEstimator
+from maple_fep.models.config import VariationalEstimatorConfig as ModelConfig
 
 
 class TestPackageIntegration:
@@ -253,16 +253,16 @@ class TestPackageImports:
 
     def test_main_package_import(self):
         """Test importing the main package."""
-        import maple
+        import maple_fep
 
         # Should have main submodules
-        assert hasattr(maple, "models")
-        assert hasattr(maple, "dataset")
-        assert hasattr(maple, "graph_analysis")
+        assert hasattr(maple_fep, "models")
+        assert hasattr(maple_fep, "dataset")
+        assert hasattr(maple_fep, "graph_analysis")
 
     def test_models_import(self):
         """Test importing models subpackage."""
-        from maple.models import VariationalEstimator, VariationalEstimatorConfig
+        from maple_fep.models import VariationalEstimator, VariationalEstimatorConfig
 
         # Should be able to access classes
         assert VariationalEstimator is not None
@@ -270,7 +270,7 @@ class TestPackageImports:
 
     def test_dataset_import(self):
         """Test importing dataset subpackage."""
-        from maple.dataset import BaseDataset, FEPDataset, SyntheticFEPDataset
+        from maple_fep.dataset import BaseDataset, FEPDataset, SyntheticFEPDataset
 
         # Should be able to access classes
         assert BaseDataset is not None
@@ -279,7 +279,7 @@ class TestPackageImports:
 
     def test_graph_analysis_import(self):
         """Test importing graph analysis subpackage."""
-        from maple.graph_analysis import calculate_mae, calculate_rmse
+        from maple_fep.graph_analysis import calculate_mae, calculate_rmse
 
         # Should be able to access functions
         assert callable(calculate_mae)

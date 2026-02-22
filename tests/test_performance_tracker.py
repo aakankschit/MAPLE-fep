@@ -15,7 +15,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from maple.utils.performance_tracker import (ModelRun, PerformanceTracker,
+from maple_fep.utils.performance_tracker import (ModelRun, PerformanceTracker,
                                              compare_model_runs,
                                              load_performance_history)
 

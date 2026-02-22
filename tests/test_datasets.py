@@ -13,10 +13,10 @@ import pandas as pd
 import pytest
 import torch
 
-from maple.dataset.base_dataset import BaseDataset
-from maple.dataset.dataset import FEPDataset
-from maple.dataset.FEP_benchmark_dataset import FEPBenchmarkDataset
-from maple.dataset.synthetic_dataset import SyntheticFEPDataset
+from maple_fep.dataset.base_dataset import BaseDataset
+from maple_fep.dataset.dataset import FEPDataset
+from maple_fep.dataset.FEP_benchmark_dataset import FEPBenchmarkDataset
+from maple_fep.dataset.synthetic_dataset import SyntheticFEPDataset
 
 
 class TestBaseDataset:

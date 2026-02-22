@@ -11,8 +11,8 @@ import pandas as pd
 import pytest
 import torch
 
-from maple.dataset import SyntheticFEPDataset
-from maple.models import GaussianMixtureVI, GaussianMixtureVIConfig
+from maple_fep.dataset import SyntheticFEPDataset
+from maple_fep.models import GaussianMixtureVI, GaussianMixtureVIConfig
 
 
 class TestGaussianMixtureVIConfig:

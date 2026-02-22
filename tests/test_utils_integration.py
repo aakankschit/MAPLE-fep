@@ -18,9 +18,9 @@ import pandas as pd
 import pytest
 import torch
 
-from maple.dataset.synthetic_dataset import SyntheticFEPDataset
-from maple.models.config import VariationalEstimatorConfig as ModelConfig, PriorType
-from maple.utils import (ModelRun, ParameterSweep, PerformanceTracker,
+from maple_fep.dataset.synthetic_dataset import SyntheticFEPDataset
+from maple_fep.models.config import VariationalEstimatorConfig as ModelConfig, PriorType
+from maple_fep.utils import (ModelRun, ParameterSweep, PerformanceTracker,
                          compare_model_runs, create_prior_sweep_experiment,
                          load_performance_history)
 
@@ -625,8 +625,8 @@ class TestUtilsConvenienceFunctions:
         assert comparison[comparison["run_id"] == "run1"]["RMSE"].iloc[0] == 0.5
         assert comparison[comparison["run_id"] == "run2"]["RMSE"].iloc[0] == 0.3
 
-    @patch("maple.models.probabilistic.variational_estimator.VariationalEstimator.fit")
-    @patch("maple.models.probabilistic.variational_estimator.VariationalEstimator.get_results")
+    @patch("maple_fep.models.probabilistic.variational_estimator.VariationalEstimator.fit")
+    @patch("maple_fep.models.probabilistic.variational_estimator.VariationalEstimator.get_results")
     def test_create_prior_sweep_experiment(
         self, mock_get_results, mock_train, temp_storage_dir, test_datasets
     ):

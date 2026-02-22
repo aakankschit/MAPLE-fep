@@ -17,7 +17,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from maple.models import (
+from maple_fep.models import (
     GraphData,
     VariationalEstimator,
     VariationalEstimatorConfig,
@@ -367,7 +367,7 @@ class TestGraphDataShared:
     """Verify GraphData from shared module works across models."""
 
     def test_import_from_models(self):
-        from maple.models import GraphData as GD
+        from maple_fep.models import GraphData as GD
         assert GD is GraphData
 
     def test_optional_fields_default_none(self):

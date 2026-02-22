@@ -145,7 +145,7 @@ Changelog = "https://github.com/aakankschit/maple-fep/blob/main/CHANGELOG.md"
 
 # Optional: CLI entry point (uncomment if you want a command-line tool)
 # [project.scripts]
-# maple = "maple.cli:main"
+# maple = "maple_fep.cli:main"
 
 # =============================================================================
 # Setuptools configuration
@@ -153,13 +153,13 @@ Changelog = "https://github.com/aakankschit/maple-fep/blob/main/CHANGELOG.md"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-include = ["maple*"]
+include = ["maple_fep*"]
 
 [tool.setuptools.package-dir]
 "" = "src"
 
 [tool.setuptools.package-data]
-maple = ["py.typed"]  # PEP 561 marker for typed package
+maple_fep = ["py.typed"]  # PEP 561 marker for typed package
 
 # =============================================================================
 # Black - Code formatter
@@ -217,7 +217,7 @@ ignore = [
 "__init__.py" = ["F401"]  # Allow unused imports in __init__.py
 
 [tool.ruff.lint.isort]
-known-first-party = ["maple"]
+known-first-party = ["maple_fep"]
 
 # =============================================================================
 # Pytest configuration
@@ -249,7 +249,7 @@ filterwarnings = [
 # =============================================================================
 
 [tool.coverage.run]
-source = ["src/maple"]
+source = ["src/maple_fep"]
 branch = true
 parallel = true
 omit = [
